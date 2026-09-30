@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Floor Walk with Shuyu Zheng</title>
+  <meta name="description" content="Explore operations leadership and program delivery with Shuyu Zheng: Bin Liners, Stow Guidance, Onboarding Portal, A-Level Beams and AI-Powered Operations. View the one-page résumé or take an interactive warehouse floor walk.">
+  <meta name="theme-color" content="#0c151d">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314213d'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-weight='700' font-size='30' text-anchor='middle' fill='white'%3ESZ%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" as="image" href="assets/warehouse-ai-operations.png">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <button class="brand" type="button" data-home aria-label="Shuyu Zheng, introduction"><span class="monogram" aria-hidden="true">SZ</span><span>SHUYU ZHENG<span class="brand-sub">OPERATIONS & QUALITY</span></span></button>
+    <nav aria-label="Main navigation"><a class="resume-nav" href="assets/Shuyu_Zheng_Resume.pdf" target="_blank" rel="noopener noreferrer"><span>Résumé</span> <span aria-hidden="true">↗</span></a><button type="button" data-about>About me</button><button type="button" data-project-menu>Project index <span aria-hidden="true">↗</span></button><label class="language-picker"><span>Language</span><select class="language-select" aria-label="Language"><option value="auto">Automatic (browser language)</option><option value="en" lang="en" data-no-translate>English</option><option value="zh-Hans" lang="zh-Hans" data-no-translate>简体中文</option><option value="es" lang="es" data-no-translate>Español</option></select></label></nav>
+  </header>
+  <main id="main">
+    <section class="landing" id="landing" aria-labelledby="intro-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="small-cross" aria-hidden="true">✦</span> ALWAYS LOOKING FOR A BETTER WAY</p>
+        <h1 id="intro-title">Hi, I’m Shuyu.<br><span>Welcome to my world of operations.</span></h1>
+        <p class="intro-role">OPERATIONS MANAGER <span>/</span> ICQA LEADER</p>
+        <p class="intro-text">Take a walk with me through the projects I’ve built to make work safer, simpler, and more efficient.</p>
+        <div class="intro-actions"><button class="button primary" id="enter-button" type="button">Let’s walk the floor <span aria-hidden="true">→</span><span class="key-tag" aria-hidden="true">↵</span></button><button class="plain-link" type="button" data-project-menu>Or browse the projects <span aria-hidden="true">↗</span></button></div>
+        <p class="intro-instruction">Choose a stop. See the problem, the approach, and the impact.</p>
+      </div>
+      <div class="intro-scene">
+        <div class="scene-heading"><span>THE WAREHOUSE</span><span>5 STOPS TO EXPLORE</span></div>
+        <div class="preview-art"><img src="assets/warehouse-ai-operations.png" width="1536" height="1024" alt="Pixel art warehouse with storage racks, order pickers, cage lanes, a manager’s desk and a multi-screen leadership sync area."><div class="preview-note"><span class="note-icon" aria-hidden="true">⌖</span><span>Real projects.<br><strong>A world you can explore.</strong></span></div></div>
+        <div class="scene-legend"><span><i class="legend-square liners-color"></i>Bin Liners</span><span><i class="legend-square stowguidance-color"></i>Stow Guidance</span><span><i class="legend-square portal-color"></i>Onboarding Portal</span><span><i class="legend-square beams-color"></i>A-Level Beams</span><span><i class="legend-square ai-color"></i>AI-Powered Operations</span></div>
+      </div>
+      <div class="landing-foot"><span>BAY AREA, CALIFORNIA</span><span>PEOPLE <b>+</b> PROCESS <b>+</b> PRACTICAL TOOLS</span><span>PERSONAL PORTFOLIO / 2026</span></div>
+    </section>
+    <section class="game" id="game" hidden aria-labelledby="game-title">
+      <div class="game-heading"><div><p class="eyebrow">SHUYU'S WAREHOUSE</p><h1 id="game-title" tabindex="-1">Your floor walk starts here.</h1></div><button class="plain-link" type="button" data-home><span aria-hidden="true">←</span> Introduction</button></div>
+      <div class="game-layout">
+        <div class="world-panel">
+          <div class="world-topbar"><span><i class="tiny-square" aria-hidden="true"></i> THE OPERATIONS FLOOR</span><span id="location-label">At the entrance</span></div>
+          <div class="world" id="world" tabindex="0" role="group" aria-label="Interactive warehouse. Click the floor to walk, or choose a project stop. Arrow keys and W A S D also move the manager; Enter opens a nearby project." aria-describedby="controls-copy">
+            <img class="warehouse-art" src="assets/warehouse-ai-operations.png" width="1536" height="1024" alt="Warehouse exploration map with five stops: Bin Liners, Stow Guidance, Onboarding Portal, A-Level Beams and AI-Powered Operations." draggable="false">
+            <svg class="route-overlay" viewBox="0 0 1000 667" aria-hidden="true"><polyline id="route-line" points=""></polyline></svg>
+            <div class="destination-ring" id="destination-ring" hidden aria-hidden="true"></div>
+            <button class="stop-pin" id="pin-liners" data-stop="liners" style="--pin-x:17%;--pin-y:41%;--stop-color:var(--mint)" aria-label="Walk to the racks and explore Bin Liners"><span class="pin-label">BIN LINERS</span><span class="pin-number">01</span><span class="pin-tip" aria-hidden="true"></span></button>
+            <button class="stop-pin" id="pin-stowguidance" data-stop="stowguidance" style="--pin-x:50%;--pin-y:24%;--stop-color:var(--amber)" aria-label="Walk to the satellite drop zone and explore Stow Guidance"><span class="pin-label">STOW GUIDANCE</span><span class="pin-number">02</span><span class="pin-tip" aria-hidden="true"></span></button>
+            <button class="stop-pin" id="pin-portal" data-stop="portal" style="--pin-x:80%;--pin-y:28%;--stop-color:var(--blue)" aria-label="Walk to the manager's desk and explore the Onboarding Portal"><span class="pin-label">ONBOARDING PORTAL</span><span class="pin-number">03</span><span class="pin-tip" aria-hidden="true"></span></button>
+            <button class="stop-pin" id="pin-beams" data-stop="beams" style="--pin-x:20%;--pin-y:66%;--stop-color:var(--safety)" aria-label="Walk to the picker and explore A-Level Beams"><span class="pin-label">A-LEVEL BEAMS</span><span class="pin-number">04</span><span class="pin-tip" aria-hidden="true"></span></button>
+            <button class="stop-pin" id="pin-ai" data-stop="ai" style="--pin-x:74%;--pin-y:53%;--stop-color:var(--violet)" aria-label="Walk to the leadership sync and explore AI-Powered Operations"><span class="pin-label">AI OPS</span><span class="pin-number">05</span><span class="pin-tip" aria-hidden="true"></span></button>
+            <button class="warehouse-exit" type="button" data-walk-outside aria-label="Exit to the basketball court"><span aria-hidden="true">↘</span><span>Life outside work</span><span aria-hidden="true">↗</span></button>
+            <div class="manager" id="manager" style="left:50%;top:78%" aria-hidden="true"><span class="manager-name">SHUYU</span><span class="manager-shadow"></span><canvas class="manager-sprite" id="manager-sprite" width="128" height="128"></canvas></div>
+            <button class="nearby-prompt" id="nearby-prompt" type="button" hidden>Explore project <kbd>Enter</kbd></button>
+            <div class="map-caption" aria-hidden="true">WAREHOUSE / EXPLORATION MAP</div>
+          </div>
+          <div class="world-controls" id="controls-copy"><span data-mobile-hint=" · Or choose a stop below"><span class="cursor-icon" aria-hidden="true">↖</span> Click or tap to walk</span><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or WASD</span><span><kbd>Enter</kbd> Explore a stop</span></div>
+          <div class="arrival-message" id="arrival-message" role="status" aria-live="polite">You're on the floor. Choose a project marker, or click anywhere in an aisle.</div>
+        </div>
+        <aside class="field-guide" aria-labelledby="guide-title">
+          <div class="guide-head"><span class="eyebrow">YOUR FIELD GUIDE</span><span class="guide-symbol" aria-hidden="true">✦</span></div>
+          <h2 id="guide-title">Choose your next stop.</h2><p class="guide-intro">Five stops. Better flow, stronger teams, safer work and informed decisions.</p>
+          <div class="progress-label"><span>PROJECTS EXPLORED</span><span id="progress-text">0 / 5</span></div><div class="progress-track" role="progressbar" aria-label="Projects explored" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span id="progress-fill"></span></div>
+          <div class="project-stops">
+            <button type="button" class="stop-card" data-stop="liners" style="--stop-color:var(--mint)"><span class="stop-index">01</span><span class="stop-copy"><span class="stop-place">STORAGE RACKS</span><strong>Bin Liners</strong><span class="stop-description">Less digging. A faster, safer pick.</span></span><span class="stop-state" aria-hidden="true">↗</span></button>
+            <button type="button" class="stop-card" data-stop="stowguidance" style="--stop-color:var(--amber)"><span class="stop-index">02</span><span class="stop-copy"><span class="stop-place">STOW SATELLITE</span><strong>Stow Guidance Tool Improvement Project</strong><span class="stop-description">Remove the scan-and-wait step.</span></span><span class="stop-state" aria-hidden="true">↗</span></button>
+            <button type="button" class="stop-card" data-stop="portal" style="--stop-color:var(--blue)"><span class="stop-index">03</span><span class="stop-copy"><span class="stop-place">MANAGER'S DESK</span><strong>Onboarding Portal</strong><span class="stop-description">Organization health. Team pace. Verified learning.</span></span><span class="stop-state" aria-hidden="true">↗</span></button>
+            <button type="button" class="stop-card" data-stop="beams" style="--stop-color:var(--safety)"><span class="stop-index">04</span><span class="stop-copy"><span class="stop-place">PALLET PICKING</span><strong>A-Level Beams</strong><span class="stop-description">Raise the pallet. Reduce the bend.</span></span><span class="stop-state" aria-hidden="true">↗</span></button>
+            <button type="button" class="stop-card" data-stop="ai" style="--stop-color:var(--violet)"><span class="stop-index">05</span><span class="stop-copy"><span class="stop-place">LEADERSHIP SYNC</span><strong>AI-Powered Operations</strong><span class="stop-description">Better evidence. Clearer decisions. Accountable execution.</span></span><span class="stop-state" aria-hidden="true">↗</span></button>
+          </div>
+          <div class="guide-bottom"><p>Want to go straight to the stories?</p><button class="plain-link" type="button" data-project-menu>Open project index <span aria-hidden="true">↗</span></button></div>
+        </aside>
+      </div>
+      <div class="game-footer"><button class="plain-link outside-link" type="button" data-walk-outside><span aria-hidden="true">🏀</span> <span>Step outside for basketball</span> <span aria-hidden="true">→</span></button><button class="plain-link" type="button" data-about>Meet the manager <span aria-hidden="true">↗</span></button></div>
+    </section>
+    <section class="outside" id="outside" hidden aria-labelledby="outside-title">
+      <div class="outside-heading"><div><p class="eyebrow">OFF THE CLOCK</p><h1 id="outside-title">Same Shuyu. Different court.</h1><p>Outside operations, I’m a basketball fan. Welcome to my slightly biased pickup game.</p></div><button class="plain-link" type="button" data-return-warehouse><span aria-hidden="true">←</span> <span>Back to the warehouse</span></button></div>
+      <div class="court-shell">
+        <div class="court-rule"><strong>SHUYU’S HOUSE RULE</strong><p>Only Shuyu or a teammate receiving his direct pass can score. Everyone else is here for the cardio.</p></div>
+        <div class="court-scoreboard" aria-label="Basketball scoreboard"><div><span>Squad points</span><strong><span id="court-score">0</span><small> / 21</small></strong></div><div><span>Shuyu’s points</span><strong id="court-shuyu-points">0</strong></div><div><span>Shuyu’s assists</span><strong id="court-assists">0</strong></div><div><span>Shot clock</span><strong id="court-clock">24</strong></div></div>
+        <div class="court-stage">
+          <div class="court-surface">
+          <canvas id="basketball-canvas" width="960" height="640" tabindex="0" aria-label="Playable basketball court. Tap to move the ball handler, or use arrows or W A S D. Hold and release the shoot button or Space to shoot. E passes or steals; Q returns to Shuyu." aria-describedby="basketball-help">Playable basketball court</canvas>
+          <div class="court-format" aria-hidden="true">First to 21 · Full court · 5 on 5</div>
+          <div class="court-timing" id="court-timing"><div class="timing-heading"><span>Shot timing</span><span id="court-possession">Shuyu can score</span></div><div class="shot-meter" id="shot-meter" role="meter" aria-label="Shot timing" aria-valuemin="0" aria-valuemax="1500" aria-valuenow="0"><span class="shot-meter-green"></span><span class="shot-meter-fill" id="shot-meter-fill"></span><span class="shot-meter-target" aria-hidden="true"></span></div><p>Release in green · about 1 second</p></div>
+          </div>
+        <div class="court-controls">
+          <div class="court-dpad" role="group" aria-label="Move"><button type="button" data-court-direction="arrowup" aria-label="Move up">↑</button><button type="button" data-court-direction="arrowleft" aria-label="Move left">←</button><button type="button" data-court-direction="arrowdown" aria-label="Move down">↓</button><button type="button" data-court-direction="arrowright" aria-label="Move right">→</button></div>
+          <div class="court-actions"><button class="button primary" id="court-shoot" type="button" disabled><span>Hold to shoot</span><kbd aria-hidden="true">Space</kbd></button><button class="outline-button" id="court-pass" type="button" disabled><span>Pass / steal</span><kbd aria-hidden="true">E</kbd></button><button class="outline-button" id="court-shuyu" type="button" disabled><span>Back to Shuyu</span><kbd aria-hidden="true">Q</kbd></button></div>
+          <div class="court-session"><button class="plain-link" id="court-pause" type="button" disabled>Pause</button><button class="plain-link" id="court-restart" type="button">Restart</button><button class="plain-link" type="button" data-return-warehouse><span aria-hidden="true">←</span><span>Warehouse</span></button></div>
+        </div>
+          <div class="court-overlay" id="court-overlay"><div><span class="court-overlay-ball" aria-hidden="true">🏀</span><h2 id="court-overlay-title">Loading the court…</h2><p>Move into range, hold for about one second, then release in green. Pass to a teammate for a Shuyu assist.</p><button class="button primary" id="court-start" type="button" disabled>Start pickup</button><button class="plain-link court-overlay-exit" type="button" data-return-warehouse><span aria-hidden="true">←</span><span>Warehouse</span></button></div></div>
+        </div>
+        <p id="court-message" class="court-message" role="status" aria-live="polite">Ready for a little pickup?</p>
+        <div class="basketball-help" id="basketball-help"><p>Tap the court to move. Hold the shoot button, then release in green. E: pass or steal. Q: back to Shuyu. Arrow keys / WASD also move.</p><p>Use Pass to find a teammate. The gold ring marks who you control; a star marks Shuyu’s pass recipient. Attack the right basket.</p></div>
+      </div>
+    </section>
+    <noscript><div class="noscript-note"><p>Shuyu Zheng leads operations and inventory quality at Amazon. Explore five areas of work: Bin Liners, Stow Guidance, Onboarding Portal, A-Level Beams and AI-Powered Operations. The interactive floor walk requires JavaScript.</p><a href="assets/Shuyu_Zheng_Resume.pdf">View résumé (PDF, English)</a></div></noscript>
+  </main>
+  <dialog class="project-dialog" id="project-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><label class="language-picker"><span>Language</span><select class="language-select" aria-label="Language"><option value="auto">Automatic (browser language)</option><option value="en" lang="en" data-no-translate>English</option><option value="zh-Hans" lang="zh-Hans" data-no-translate>简体中文</option><option value="es" lang="es" data-no-translate>Español</option></select></label><span class="eyebrow" id="dialog-eyebrow">PROJECT FIELD NOTES</span><button class="close-dialog" type="button" aria-label="Close and return">Close <span aria-hidden="true">×</span></button></div><div id="dialog-content"></div></dialog>
+</body>
+</html>

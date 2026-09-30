@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<!-- Receive Dock — Animated Flow Map. Created and owned by Shuyu Zheng (shuyuzheng.com). © 2026 Shuyu Zheng. Illustrative model with an invented layout: not a real site, not live data. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receive Dock — Animated Flow Map · Shuyu Zheng</title>
+<meta name="description" content="An interactive, illustrative model of an inbound receive dock, from trailer to cage, built by Shuyu Zheng to help new operations leaders learn the process path.">
+<meta name="author" content="Shuyu Zheng">
+<meta name="copyright" content="© 2026 Shuyu Zheng — creator and owner">
+<link rel="canonical" href="https://shuyuzheng.com/dock-flow/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314213d'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-weight='700' font-size='30' text-anchor='middle' fill='white'%3ESZ%3C/text%3E%3C/svg%3E">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed')</script>
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#0c151d; --panel:#121f28; --panel2:#172631; --line:#2b3c46; --text:#edf2e9; --muted:#a6b5bb; --dim:#6f8290;
+    --mint:#c6efa7; --amber:#ffc17d; --blue:#a7d9ef; --safety:#ffc94b; --red:#ff7b72;
+    --floor:#101d26; --grid:#152634;
+    --conv:#46718f; --case:#c98a4b; --pallet:#4aa3ff; --fork:#ff8a3d; --chk:#b48cf2; --c2c:#5ad27a; --cage:#7fc3e8; --lbl:#ff9f43; --ws:#f28fb8;
+    --mono:'Courier New',Courier,monospace; --sans:Inter,ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font:14px/1.5 var(--sans);color:var(--text);background:var(--bg)}
+  header{display:flex;align-items:center;gap:16px;padding:10px 20px;min-height:66px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .back{font:700 11px/1.4 var(--mono);letter-spacing:.1em;color:var(--mint);text-decoration:none;border:1px solid var(--line);padding:7px 10px;box-shadow:3px 3px 0 #080f15;white-space:nowrap}
+  .back:hover,.back:focus-visible{border-color:var(--mint)}
+  .eyebrow{font:700 11px/1.4 var(--mono);letter-spacing:.13em;color:var(--muted);margin:0}
+  .eyebrow b{color:var(--mint);font-weight:700}
+  header h1{font-size:18px;margin:2px 0 0;font-weight:650;letter-spacing:-.01em}
+  .controls{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  button{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:7px 12px;cursor:pointer;font:inherit;font-size:13px;box-shadow:3px 3px 0 #080f15;transition:transform .12s,box-shadow .12s}
+  button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #080f15}
+  button:active{transform:translate(1px,1px);box-shadow:2px 2px 0 #080f15}
+  button[aria-pressed="true"]{background:var(--mint);color:#132319;border-color:var(--mint)}
+  button:disabled{opacity:.4;transform:none;box-shadow:none;cursor:default}
+  label.ctl{display:flex;align-items:center;gap:8px;font:12px var(--mono);letter-spacing:.04em;color:var(--muted)}
+  label.ctl input[type=range]{width:110px;accent-color:var(--mint)}
+  label.ctl span{color:var(--mint);min-width:64px}
+  body{display:flex;flex-direction:column}
+  header{flex:none}
+  main{display:grid;grid-template-columns:1fr 430px;flex:1;min-height:0}
+  #mapwrap{position:relative;overflow:hidden;background:var(--bg);padding-bottom:78px}
+  svg{width:100%;height:100%;display:block}
+  .floor{fill:url(#grid);stroke:var(--line)}
+  .aisle{fill:none;stroke:#3a5566;stroke-width:1.5;stroke-dasharray:6 6}
+  .fllane{fill:#132430;stroke:#5a4a1e;stroke-width:1;stroke-dasharray:8 4}
+  .door{cursor:pointer}
+  .door rect.d{fill:#2b3c46;stroke:#3a5060}
+  .door.flex rect.d{fill:#22405a;stroke:#3a6a8a}
+  .door.closed rect.d{fill:#3a2326;stroke:#5a2a2a;cursor:default}
+  .door.active rect.d{stroke:var(--safety);stroke-width:2.5}
+  .doorlbl{fill:var(--text);font:700 11px var(--mono);text-anchor:middle;pointer-events:none}
+  .trailer{fill:#1b2b36;stroke:#354753}
+  .trailer.open{fill:#243745;stroke:#4a6a80}
+  .conv{fill:none;stroke:var(--conv);stroke-width:12;stroke-linecap:round;stroke-linejoin:round;cursor:pointer;transition:stroke .2s}
+  .conv2{fill:none;stroke:#7fa6c0;stroke-width:2;stroke-dasharray:3 7;pointer-events:none;opacity:.7}
+  .conv.hot,.conv:hover{stroke:#6c9fc4}
+  .convlbl{font:italic 10.5px var(--sans);fill:var(--muted);paint-order:stroke;stroke:var(--floor);stroke-width:4px;pointer-events:none}
+  .zone{cursor:pointer}
+  .zone rect.box{transition:all .2s}
+  .zone:hover rect.box,.zone:focus rect.box{stroke:var(--text);stroke-width:2}
+  .zone.active rect.box{stroke:var(--mint);stroke-width:2.5}
+  .zone.tourglow rect.box{animation:pulse 1.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{stroke-width:2.5}50%{stroke-width:5}}
+  .stall rect.box{fill:#182a36;stroke:#35505f}
+  .stall.warn rect.box{fill:#3d3312;stroke:var(--amber)}
+  .stall.crit rect.box{fill:#4a1f22;stroke:var(--red)}
+  .stall text{font:700 9px var(--mono);fill:var(--muted);text-anchor:middle;pointer-events:none}
+  .pal{fill:var(--pallet);stroke:#a7d9ef;stroke-width:1}
+  .flexz rect.box{fill:#13242f;stroke:#3a6a8a;stroke-dasharray:5 3}
+  .flexz.warn rect.box{fill:#3d3312;stroke:var(--amber)}
+  .flexz.crit rect.box{fill:#4a1f22;stroke:var(--red)}
+  .flexz text{font:700 10px var(--mono);fill:var(--blue);text-anchor:middle;pointer-events:none;letter-spacing:.05em}
+  .flexz .sm{font:9px var(--sans);fill:var(--muted);letter-spacing:0}
+  .table rect.box{fill:#2e4a2a;stroke:var(--mint);stroke-width:1.5}
+  .table .dots{fill:url(#balls);pointer-events:none}
+  .table text{font:700 9px var(--mono);fill:var(--mint);text-anchor:middle;pointer-events:none;letter-spacing:.06em}
+  .lblst rect.box{fill:#5a3a16;stroke:var(--lbl);stroke-width:1.5}
+  .lblst text{font:700 8.5px var(--mono);fill:var(--lbl);text-anchor:middle;pointer-events:none;letter-spacing:.04em}
+  .build rect.box{fill:#111e28;stroke:#2b3c46;stroke-dasharray:4 3}
+  .build.warn rect.box{stroke:var(--amber);fill:#1e2416}
+  .build.crit rect.box{stroke:var(--red);fill:#2a161a}
+  .build text{font:700 10px var(--mono);fill:var(--blue);text-anchor:middle;pointer-events:none;letter-spacing:.06em}
+  .build .sm{font:9px var(--sans);fill:var(--muted);letter-spacing:0}
+  .cage{--pc:var(--cage)}
+  .cage.pc-green{--pc:var(--c2c)} .cage.pc-red{--pc:var(--red)} .cage.pc-yellow{--pc:var(--safety)} .cage.pc-grey{--pc:#9fb0bd}
+  .cage rect.box{fill:#14222d;stroke:var(--pc);stroke-width:1.2}
+  .cage .placard{fill:var(--pc);pointer-events:none}
+  .cage .fill{fill:var(--pc);opacity:.35;pointer-events:none}
+  .cage text{font:700 9px var(--mono);fill:var(--pc);text-anchor:middle;pointer-events:none}
+  .cage.full rect.box{stroke:var(--mint);stroke-width:2}
+  .cage.full .fill{fill:var(--mint);opacity:.55}
+  .cage .seal{fill:none;stroke:#0c151d;stroke-width:2.4;stroke-linecap:round;visibility:hidden;pointer-events:none}
+  .cage.sealed .seal{visibility:visible}
+  .cage.away rect.box{fill:none;stroke-dasharray:3 3;opacity:.45}
+  .cage.away .seal{visibility:hidden}
+  .cage.away .fill{visibility:hidden}
+  .buffer rect.box{fill:#0f1c25;stroke:#3a5060;stroke-dasharray:6 4}
+  .buffer text{font:700 10px var(--mono);fill:var(--muted);text-anchor:end;pointer-events:none;letter-spacing:.06em}
+  .buffer.warn rect.box{stroke:var(--amber)}
+  .bcage{fill:var(--mint);opacity:.55;stroke:var(--cage);stroke-width:1}
+  .empties rect.box{fill:#0f1c25;stroke:#3a5060}
+  .empties .ecage{fill:#13242f;stroke:var(--cage);stroke-width:1;stroke-dasharray:2 2;pointer-events:none}
+  .empties text{font:700 8px var(--mono);fill:var(--muted);text-anchor:middle;pointer-events:none;letter-spacing:.05em}
+  .room rect.box{fill:#2a2230;stroke:#4a3a55}
+  .room text{font:700 10px var(--mono);fill:var(--muted);text-anchor:middle;pointer-events:none;letter-spacing:.06em}
+  .walk{fill:none;stroke:#2f7a45;stroke-width:16;cursor:pointer}
+  .walk:hover{stroke:#3a9a55}
+  .walklbl{font:700 10px var(--mono);fill:#c6efa7;text-anchor:middle;pointer-events:none;letter-spacing:.1em}
+  .case rect.b{fill:var(--case);stroke:#3a2a12;stroke-width:1}
+  .case rect.y{fill:var(--safety);stroke:none}
+  .case.done rect.b{fill:#d9a066}
+  .badge circle{fill:var(--mint)}
+  .badge text{fill:#132319;font:700 10px var(--mono);text-anchor:middle;pointer-events:none}
+  .linetag{font:700 10px var(--mono);fill:var(--dim);text-anchor:middle;letter-spacing:.1em}
+  .north{font:700 10px var(--mono);fill:var(--dim);letter-spacing:.1em}
+  .wm{pointer-events:none} .wm text{font:700 34px var(--mono);fill:var(--text);opacity:.045;letter-spacing:.12em;text-anchor:middle} .wm text.org{font-size:15px;letter-spacing:.16em}
+  .credit{font:700 10px var(--mono);fill:var(--muted);letter-spacing:.1em;text-anchor:end;pointer-events:none}
+  .fork{cursor:pointer}
+  .fork .body{fill:var(--fork);stroke:#7a3a10;stroke-width:1}
+  .fork .cab{fill:#132319}
+  .fork .tine{stroke:#9fb0bd;stroke-width:2}
+  .fork.active .body{stroke:var(--mint);stroke-width:2.5}
+  .aa{cursor:pointer}
+  .aa .vest{stroke:#0c151d;stroke-width:1.2}
+  .aa .stripe{stroke:#edf2e9;stroke-width:1.6;opacity:.85;pointer-events:none}
+  .aa .head{fill:#e8cdb0;stroke:#0c151d;stroke-width:.9}
+  .aa .hat{fill:none;stroke:#0c151d;stroke-width:1;opacity:.6}
+  .aa .tag{font:700 9px var(--mono);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:var(--floor);stroke-width:3px;letter-spacing:.04em}
+  .aa.busy .vest{filter:brightness(1.2)}
+  .aa.active .vest{stroke:var(--mint);stroke-width:2.2}
+  .wscage{fill:none;stroke:var(--cage);stroke-width:1.5;stroke-dasharray:2 2}
+  .wsfull .wscage{fill:var(--mint);opacity:.85;stroke-dasharray:none}
+  .flbl{font:700 9.5px var(--mono);fill:var(--text);paint-order:stroke;stroke:var(--floor);stroke-width:5px;pointer-events:none}
+  .say{font:9px var(--sans);fill:var(--muted);paint-order:stroke;stroke:var(--floor);stroke-width:4px;pointer-events:none;text-anchor:middle}
+  #legend{position:absolute;left:16px;right:16px;bottom:14px;background:#0c171fed;border:1px solid #354753;box-shadow:4px 4px 0 #080f15;padding:9px 13px;font:11.5px var(--mono);display:flex;gap:14px;flex-wrap:wrap;color:var(--muted)}
+  #legend span{display:inline-flex;align-items:center;gap:7px}
+  .sw{width:12px;height:8px;display:inline-block}
+  .sw.round{border-radius:50%;width:9px;height:9px}
+  #tip{position:absolute;pointer-events:none;background:#0c171f;border:1px solid #5c777b;color:var(--text);font-size:12px;padding:8px 10px;display:none;max-width:280px;line-height:1.4;z-index:5;box-shadow:4px 4px 0 #080f15}
+  #tip b{color:var(--mint)}
+  aside{background:var(--panel);border-left:1px solid var(--line);overflow:auto;display:flex;flex-direction:column}
+  aside .empty{padding:26px 24px;color:var(--muted)}
+  aside .empty h2{margin:6px 0 10px;font-size:20px;color:var(--text);letter-spacing:-.02em}
+  aside .empty h2 span{color:var(--mint)}
+  aside .empty b{color:var(--text)}
+  .ph{padding:18px 20px 12px;border-bottom:1px solid var(--line)}
+  .ph h2{margin:4px 0 4px;font-size:19px;letter-spacing:-.01em}
+  .ph .owner{font-size:12.5px;color:var(--muted)}
+  .tabs{display:flex;border-bottom:1px solid var(--line);background:var(--panel)}
+  .tabs button{border:0;box-shadow:none;padding:10px 12px;background:none;border-bottom:2px solid transparent;color:var(--muted);font:700 11px var(--mono);letter-spacing:.06em;transform:none}
+  .tabs button:hover{color:var(--text);transform:none;box-shadow:none}
+  .tabs button[aria-selected="true"]{color:var(--mint);border-bottom-color:var(--mint);background:none}
+  .tab{padding:16px 20px;display:none}
+  .tab.on{display:block}
+  .tab h3{font:700 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin:16px 0 8px}
+  .tab h3:first-child{margin-top:0}
+  .tab ul,.tab ol{margin:0;padding-left:18px}
+  .tab li{margin:4px 0;color:#d5dcd2}
+  .kv{display:grid;grid-template-columns:minmax(120px,1fr) 1.3fr;gap:7px 12px;font-size:13px}
+  .kv .v{font-weight:600;text-align:right;color:var(--text)}
+  .kv div:not(.v){color:var(--muted)}
+  .ref{font:11px var(--mono);color:var(--dim)}
+  .deck{border:1px solid #354753;background:#0c171f;box-shadow:6px 6px 0 #080f15}
+  .slide{aspect-ratio:16/9;padding:20px 24px;display:flex;flex-direction:column;overflow:auto}
+  .slide .k{font:700 10.5px var(--mono);color:var(--muted);letter-spacing:.1em}
+  .slide h4{margin:6px 0 12px;font-size:17px;color:var(--mint);letter-spacing:-.01em}
+  .slide ol{margin:0;padding-left:18px;font-size:12.5px}
+  .slide li{margin:5px 0}
+  .deckbar{display:flex;align-items:center;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--panel)}
+  .deckbar .n{margin-left:auto;font:10.5px var(--mono);color:var(--dim)}
+  .navrow{display:flex;gap:10px;padding:14px 20px;border-top:1px solid var(--line);margin-top:auto}
+  .navrow button{flex:1}
+  @media (max-width:1000px){main{grid-template-columns:1fr}aside{position:fixed;inset:auto 0 0 0;max-height:60%;border-top:1px solid var(--line)}}
+html.embed,html.embed body{overflow:hidden}
+html.embed header,html.embed aside,html.embed #legend{display:none}
+html.embed main{grid-template-columns:1fr;height:100%}
+html.embed #mapwrap{padding-bottom:0!important}
+@media (max-width:1000px){html:not(.embed),html:not(.embed) body{height:auto}html:not(.embed) body{display:block}html:not(.embed) header{flex-wrap:wrap}html:not(.embed) .controls{margin-left:0;flex-basis:100%}html:not(.embed) main{display:block;height:auto}html:not(.embed) svg{height:auto;aspect-ratio:16/9}html:not(.embed) aside{position:static;max-height:none;border-left:0;border-top:1px solid var(--line)}}
+.door:focus rect.d,.fork:focus .body,.aa:focus .vest{stroke:var(--text);stroke-width:2}
+path.conv:focus,path.walk:focus{stroke:var(--text)}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="/#work" aria-label="Back to shuyuzheng.com">← SHUYUZHENG.COM</a>
+  <div>
+    <p class="eyebrow"><b>✦</b> INBOUND RECEIVE DOCK · ILLUSTRATIVE MODEL</p>
+    <h1>Animated flow map — trailer to cage</h1>
+  </div>
+  <div class="controls">
+    <label class="ctl">VOLUME <input type="range" id="vol" min="1" max="10" step="1" value="4"> <span id="vollbl">Normal</span></label>
+    <button id="play">⏸ Pause</button>
+    <label class="ctl">SPEED <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"></label>
+    <button id="tour">▶ Guided tour</button>
+  </div>
+</header>
+<main>
+  <div id="mapwrap">
+    <svg id="map" viewBox="0 0 1600 900" role="img" aria-label="Illustrative receive dock floor plan with animated flow"></svg>
+    <div id="legend"></div>
+    <div id="tip"></div>
+  </div>
+  <aside id="panel"></aside>
+</main>
+<script>
+const DOORS = ["01","02","03","04","05","06","07","X","08","09","10","11","12","13","14"];
+const FLEX_DOORS = ["02","13"];
+const DOOR_X0 = 390, DOOR_W = 60;
+const LINES = [
+  {n:1, x:400,  type:"fluid", door:"01"},
+  {n:2, x:570,  type:"map",   doors:["03","04"],      head:"03"},
+  {n:3, x:740,  type:"map",   doors:["05","06","07"], head:"06"},
+  {n:4, x:910,  type:"map",   doors:["08","09"],      head:"08"},
+  {n:5, x:1080, type:"map",   doors:["10","11","12"], head:"11"},
+  {n:6, x:1250, type:"fluid", door:"14"},
+];
+const STALL_CAP = 6, CASES_PER_PALLET = 8, FLEX_CAP = 12, TABLE_CAP = 2, CAGE_CAP = 24;
+const BUFFER_PULL = 8.5, BUF_AMBER = 12, SEAL_T = 1.5;
+const CAGES = ["STOW","STOW","STOW","EACH", "STOW","STOW","XD","ITEM", "PSOL","MISC"];
+const PLACARD = {STOW:"blue", XD:"green", PSOL:"red", EACH:"yellow", ITEM:"grey", MISC:"grey"};
+const CAGE_WEIGHTS = [4.5,4,3,1.6, 4,3.5,1.1,0.7, 0.9,0.4];
+const FORKS = [ {id:"forkA", label:"Forklift 1", lines:[2,3]}, {id:"forkB", label:"Forklift 2", lines:[4,5]} ];
+const WATERSPIDERS = [ {id:"ws1", label:"Waterspider 1", lines:[1,2,3]}, {id:"ws2", label:"Waterspider 2", lines:[4,5,6]} ];
+const FLEXZONES = [
+  {id:"flexL1", door:"02", title:"FLEX L"},
+  {id:"flexR1", door:"13", title:"FLEX R"},
+];
+const INFO = {
+  door:{lane:"DOCK DOOR",title:"Dock door & trailer",owner:"Dock manager",
+    what:["A trained associate releases the trailer to the dock before anyone works it, and every move starts with a door scan so the system knows which trailer is being unloaded.","Floor-loaded (fluid) trailers are hand-unloaded from inside the trailer straight onto a flex conveyor (lines 1 and 6). Palletized trailers are unloaded by forklift into the pallet zone right below the door (lines 2–5)."],
+    controls:[["Trailer release","nobody works a trailer until it is released to the dock","practice"],["Freight type","fluid → unloaders + flex conveyor · pallets → forklift to the door's pallet zone","model"],["Escalation","zones turn amber as they fill and red at capacity","model"]],
+    slides:[{title:"Door discipline",bullets:["Freight type decides the line: fluid → unloaders feed the flex conveyor; pallets → forklift to the pallet zone under the door","Keep each zone inside its limit before the next trailer is pulled","Separate people from forklift traffic at unload and staging"]}]},
+  flexdoor:{lane:"FLEX DOOR",title:"Flex door — pallet unload only",owner:"Dock manager",
+    what:["One extra door on each side, between the fluid lines and the pallet lines. No conveyor: pallets are unloaded by forklift straight into the flex zone below.","They add room for live unloads, overflow pallet staging and urgent trailers without tying up a conveyor line."],
+    controls:[["Use cases","live unloads · overflow staging · urgent trailers","practice"]],
+    slides:[{title:"Why flex doors",bullets:["Live unloads do not wait for a conveyor line","Overflow pallets stage here when a line's zones are full","Urgent trailers get worked on arrival instead of waiting in the yard"]}]},
+  flexz:{lane:"FLEX PALLET ZONE",title:"Flex zone — overflow pallet staging",owner:"Dock manager · Receive manager",
+    what:["One flex zone directly under each flex door. Pallets land here when every zone on a line is full, and can be received in place so their routing is known before a line frees up.","Single-item pallets can go straight to stow from here; mixed pallets wait for a line to break them down."],
+    controls:[["Capacity","the positions drawn in the zone; amber when nearly full, red when full","anim"],["Order","first in, first out — oldest and most urgent first","practice"]],
+    slides:[{title:"Flex zone rules",bullets:["First in, first out","Receive pallets as they land so routing is known early","Zone full → stop sending pallet trailers to flex doors and escalate"]}]},
+  fork:{lane:"FORKLIFT · PALLET UNLOAD",title:"Forklift operator — pallet unload",owner:"Dock manager · certified operators",
+    what:["Forklift operators unload mixed pallets from the trailer into the pallet zone under that door.","The forklift works only inside the dock zone: along the lane between the doors and the zones, back into the trailer, and down into the pallet zone or flex zone under that door. It never drives past the zone line into the depal, conveyor or cage areas. When every zone on its line is full it diverts the next pallet to a flex zone on its side.","Each move is scanned — the door first, then the pallet once it is set down — so the system knows where every pallet is."],
+    controls:[["Travel","forklift lane + pallet zones only — never past the zone line","model"],["Certification","every operator certified before live work","practice"],["Pedestrian separation","marked forklift lanes; spotter at active stacking","practice"],["Zone being worked","the forklift does not drop into the zone the flex conveyor is in","model"]],
+    slides:[{title:"Pallet unload",bullets:["Scan the dock door","Drive into the trailer, pick the pallet","Set it down in the door's pallet zone, scan the pallet → unload done"]},{title:"Then hand off to receive",bullets:["An associate receives the pallet in the zone","The scanner returns where it goes — follow it","Mixed pallets → depalletize on this line · single-item pallets → straight to stow"]}]},
+  stall:{lane:"PALLET ZONE · WIP",title:"Pallet zone — receive & depalletize",owner:"Receive manager · depal associates",
+    what:["One pallet zone per dock door, directly below it. The forklift drops pallets here. An associate receives each pallet by scanning its labels, and the scanner says where it goes: depalletize on this line, or straight to stow.","In the zone the flex conveyor is snaked into, associates cut the wrap, label every case and throw cases one at a time onto the conveyor. Each line has one flex conveyor, snaked into one zone at a time; when that zone is cleared the belt runs empty and the associates move its end to the next zone (line 3: 06 → 07 → 06 → 05, then back). Meanwhile the forklift keeps filling the line's other zones and stays out of the one being worked."],
+    controls:[["Zone capacity","the positions drawn in the zone","anim"],["Amber","nearly full → dock manager acts","model"],["Red","door at capacity → forklift diverts to a flex zone","model"],["Second thrower","joins when the line's zones pass half full","anim"],["Forklift / depal separation","the forklift does not drop into the zone being worked","model"]],
+    slides:[{title:"Receive the pallet",bullets:["Scan the pallet labels","Follow the routing the scanner returns","Mixed pallet → depalletize here"]},{title:"Depalletize and throw",bullets:["Cut the wrap","Label every case","Throw cases onto the flex conveyor one at a time — no piles, no double-stacks","Empty pallet out of the zone immediately","Zone cleared → let the belt run empty → move the conveyor end to the next zone"]},{title:"Reading the zones",bullets:["Zones filling + forklift waiting = depal is the constraint → add throwers","Zones empty + trailer open = the forklift or the door is the constraint","Zone red → send the next pallet trailer to a flex door"]}]},
+  convmap:{lane:"FLEX CONVEYOR",title:"Flex conveyor — pallet zone to ball transfer table",owner:"Receive manager",
+    what:["One movable gravity (skate-wheel) flex conveyor per line — a single belt that curves and snakes, not a network. Its end is snaked into one pallet zone at a time and the throwers work there. When that zone is cleared the associates let the belt run empty, then walk its end to the next zone. On the map the belt swings across and the throwers go with it.","Throughput is set by the throwers and by check-in, not by the conveyor: one case at a time, label up."],
+    controls:[["Jam clears","lock out before reaching in; hands-off zones at transfers","practice"],["Orientation","label up for the check-in scan","practice"],["Move","zone cleared + belt empty → move the end; never move a loaded belt","model"]],
+    slides:[{title:"Flex conveyor standard",bullets:["One case per throw, label up","One belt per line — its end sits in one zone at a time","Zone cleared → belt runs empty → move the end to the next zone","Stop throwing if the table backs up — never build a pile","Lock out for every jam clear"]}]},
+  convfluid:{lane:"FLEX CONVEYOR · FLUID",title:"Flex conveyor — fluid trailer to ball transfer table",owner:"Dock manager · unloaders",
+    what:["Floor-loaded cases are unloaded by hand onto a flex conveyor that runs from inside the trailer to the ball transfer table.","Flex conveyors are movable, so the door-to-line pairing can change with the shift plan."],
+    controls:[["Pace","set by the unloaders; they stop when the check-in table is full","model"],["No piles","standard-work misses show up as piles at the end of the line","practice"]],
+    slides:[{title:"Fluid unload standard",bullets:["Controlled pace — stop when the check-in table is full","Label up on the belt","No floor piles at the end of the line"]}]},
+  table:{lane:"BALL TRANSFER TABLE · CHECK-IN",title:"Ball transfer table — case check-in",owner:"Receive manager · check-in associates",
+    what:["The flex conveyor rolls cases onto the ball transfer table: a plate of small steel ball transfers, so a case can be pushed or turned in any direction by hand. It is not powered — freight stops here until an associate pushes it.","The check-in associate scans each case's barcodes, one case at a time, which receives it into the system and ties it to a case label.","Received cases are pushed sideways onto the powered conveyor that sits right beside the table."],
+    controls:[["Scan time","each case takes a fixed check-in time in this model","anim"],["Table capacity","2 cases — table full = stop throwing","anim"],["Damaged / unscannable","set aside, photograph, log — never back on the line","practice"]],
+    slides:[{title:"Check-in at the table",bullets:["Case arrives on the ball transfer table and stops","Scan every barcode on the case","Push the received case onto the powered conveyor beside the table"]},{title:"Table rules",bullets:["Every case leaves with a system record and a case label","Table full → throwers / unloaders stop; never stack on the table","Problem cases go to the problem-solve cart, not back on the line"]}]},
+  pconv:{lane:"POWERED CONVEYOR",title:"Powered conveyor — table to the cage area",owner:"Receive manager",
+    what:["The powered roller conveyor carries checked-in cases from the ball transfer table past the label station to the case-to-cage associates.","It is the first visible signal of a rate mismatch between check-in and cage build."],
+    controls:[["Queue at the end","more than 12 cases → check-in stops pushing; move people to case-to-cage","model"],["Guarding","photo-eyes, end guard and emergency stop checked before start","practice"]],
+    slides:[{title:"Reading the conveyor",bullets:["Empty conveyor + full table = check-in is the constraint → add a check-in associate","Backed-up end + empty table = case-to-cage is the constraint","Both full → divert to flex zones and escalate"]}]},
+  label:{lane:"LABEL STATION",title:"Label station — destination label",owner:"Receive manager · label associate",
+    what:["A 5S-marked station beside the powered conveyor. The associate scans each checked-in case; a small yellow label prints with the case's destination and goes on the box.","Destinations in this model: STOW, EACH, XD (cross-dock), PSOL (problem solve), ITEM (item-level receive downstream) and MISC."],
+    controls:[["Label","yellow destination label on every case","model"],["Unreadable","to problem solve — never a guess","practice"]],
+    slides:[{title:"Destination label",bullets:["Scan the case → label prints → apply, label up","One case at a time, keep the gap","Unreadable → problem solve, not a guess"]}]},
+  build:{lane:"CAGE BUILD · CASE TO CAGE",title:"Cage build — case to cage",owner:"Receive manager · problem solve · inventory quality",
+    what:["Two case-to-cage associates work the end of the powered conveyor: scan the case, read the destination on screen, carry the case to the matching cage, and scan the cage so the system records the move.","Ten cages are 5S-marked around the end of each conveyor, each with a colour-coded placard for its destination — blue STOW, green XD (cross-dock), red PSOL (problem solve), yellow EACH; ITEM and MISC are grey. When a cage is full the associate seals it with a scan, then the waterspider takes it to the full-cage buffer and drops an empty cage in its place."],
+    controls:[["Queue at the conveyor end","more than 6 cases → the line flags 'add case-to-cage help'; more than 12 → check-in stops pushing","model"],["Cage capacity","the fill bar shows how close a cage is to full","anim"],["Placard","colour matches the destination; checked again at drop-off","practice"],["Seal","every cage is sealed with a scan before it leaves the build area","practice"]],
+    slides:[{title:"Cage build",bullets:["Scan the case, read the destination on screen","Carry the case to the cage whose placard colour matches, scan the cage","Full cage → seal → waterspider → buffer → downstream"]}]},
+  c2c:{lane:"CASE-TO-CAGE ASSOCIATE",title:"Case-to-cage associate",owner:"Receive manager",
+    what:["Picks the next case off the end of the powered conveyor, scans it, walks the short lane between the conveyor and the cages, places the case in the cage whose placard colour matches the destination, then scans the cage.","One associate works each side of the conveyor end (five cages each). If every open cage on that side is full and waiting on the waterspider, the case waits on the conveyor."],
+    controls:[["Rule","never place a case without the cage scan","practice"],["Add help","queue past 6 cases → the line flags 'add case-to-cage help'","model"]],
+    slides:[{title:"Case to cage",bullets:["Scan the case → destination","Carry it to the matching cage","Place it, scan the cage → move recorded"]}]},
+  cage:{lane:"DESTINATION CAGE",title:"Destination cage (colour-coded placard)",owner:"Receive manager",
+    what:["The colour-coded placard names the destination: blue STOW (to storage), green XD (cross-dock, straight to outbound), red PSOL (problem solve), yellow EACH (broken down to single items); ITEM and MISC are grey.","The cage fills visibly; when it is full it turns green and a seal scan marks it (✓). Only then does the waterspider wheel it to the full-cage buffer and replace it with an empty cage — while it is away the 5S spot shows as a dashed outline."],
+    controls:[["Seal","scan before transport — no unsealed cage leaves","practice"],["Placard","faces the conveyor; colour matches the destination","practice"],["Mixed freight","cages are spot-checked for cross-dock / stow mix-ups","practice"]],
+    slides:[{title:"Cage destinations",bullets:["BLUE STOW → storage","YELLOW EACH → broken down to single items","GREEN XD → cross-dock to outbound","RED PSOL → problem solve","ITEM · MISC → grey in this model"]},{title:"Placard discipline",bullets:["Placard colour must match the destination before the cage is released","The waterspider checks the placard before moving a cage","Any mixed cage = flag it and re-sort before it reaches stow"]}]},
+  ws:{lane:"WATERSPIDER · CAGE SWAP",title:"Waterspider — full cage out, empty cage in",owner:"Receive manager",
+    what:["The waterspider watches the cages around the conveyor ends. When one is full and sealed they wheel it to the full-cage buffer below the dock and bring an empty cage back to the same 5S spot, so the case-to-cage associates never leave the line.","In this animation one waterspider covers three lines, parks each sealed cage in the buffer under its own line and takes an empty from the nearer stack; add a second per side when full cages start waiting."],
+    controls:[["Seal first","only sealed cages move","practice"],["Placard check","placard colour vs destination before moving a cage","practice"],["Coverage","1 waterspider per 3 lines","anim"],["Rule","empty cage back on the 5S spot before the next full one is pulled","model"]],
+    slides:[{title:"Waterspider loop",bullets:["Full cage → wheel to buffer","Grab an empty cage","Empty cage back on the same 5S spot","Repeat — case-to-cage associates never leave the line"]}]},
+  buffer:{lane:"FULL CAGE BUFFER",title:"Full-cage buffer — below the dock",owner:"Receive manager · stow manager",
+    what:["A staging strip below the receive lines where waterspiders park full cages. From here each cage goes on to its destination: stow, each break-down, cross-dock or problem solve.","A growing buffer means downstream is not pulling fast enough — the dock is producing more than downstream is consuming."],
+    controls:[["Amber","too many full cages waiting → stow manager","model"],["Pull","one cage every few seconds","anim"]],
+    slides:[{title:"Reading the buffer",bullets:["Empty buffer + full cages waiting at the lines = the waterspider is the constraint","Buffer growing = the downstream pull is the constraint","Never stage cages on the walkway"]}]},
+  empties:{lane:"EMPTY CAGES",title:"Empty-cage stack",owner:"Receive manager",
+    what:["Empty cages staged at each end of the full-cage buffer. On every swap the waterspider drops the full cage in the buffer, takes an empty from the nearest stack and wheels it back to the same 5S spot at the line."],
+    controls:[["Stack empty","the waterspider cannot swap → cages overflow at the line","practice"]],
+    slides:[{title:"Empty-cage stack",bullets:["Full cage into the buffer → empty cage from the stack → back to the 5S spot","Stack empty = no swap → cages overflow at the line"]}]},
+  depal:{lane:"DEPAL ASSOCIATE",title:"Depal thrower",owner:"Receive manager",
+    what:["Depalletizes the mixed pallets in the zone the flex conveyor is snaked into: cut the wrap, label every case, throw one case at a time onto the conveyor. When the zone is cleared the throwers move the conveyor end to the next zone and follow it. A second thrower joins when the line's zones pass half full."],
+    controls:[["Second thrower","joins when the line's zones pass half full","anim"],["Stop","stop throwing when the table is full","model"]],
+    slides:[{title:"Depal",bullets:["Cut wrap · label every case · one case per throw","Stop when the table is full","Zone cleared → move the flex conveyor to the next zone"]}]},
+  unloader:{lane:"FLUID UNLOADER",title:"Fluid unloader",owner:"Dock manager",
+    what:["Works inside the trailer, not on the dock: two unloaders hand-unload floor-loaded cases onto the flex conveyor that is pushed into the trailer, and the belt carries them out to the ball transfer table. They stop unloading whenever the check-in table is full."],
+    controls:[["Stop","stop unloading when the check-in table is full","model"]],
+    slides:[{title:"Fluid unload",bullets:["Conveyor pushed into the trailer — unloaders work inside it","Label up on the conveyor","Controlled pace — stop when the check-in table is full","No floor piles at the trailer door or the end of the line"]}]},
+  walk:{lane:"SAFETY",title:"Associate walkway",owner:"Safety · operations manager",
+    what:["Green pedestrian-only boundary around the dock. It keeps people out of forklift travel between the doors and the pallet zones — the biggest safety exposure on a receive dock."],
+    controls:[["Forklift contact","zero tolerance","practice"],["Near miss","document, debrief, refresh the standard work","practice"]],
+    slides:[{title:"Walkway rules",bullets:["Cross forklift lanes only at marked points","Nothing staged on the walkway","Dock safety walk every shift, findings actioned the same shift"]}]},
+  room:{lane:"SUPPORT",title:"Break room",owner:"Site",what:["Break room beside the dock; pedestrian access via the walkway only."],controls:[],slides:[{title:"Break room",bullets:["Pedestrian access via the walkway only"]}]},
+};
+const svg=document.getElementById('map'), NS='http://www.w3.org/2000/svg';
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const txt=(x,y,s,a={},p)=>{const t=el('text',{x,y,...a},p);t.textContent=s;return t;};
+const doorIdx=n=>DOORS.indexOf(String(n)), doorCenter=n=>DOOR_X0+doorIdx(n)*DOOR_W+DOOR_W/2;
+let playing=true, speed=1, vol=4, active=null, tourTimer=null, tab='overview', slideIdx=0;
+const FL_LANE=97, STALL_Y=114, STALL_H=90, FLEX_H=192, TABLE_Y=360, TABLE_H=48, TABLE_W=30, LBL_Y=446, CONV_END=648, BUILD_TOP=492, BUILD_BOT=740, WS_AISLE=752, BUF_Y=772, BUF_H=56, BUF_X0=290, BUF_X1=1350;
+const CAGE_W=24, CAGE_H=30, CAGE_IN=28, CAGE_PITCH=42, LANE=17;
+const CX=x=>x+14;
+const TX=x=>CX(x)-6-TABLE_W/2;
+const defs=el('defs',{},svg);
+const grid=el('pattern',{id:'grid',width:40,height:40,patternUnits:'userSpaceOnUse'},defs);
+el('rect',{width:40,height:40,fill:'#101d26'},grid); el('path',{d:'M40,0 L0,0 0,40',fill:'none',stroke:'#152634','stroke-width':1},grid);
+const pat=el('pattern',{id:'hatch',width:6,height:6,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs);
+el('rect',{width:6,height:6,fill:'#243745'},pat); el('rect',{width:2,height:6,fill:'#4a6a80'},pat);
+const balls=el('pattern',{id:'balls',width:7,height:7,patternUnits:'userSpaceOnUse'},defs);
+el('circle',{cx:3.5,cy:3.5,r:1.5,fill:'#c6efa7',opacity:.8},balls);
+el('rect',{class:'floor',x:20,y:20,width:1560,height:860},svg);
+txt(34,850,'SCHEMATIC',{class:'north'},svg); txt(34,862,'NOT TO SCALE',{class:'north'},svg);
+const gRoom=el('g',{},svg), gWalk=el('g',{},svg), gAisle=el('g',{},svg), gBuf=el('g',{},svg), gBuild=el('g',{},svg), gConv=el('g',{},svg), gLbl=el('g',{},svg), gDoor=el('g',{},svg), gZone=el('g',{},svg), gAA=el('g',{},svg), gCase=el('g',{},svg), gWS=el('g',{},svg), gFork=el('g',{},svg);
+const OWNER='SHUYU ZHENG', ORG='shuyuzheng.com';
+const gMark=el('g',{class:'wm','aria-hidden':'true'},svg);
+for(let r=0;r<5;r++)for(let c=0;c<5;c++){ const x=160+c*340+(r%2)*170, y=120+r*180, t=el('g',{transform:`rotate(-20 ${x} ${y})`},gMark);
+  txt(x,y-18,ORG.toUpperCase(),{class:'org'},t); txt(x,y+14,OWNER,{},t); }
+txt(1580,894,'CREATED & OWNED BY SHUYU ZHENG · SHUYUZHENG.COM · © 2026',{class:'credit'},svg);
+el('rect',{class:'fllane',x:DOOR_X0,y:FL_LANE-15,width:DOORS.length*DOOR_W,height:30},gAisle);
+el('path',{class:'aisle',d:`M${DOOR_X0},${FL_LANE} L${DOOR_X0+DOORS.length*DOOR_W},${FL_LANE}`},gAisle);
+txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE-2,'PIT LANE',{class:'north'},gAisle); txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE+10,'DOCK ZONE',{class:'north'},gAisle);
+const zones={}, order=[];
+function keyAct(g,id){g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(id);}});}
+function zone(id,cls,info,x,y,w,h,label,sub,parent,ly){
+  const g=el('g',{class:'zone '+cls,tabindex:0,role:'button','aria-label':label},parent||gZone);
+  el('rect',{class:'box',x,y,width:w,height:h,rx:3},g);
+  const base=ly!=null?ly:y+h/2;
+  if(label)txt(x+w/2,base+(sub!=null?-2:4),label,{},g);
+  if(sub!=null)txt(x+w/2,base+12,sub,{class:'sm'},g);
+  g.dataset.id=id; g.addEventListener('click',()=>select(id));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(id);}});
+  zones[id]={g,info,x,y,w,h,label}; return g;
+}
+zone('room','room','room',30,86,110,70,'BREAK ROOM',null,gRoom);
+const walk=el('path',{class:'walk',d:'M118,162 L150,162 L150,872 L1560,872 L1560,340'},gWalk);
+walk.addEventListener('click',()=>select('walk')); walk.setAttribute('tabindex','0'); walk.setAttribute('role','button'); walk.setAttribute('aria-label','Associate walkway'); keyAct(walk,'walk'); zones.walk={g:walk,info:'walk',label:'Associate walkway'};
+txt(840,876,'ASSOCIATE WALKWAY',{class:'walklbl'},gWalk);
+const bufG=zone('buffer','buffer','buffer',BUF_X0,BUF_Y,BUF_X1-BUF_X0,BUF_H,'',null,gBuf);
+const bufLbl=txt(BUF_X0+10,BUF_Y+BUF_H-8,'',{style:'text-anchor:start'},bufG); const bufCages=el('g',{},bufG);
+const buffer=[], NSLOT=Math.floor((BUF_X1-BUF_X0-12)/30);
+const bufSlot=i=>({x:BUF_X0+12+i*30,y:BUF_Y+8});
+function freeSlot(x){ const used=new Set([...buffer.map(b=>b.slot),...spiders.map(w=>w.slot)]); let best=null,bd=1e9;
+  for(let i=0;i<NSLOT;i++){ if(used.has(i))continue; const d=Math.abs(bufSlot(i).x+12-x); if(d<bd){bd=d;best=i;} } return best; }
+function drawBuffer(){ while(bufCages.firstChild)bufCages.removeChild(bufCages.firstChild);
+  buffer.forEach(b=>{const s=bufSlot(b.slot); el('rect',{class:'bcage',x:s.x,y:s.y,width:24,height:22,rx:2},bufCages);});
+  bufLbl.textContent=`FULL CAGE BUFFER · ${buffer.length} WAITING → STOW / DOWNSTREAM`;
+  bufG.classList.toggle('warn',buffer.length>BUF_AMBER); }
+drawBuffer();
+const EMPTIES=[{x:BUF_X0-48,y:BUF_Y+BUF_H/2},{x:BUF_X1+48,y:BUF_Y+BUF_H/2}];
+EMPTIES.forEach((e,i)=>{ const g=zone('empty'+(i+1),'empties','empties',e.x-36,BUF_Y,72,BUF_H,'',null,gBuf);
+  for(let k=0;k<3;k++) el('rect',{class:'ecage',x:e.x-30+k*6,y:BUF_Y+8+k*3,width:22,height:20,rx:2},g);
+  txt(e.x,BUF_Y+BUF_H-6,'EMPTY CAGES',{},g); });
+function person(x,y,vest,id,info,label,tag,parent,tagDy){
+  const g=el('g',{class:'aa',transform:`translate(${x},${y})`,tabindex:0,role:'button','aria-label':label},parent||gAA);
+  el('rect',{class:'vest',x:-11,y:-7,width:22,height:14,rx:6,fill:vest},g);
+  el('line',{class:'stripe',x1:-9,y1:-2.5,x2:9,y2:-2.5},g); el('line',{class:'stripe',x1:-9,y1:2.5,x2:9,y2:2.5},g);
+  el('circle',{class:'head',cx:0,cy:-1,r:5},g); el('circle',{class:'hat',cx:0,cy:-1,r:3},g);
+  if(tag)txt(0,tagDy!=null?tagDy:17,tag,{class:'tag',fill:vest},g);
+  if(id){ g.addEventListener('click',()=>select(id)); keyAct(g,id); zones[id]={g,info,label}; }
+  return g;
+}
+const doorEls={}, fluidDoors=LINES.filter(l=>l.type==='fluid').map(l=>l.door);
+DOORS.forEach((d,i)=>{
+  const x=DOOR_X0+i*DOOR_W, closed=d==='X', flex=FLEX_DOORS.includes(d);
+  const g=el('g',{class:'door'+(closed?' closed':'')+(flex?' flex':''),tabindex:closed?-1:0},gDoor);
+  if(!closed){ const fl=fluidDoors.includes(d); const tr=el('rect',{class:'trailer'+(fl?' open':''),x:x+(fl?3:8),y:fl?20:22,width:DOOR_W-(fl?6:16),height:fl?32:28,rx:2},g); doorEls[d]={g,tr}; }
+  el('rect',{class:'d',x:x+3,y:52,width:DOOR_W-6,height:26,rx:2},g);
+  if(!closed){ txt(x+DOOR_W/2,70,d,{class:'doorlbl'},g); g.addEventListener('click',()=>select('door:'+d)); keyAct(g,'door:'+d); g.setAttribute('role','button'); g.setAttribute('aria-label','Door '+d+(flex?' (flex)':'')); g.dataset.door=d;
+    zones['door:'+d]={g,info:flex?'flexdoor':'door',label:'Door '+d+(flex?' (flex)':'')}; }
+  else el('rect',{x:x+22,y:56,width:DOOR_W-44,height:18,fill:'#0c151d',opacity:.6},g);
+});
+txt(DOOR_X0-130,66,'DOCK DOORS',{class:'north'},gDoor); txt(DOOR_X0-130,78,'01 – 14',{class:'north'},gDoor);
+const flexz={};
+FLEXZONES.forEach(f=>{const x=doorCenter(f.door)-26, z={...f,x,y:STALL_Y,w:52,h:FLEX_H,side:doorIdx(f.door)<DOORS.length/2?'L':'R'};
+  const g=zone(f.id,'flexz','flexz',z.x,z.y,z.w,z.h,f.title,'door '+f.door,undefined,z.y+z.h-22); flexz[f.id]={...z,g,palG:el('g',{},g),pallets:0,drain:0};});
+function drawFlex(z){ while(z.palG.firstChild)z.palG.removeChild(z.palG.firstChild);
+  for(let i=0;i<Math.min(z.pallets,FLEX_CAP);i++){const c=i%2,r=Math.floor(i/2); el('rect',{class:'pal',x:z.x+3+c*24,y:z.y+6+r*20,width:21,height:15,rx:1.5},z.palG);}
+  z.g.classList.toggle('warn',z.pallets>FLEX_CAP*0.8&&z.pallets<FLEX_CAP); z.g.classList.toggle('crit',z.pallets>=FLEX_CAP); }
+const stalls={};
+const stallDoors=LINES.filter(l=>l.type==='map').flatMap(l=>l.doors);
+DOORS.forEach(d=>{ if(!stallDoors.includes(d))return;
+  const x=doorCenter(d)-26, g=zone('stall:'+d,'stall','stall',x,STALL_Y,52,STALL_H,d,null,undefined,STALL_Y+STALL_H-6);
+  g.querySelector('text').setAttribute('y',STALL_Y+STALL_H-5);
+  stalls[d]={d,x:x+26,g,palG:el('g',{},g),pallets:0};
+});
+function drawStall(s){ while(s.palG.firstChild)s.palG.removeChild(s.palG.firstChild);
+  for(let i=0;i<Math.min(s.pallets,STALL_CAP);i++){const c=i%2,r=Math.floor(i/2); el('rect',{class:'pal',x:s.x-23+c*24,y:STALL_Y+6+r*18,width:21,height:15,rx:1.5},s.palG);}
+  s.g.classList.toggle('warn',s.pallets>STALL_CAP*0.75&&s.pallets<STALL_CAP); s.g.classList.toggle('crit',s.pallets>=STALL_CAP); }
+const paths=[], lines={};
+function curve(x1,y1,x2,y2){const my=(y1+y2)/2;return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;}
+function conv(d,label,info,selId,kind,line,extra){
+  const p=el('path',{class:'conv',d},gConv), ov=el('path',{class:'conv2',d},gConv);
+  p.dataset.label=label; p.dataset.info=info; p.addEventListener('click',()=>select(selId)); p.setAttribute('tabindex','0'); p.setAttribute('role','button'); p.setAttribute('aria-label',label); keyAct(p,selId);
+  zones[selId]=zones[selId]||{g:p,info,label};
+  const rec={el:p,ov,len:p.getTotalLength(),kind,line,...extra}; paths.push(rec); return rec;
+}
+function setFlex(L,ex){
+  const f=L.feed, d=curve(ex,STALL_Y+STALL_H,L.tx,TABLE_Y);
+  f.el.setAttribute('d',d); f.ov.setAttribute('d',d); f.len=f.el.getTotalLength();
+  const p=f.el.getPointAtLength(f.len*0.85); f.lbl.setAttribute('x',p.x-10); f.lbl.setAttribute('y',p.y+4); L.st.setAttribute('x',p.x-10); L.st.setAttribute('y',p.y+16);
+  L.flex.x=ex; L.flex.aa.forEach((a,i)=>a.setAttribute('transform',`translate(${ex+(i?17:-17)},${STALL_Y+STALL_H+10})`)); }
+function nextZone(L){
+  const F=L.flex, zs=L.zs, i=zs.indexOf(F.z);
+  let j=i+F.dir; if(j<0||j>=zs.length){ F.dir=-F.dir; j=i+F.dir; }
+  if(zs[j]&&zs[j].pallets>0) return zs[j];
+  return zs.filter(z=>z!==F.z&&z.pallets>0).sort((a,b)=>b.pallets-a.pallets||Math.abs(a.x-F.x)-Math.abs(b.x-F.x))[0]||null; }
+LINES.forEach(L=>{
+  const n=L.n, x=L.x, cx=CX(x), tx=TX(x);
+  txt(x,BUF_Y+BUF_H+14,`LINE ${n} · ${L.type==='map'?'PALLETS':'FLUID'}`,{class:'linetag'},gLbl);
+  const build=zone('build'+n,'build','build',cx-60,BUILD_TOP,120,BUILD_BOT-BUILD_TOP,'CAGE BUILD',null,gBuild,BUILD_BOT-12);
+  const cagePos=i=>{
+    if(i<8){ const side=i<4?-1:1, r=i%4, y=BUILD_TOP+10+r*CAGE_PITCH, x=side<0?cx-CAGE_IN-CAGE_W:cx+CAGE_IN;
+      return {x,y,side,stand:{x:cx+side*LANE,y:y+CAGE_H/2},ws:{x:cx+side*(CAGE_IN+CAGE_W+14),y:y+CAGE_H/2,gx:cx+side*82}}; }
+    const side=i===8?-1:1, x=side<0?cx-26:cx+2, y=CONV_END+26;
+    return {x,y,side,stand:{x:cx+side*LANE,y:CONV_END+4},ws:{x:x+CAGE_W/2,y:WS_AISLE,gx:x+CAGE_W/2}}; };
+  const cages=CAGES.map((lab,i)=>{ const p=cagePos(i);
+    const g=zone(`cage${n}_${i}`,'cage','cage',p.x,p.y,CAGE_W,CAGE_H,'',null,gBuild); g.classList.add('pc-'+PLACARD[lab]);
+    el('rect',{class:'placard',x:p.x+5,y:p.y+2.5,width:CAGE_W-10,height:4.5,rx:1},g);
+    const f=el('rect',{class:'fill',x:p.x+1,y:p.y+CAGE_H-1,width:CAGE_W-2,height:0},g);
+    el('path',{class:'seal',d:`M${p.x+6},${p.y+15} l4,4 l8,-9`},g);
+    txt(p.x+CAGE_W/2,p.y+CAGE_H+9,lab,{},g); return {g,f,x:p.x+CAGE_W/2,y:p.y+CAGE_H/2,count:0,lab,line:n,full:false,side:p.side,stand:p.stand,ws:p.ws,w:CAGE_WEIGHTS[i]}; });
+  let feed;
+  if(L.type==='fluid'){
+    const dx=doorCenter(L.door);
+    feed=conv(curve(dx,36,tx,TABLE_Y),`Door ${L.door} → line ${n} · flex conveyor (fluid)`,'convfluid','conv'+n,'feed',n,{door:L.door});
+    const m=feed.el.getPointAtLength(feed.len*0.74); {const rt=dx>800; txt(rt?m.x+10:m.x-10,m.y+4,'flex conveyor · fluid',{class:'convlbl',style:'text-anchor:'+(rt?'start':'end')},gLbl);}
+    person(dx-13,32,'var(--safety)','unl'+n+'a','unloader','Fluid unloader — works inside the trailer','UNL',gAA,14); person(dx+13,32,'var(--safety)','unl'+n+'b','unloader','Fluid unloader — works inside the trailer',null,gAA);
+  } else {
+    const z0=stalls[L.head];
+    feed=conv(curve(z0.x,STALL_Y+STALL_H,tx,TABLE_Y),`Line ${n} · flex conveyor (depal throw-on) → ball transfer table`,'convmap','conv'+n,'feed',n,{});
+    feed.lbl=txt(0,0,'flex conveyor · depal',{class:'convlbl',style:'text-anchor:end'},gLbl);
+  }
+  const tg=zone('table'+n,'table','table',tx-TABLE_W/2,TABLE_Y,TABLE_W,TABLE_H,'',null);
+  el('rect',{class:'dots',x:tx-TABLE_W/2+2,y:TABLE_Y+2,width:TABLE_W-4,height:TABLE_H-4},tg); txt(tx,TABLE_Y+TABLE_H+11,'BTT',{},tg);
+  person(tx-32,TABLE_Y+TABLE_H/2,'var(--chk)','chk'+n,'table','Check-in associate','CHK');
+  const b=el('g',{class:'badge'},gLbl); el('circle',{cx:cx+18,cy:TABLE_Y-8,r:9},b); txt(cx+18,TABLE_Y-4.5,n,{},b);
+  const down=conv(`M${cx},${TABLE_Y+TABLE_H/2} L${cx},${CONV_END}`,`Line ${n} · powered conveyor → label station → case to cage`,'pconv','pconv'+n,'down',n,{});
+  const av=zone('label'+n,'lblst','label',cx+18,LBL_Y-11,22,22,'',null); txt(cx+29,LBL_Y+3.5,'L',{},av); txt(cx+29,LBL_Y+22,'LABEL',{},av);
+  person(cx+54,LBL_Y,'var(--lbl)','lbaa'+n,'label','Label associate','LBL');
+  const c2c=[{side:-1,home:{x:cx-LANE,y:CONV_END-8}},{side:1,home:{x:cx+LANE,y:CONV_END-8}}].map((c,i)=>{ c.g=person(c.home.x,c.home.y,'var(--c2c)','c2c'+n+'_'+i,'c2c','Case-to-cage associate','C2C'); c.state='idle'; c.t=0; c.x=c.home.x; c.y=c.home.y; return c; });
+  const qtxt=txt(cx,BUILD_TOP-5,'',{class:'say'},gLbl);
+  lines[n]={...L,cx,tx,feed,down,build,cages,c2c,table:[],queue:[],qtxt,acc:0,buildG:build};
+  if(L.type==='map'){
+    const z0=stalls[L.head], zs=L.doors.map(d=>stalls[d]).sort((p,q)=>p.x-q.x);
+    const aa=['a','b'].map(k=>person(z0.x,STALL_Y+STALL_H+10,'var(--safety)',`dpl${n}${k}`,'depal','Depal thrower · works the zone the flex conveyor is in','DPL'));
+    aa[1].setAttribute('visibility','hidden');
+    lines[n].zs=zs; lines[n].flex={z:z0,x:z0.x,dir:1,state:'feed',t:0,from:z0.x,to:z0.x,aa,rec:0,cases:0,acc:0};
+    lines[n].st=txt(0,0,'',{class:'say',style:'text-anchor:end'},gLbl);
+    setFlex(lines[n],z0.x); }
+});
+const fullQueue=[], sealing=[];
+const spiders=WATERSPIDERS.map((w,i)=>{
+  const mid=lines[w.lines[Math.floor(w.lines.length/2)]].cx+82, home={x:mid,y:WS_AISLE,gx:mid};
+  const g=person(home.x,home.y,'var(--ws)',w.id,'ws',w.label+' · cage swap','WS',gWS);
+  const cg=el('g',{visibility:'hidden'},g); el('rect',{class:'wscage',x:12,y:-9,width:20,height:18,rx:2},cg);
+  return {...w,g,cg,home,x:home.x,y:home.y,pos:home,state:'idle',target:null,path:[],slot:null};
+});
+function route(A,B){ return [{x:A.gx,y:A.y},{x:A.gx,y:WS_AISLE},{x:B.gx,y:WS_AISLE},{x:B.gx,y:B.y},{x:B.x,y:B.y}]; }
+function stepWS(w,dt){
+  const sp=150;
+  let budget=sp*dt;
+  while(w.path.length&&budget>0){ const t=w.path[0], dx=t.x-w.x, dy=t.y-w.y, d=Math.hypot(dx,dy);
+    if(d<=budget){ w.x=t.x; w.y=t.y; budget-=d; w.path.shift(); } else { w.x+=dx/d*budget; w.y+=dy/d*budget; budget=0; } }
+  const go=(B,next)=>{ w.path=route(w.pos,B); w.pos=B; w.state=next; };
+  const next=()=>{ const i=fullQueue.findIndex(c=>w.lines.includes(c.line)); if(i<0)return false;
+    const s=freeSlot(fullQueue[i].x); if(s==null)return false; w.target=fullQueue.splice(i,1)[0]; w.slot=s; go(w.target.ws,'toCage'); return true; };
+  if(!w.path.length){
+    if(w.state==='idle'){ next(); }
+    else if(w.state==='toCage'){ w.target.g.classList.add('away'); w.cg.setAttribute('visibility','visible'); w.cg.classList.add('wsfull');
+      const s=bufSlot(w.slot); go({x:s.x+12,y:BUF_Y+14,gx:s.x+12},'toBuffer'); }
+    else if(w.state==='toBuffer'){ buffer.push({t:0,slot:w.slot}); w.slot=null; drawBuffer(); w.cg.setAttribute('visibility','hidden');
+      const e=EMPTIES.reduce((a,b)=>Math.abs(a.x-w.x)<Math.abs(b.x-w.x)?a:b); go({x:e.x,y:e.y,gx:e.x},'toEmpty'); }
+    else if(w.state==='toEmpty'){ w.cg.classList.remove('wsfull'); w.cg.setAttribute('visibility','visible'); go(w.target.ws,'back'); }
+    else if(w.state==='back'){ const c=w.target; c.count=0; c.full=false; c.f.setAttribute('height',0); c.f.setAttribute('y',c.y+CAGE_H/2-1); c.g.classList.remove('full','away','sealed');
+      w.cg.setAttribute('visibility','hidden'); if(!next()) go(w.home,'home'); }
+    else if(w.state==='home'){ w.state='idle'; }
+  }
+  w.cg.setAttribute('transform',(w.y<WS_AISLE-4)?'translate(-22,-30)':'translate(0,0)');
+  w.g.setAttribute('transform',`translate(${w.x},${w.y})`); w.g.classList.toggle('busy',w.state!=='idle');
+}
+const forks=FORKS.map((F,fi)=>{
+  const g=el('g',{class:'fork',tabindex:0,role:'button','aria-label':F.label},gFork);
+  const body=el('g',{},g);
+  el('line',{class:'tine',x1:14,y1:-5,x2:26,y2:-5},body); el('line',{class:'tine',x1:14,y1:5,x2:26,y2:5},body);
+  el('rect',{class:'body',x:-14,y:-9,width:28,height:18,rx:3},body); el('rect',{class:'cab',x:-10,y:-6,width:9,height:12,rx:2},body);
+  const pal=el('rect',{class:'pal',x:12,y:-8,width:16,height:16,rx:2,visibility:'hidden'},body);
+  const lbl=txt(0,fi===0?FL_LANE+4:FL_LANE-11,'',{class:'flbl'},gFork);
+  g.addEventListener('click',()=>select(F.id)); keyAct(g,F.id); zones[F.id]={g,info:'fork',label:F.label+' · pallet unload'};
+  const lineObjs=F.lines.map(n=>lines[n]);
+  return {...F,g,body,pal,lbl,lineObjs,x:doorCenter(lineObjs[0].doors[0]),y:FL_LANE,angle:0,seg:[],segI:0,wait:0,state:'idle',target:null,doorNow:null,k:0};
+});
+function planTrip(f){
+  const L=f.lineObjs[f.k%f.lineObjs.length]; f.k++;
+  const gap=(10-vol)*0.9;
+  const zs=L.doors.map(d=>stalls[d]), open=zs.filter(z=>!L.flex||z!==L.flex.z);
+  const st=(open.length?open:zs).sort((a,b)=>a.pallets-b.pallets)[0];
+  if(st.pallets>=STALL_CAP){
+    const side=L.cx<800?'L':'R', z=Object.values(flexz).filter(q=>q.side===side).sort((a,b)=>a.pallets-b.pallets)[0];
+    if(z.pallets>=FLEX_CAP){f.target=null;f.seg=[{x:f.x,y:FL_LANE,say:'flex full · escalate',pause:2}];f.segI=0;f.wait=0;f.state='move';return;}
+    const fd=doorCenter(z.door);
+    f.target=z; f.doorNow=z.door;
+    f.seg=[{x:f.x,y:FL_LANE,say:'zones full → flex '+z.door,pause:gap},{x:fd,y:FL_LANE,say:'scan door '+z.door,at:'scan'},{x:fd,y:40,say:'into trailer',pause:1.0,at:'trailer'},
+      {x:fd,y:STALL_Y+60,say:'drop → '+z.title+' · tag ✓',pause:0.7,at:'flex'},{x:fd,y:FL_LANE,say:'',at:'close'}];
+  } else {
+    const dx=doorCenter(st.d); f.target=st; f.doorNow=st.d;
+    f.seg=[{x:f.x,y:FL_LANE,say:'',pause:gap},{x:dx,y:FL_LANE,say:'scan door '+st.d,at:'scan'},{x:dx,y:40,say:'into trailer',pause:1.0,at:'trailer'},
+      {x:dx,y:STALL_Y+STALL_H/2,say:'drop → zone '+st.d+' · tag ✓',pause:0.8,at:'stall'},{x:dx,y:FL_LANE,say:''}];
+  }
+  f.segI=0; f.wait=0; f.state='move';
+}
+function moveFork(f,dt){
+  if(f.state==='idle')planTrip(f);
+  if(f.wait>0){f.wait-=dt;return;}
+  const s=f.seg[f.segI]; if(!s){f.state='idle';return;}
+  const dx=s.x-f.x, dy=s.y-f.y, d=Math.hypot(dx,dy), sp=300*(0.6+vol*0.1);
+  if(d<=sp*dt){ f.x=s.x; f.y=s.y;
+    if(s.at==='scan'){ const de=doorEls[f.doorNow]; if(de)de.tr.classList.add('open'); }
+    if(s.at==='close'){ const de=doorEls[f.doorNow]; if(de)de.tr.classList.remove('open'); }
+    if(s.at==='trailer'){ f.pal.setAttribute('visibility','visible'); }
+    if(s.at==='stall'){ f.pal.setAttribute('visibility','hidden'); f.target.pallets=Math.min(f.target.pallets+1,STALL_CAP+1); drawStall(f.target); }
+    if(s.at==='flex'){ f.pal.setAttribute('visibility','hidden'); f.target.pallets=Math.min(f.target.pallets+1,FLEX_CAP+1); drawFlex(f.target); }
+    f.wait=s.pause||0; f.segI++; if(f.segI>=f.seg.length)f.state='idle';
+  } else { f.x+=dx/d*sp*dt; f.y+=dy/d*sp*dt; f.angle=Math.atan2(dy,dx)*180/Math.PI; }
+  f.lbl.textContent=s.say||''; const right=f.lineObjs[0].n<=3; f.lbl.setAttribute('x',f.x+(right?22:-22)); f.lbl.setAttribute('style','text-anchor:'+(right?'start':'end'));
+  f.g.setAttribute('transform',`translate(${f.x},${f.y})`); f.body.setAttribute('transform',`rotate(${f.angle})`);
+}
+const cases=[];
+const CHK_T=1.1, LBL_T=0.6, CARRY_T=1.1, RETURN_T=0.9, QSTOP=13, THROW_R=0.6, FLEX_MOVE_T=4;
+function addCase(L){ const g=el('g',{class:'case'},gCase); el('rect',{class:'b',x:-5,y:-4,width:10,height:8,rx:1},g); el('rect',{class:'y',x:1,y:-3,width:3,height:3,visibility:'hidden'},g);
+  cases.push({el:g,L,stage:'flex',t:0,v:0.10+Math.random()*0.03,timer:0,labeled:false,x:0,y:0,cage:null}); }
+function pickCage(L,side){ const open=L.cages.filter(c=>!c.full&&c.side===side); if(!open.length)return null;
+  let s=0; open.forEach(c=>s+=c.w); let r=Math.random()*s; for(const c of open){ r-=c.w; if(r<=0) return c; } return open[0]; }
+const LBL_F=(LBL_Y-(TABLE_Y+TABLE_H/2))/(CONV_END-(TABLE_Y+TABLE_H/2));
+function stepCase(c,dt){
+  const L=c.L;
+  if(c.stage==='flex'){ const free=L.table.length<TABLE_CAP; const nt=c.t+dt*c.v;
+    if(nt>=1){ if(free){ c.stage='table'; c.timer=CHK_T; L.table.push(c); c.t=1; } else c.t=Math.min(nt,0.985); }
+    else { const ahead=cases.filter(o=>o.L===L&&o.stage==='flex'&&o.t>c.t).length; const cap=1-ahead*0.05; c.t=Math.min(nt,cap); }
+    const p=L.feed.el.getPointAtLength(L.feed.len*c.t); c.x=p.x; c.y=p.y; }
+  else if(c.stage==='table'){ const i=L.table.indexOf(c); if(i===0)c.timer-=dt; c.x=L.tx-6+i*12; c.y=TABLE_Y+TABLE_H/2;
+    if(c.timer<=0&&i===0){ L.hold=L.queue.length+cases.filter(o=>o.L===L&&(o.stage==='down'||o.stage==='push')).length>=QSTOP;
+      if(!L.hold){ L.table.shift(); c.stage='push'; c.timer=0.35; } } }
+  else if(c.stage==='push'){ c.timer-=dt; const k=1-Math.max(0,c.timer)/0.35; c.x=L.tx-6+(L.cx-(L.tx-6))*k; c.y=TABLE_Y+TABLE_H/2; if(c.timer<=0){c.stage='down';c.t=0;} }
+  else if(c.stage==='down'){ if(c.timer>0){ c.timer-=dt; if(c.timer<=0){c.labeled=true;c.el.querySelector('.y').setAttribute('visibility','visible');c.el.classList.add('done');} }
+    else { let nt=c.t+dt*0.24; const ah=cases.reduce((m,o)=>o!==c&&o.L===L&&o.stage==='down'&&o.t>c.t?Math.min(m,o.t):m,2); nt=Math.max(c.t,Math.min(nt,ah-0.045));
+      if(!c.labeled&&nt>=LBL_F){ c.t=LBL_F; c.timer=LBL_T; } else c.t=nt; }
+    const qn=L.queue.length; const cap=1-qn*0.05;
+    if(c.t>=cap){ c.t=cap; if(!L.queue.includes(c)){ L.queue.push(c); c.stage='queue'; } }
+    const p=L.down.el.getPointAtLength(L.down.len*c.t); c.x=p.x; c.y=p.y; }
+  else if(c.stage==='queue'){ const i=L.queue.indexOf(c); const p=L.down.el.getPointAtLength(L.down.len*Math.max(0,1-i*0.05)); c.x=p.x; c.y=p.y; }
+  else if(c.stage==='carry'){ c.timer-=dt; const k=1-Math.max(0,c.timer)/CARRY_T, a=c.aa, st=c.cage.stand;
+    const kw=Math.min(1,k/0.8); a.x=a.from.x+(st.x-a.from.x)*kw; a.y=a.from.y+(st.y-a.from.y)*kw;
+    a.g.setAttribute('transform',`translate(${a.x},${a.y})`);
+    if(k<0.8){ c.x=a.x; c.y=a.y-10; } else { const kd=(k-0.8)/0.2; c.x=a.x+(c.cage.x-a.x)*kd; c.y=(a.y-10)+(c.cage.y-(a.y-10))*kd; }
+    if(c.timer<=0){ const cg=c.cage; cg.count++; const hh=cg.count/CAGE_CAP*(CAGE_H-2); cg.f.setAttribute('height',hh); cg.f.setAttribute('y',cg.y+CAGE_H/2-1-hh);
+      if(cg.count>=CAGE_CAP&&!cg.full){ cg.full=true; cg.g.classList.add('full'); cg.seal=SEAL_T; sealing.push(cg); }
+      a.state='return'; a.t=RETURN_T; a.from={x:a.x,y:a.y}; c.stage='gone'; } }
+  c.el.setAttribute('transform',`translate(${c.x},${c.y})`);
+}
+function stepC2C(L,dt){
+  L.c2c.forEach(a=>{
+    if(a.state==='idle'&&L.queue.length){ const cg=pickCage(L,a.side); if(!cg)return; const c=L.queue.shift(); c.stage='carry'; c.timer=CARRY_T; c.cage=cg; c.aa=a; a.from={x:a.x,y:a.y}; a.state='carry'; a.g.classList.add('busy'); }
+    else if(a.state==='return'){ a.t-=dt; const k=1-Math.max(0,a.t)/RETURN_T; a.x=a.from.x+(a.home.x-a.from.x)*k; a.y=a.from.y+(a.home.y-a.from.y)*k; a.g.setAttribute('transform',`translate(${a.x},${a.y})`); if(a.t<=0){a.state='idle';a.g.classList.remove('busy');} }
+  });
+  const qn=L.queue.length, stop=L.hold||qn>12; L.buildG.classList.toggle('warn',qn>6&&!stop); L.buildG.classList.toggle('crit',stop);
+  const allFull=L.cages.every(c=>c.full);
+  L.qtxt.textContent=allFull?'all cages full · waiting on waterspider':stop?`queue ${qn} · check-in stopped · escalate`:qn>6?`queue ${qn} · add case-to-cage help`:'';
+}
+let last=performance.now(), bufPull=0;
+function step(dt){
+  forks.forEach(f=>moveFork(f,dt));
+  spiders.forEach(w=>stepWS(w,dt));
+  for(let i=sealing.length-1;i>=0;i--){ const cg=sealing[i]; cg.seal-=dt; if(cg.seal<=0){ cg.g.classList.add('sealed'); fullQueue.push(cg); sealing.splice(i,1); } }
+  bufPull+=dt; buffer.forEach(b=>b.t+=dt);
+  if(buffer.length&&buffer[0].t>=BUFFER_PULL&&bufPull>=BUFFER_PULL){ bufPull=0; buffer.shift(); drawBuffer(); }
+  Object.values(flexz).forEach(z=>{ if(z.pallets>0){ z.drain+=dt; if(z.drain>14){z.drain=0;z.pallets--;drawFlex(z);} } else z.drain=0; });
+  Object.values(lines).forEach(L=>{
+    const tableFree=L.table.length<TABLE_CAP && cases.filter(c=>c.L===L&&c.stage==='flex').length<12;
+    if(L.type==='fluid'){ if(tableFree){ L.acc+=dt*vol*0.09; while(L.acc>1){L.acc-=1;addCase(L);} } }
+    else {
+      const total=L.doors.reduce((s,d)=>s+stalls[d].pallets,0), F=L.flex, z=F.z;
+      const two=total>L.doors.length*STALL_CAP*0.5; F.aa[1].setAttribute('visibility',two?'visible':'hidden');
+      const busy=on=>F.aa.forEach(a=>a.classList.toggle('busy',on));
+      if(F.state==='move'){ F.t+=dt; const k=Math.min(1,F.t/FLEX_MOVE_T), e=k<0.5?2*k*k:1-2*(1-k)*(1-k);
+        setFlex(L,F.from+(F.to-F.from)*e); busy(true); if(k>=1)F.state='feed'; L.st.textContent=`moving flex → ${z.d}`; }
+      else if(z.pallets<=0&&F.cases===0){ busy(false); F.rec=0;
+        const nz=nextZone(L);
+        if(!nz) L.st.textContent=total>0?'waiting on forklift':'zones clear';
+        else if(cases.some(c=>c.L===L&&c.stage==='flex')) L.st.textContent=`belt clearing → ${nz.d}`;
+        else { F.dir=Math.sign(nz.x-z.x)||F.dir; F.from=F.x; F.to=nz.x; F.z=nz; F.t=0; F.state='move'; } }
+      else { L.st.textContent=`working ${z.d} · ${total} pal`;
+        if(F.cases===0&&F.rec<=0) F.rec=2.5;
+        if(F.rec>0){ F.rec-=dt; if(F.rec<=0)F.cases=CASES_PER_PALLET; busy(false); }
+        else { busy(true);
+          if(tableFree){ F.acc+=dt*THROW_R*(two?2:1);
+            while(F.acc>1&&F.cases>0){ F.acc-=1; F.cases--; addCase(L); if(F.cases===0){ z.pallets--; drawStall(z); } } } } }
+    }
+    stepC2C(L,dt);
+  });
+  for(let i=cases.length-1;i>=0;i--){ const c=cases[i]; stepCase(c,dt); if(c.stage==='gone'){ c.el.remove(); cases.splice(i,1); } }
+}
+function tick(now){const dt=Math.max(0,Math.min(0.05,(now-last)/1000));last=now;if(playing)step(dt*speed);requestAnimationFrame(tick);}
+const q=new URLSearchParams(location.search);
+if(q.get('vol')){vol=+q.get('vol');document.getElementById('vol').value=vol;}
+if(q.get('t')){for(let k=0;k<(+q.get('t'))/0.05;k++)step(0.05);}if(document.documentElement.classList.contains('embed'))new IntersectionObserver(es=>{playing=es[0].isIntersecting;}).observe(document.getElementById('map'));
+requestAnimationFrame(tick);
+document.getElementById('legend').innerHTML=[
+  `<span><i class="sw" style="background:var(--case);box-shadow:inset -3px 3px 0 var(--safety)"></i>CASE · YELLOW TAB = DESTINATION LABEL</span>`,
+  `<span><i class="sw" style="background:var(--pallet)"></i>MIXED PALLET</span>`,
+  `<span><i class="sw" style="background:var(--fork)"></i>FORKLIFT</span>`,
+  `<span><i class="sw round" style="background:var(--safety)"></i>UNLOAD / DEPAL</span>`,
+  `<span><i class="sw round" style="background:var(--chk)"></i>CHECK-IN</span>`,
+  `<span><i class="sw round" style="background:var(--lbl)"></i>LABEL</span>`,
+  `<span><i class="sw round" style="background:var(--c2c)"></i>CASE TO CAGE</span>`,
+  `<span><i class="sw round" style="background:var(--ws)"></i>WATERSPIDER</span>`,
+  `<span><i class="sw" style="background:#2e4a2a;border:1px solid var(--mint)"></i>BALL TRANSFER TABLE</span>`,
+  `<span>CAGE PLACARD <i class="sw" style="background:var(--cage)"></i>STOW <i class="sw" style="background:var(--c2c)"></i>XD <i class="sw" style="background:var(--red)"></i>PSOL <i class="sw" style="background:var(--safety)"></i>EACH</span>`,
+  `<span><i class="sw" style="background:var(--mint);opacity:.6"></i>FULL CAGE · SEALED ✓</span>`,
+  `<span><i class="sw" style="border:1px dashed var(--cage);background:none"></i>DASHED · EMPTY CAGE / CAGE OUT WITH WS</span>`,
+  `<span><i class="sw" style="background:#3d3312;border:1px solid var(--amber)"></i>AMBER · MANAGER ACTION</span>`,
+  `<span><i class="sw" style="background:#4a1f22;border:1px solid var(--red)"></i>RED · ESCALATE / STOP</span>`,
+  `<span style="margin-left:auto;color:var(--dim)">← → TOUR STOPS · ESC CLOSES</span>`,
+].join('');
+document.getElementById('legend').style.visibility='visible';
+const fitLegend=()=>{ document.getElementById('mapwrap').style.paddingBottom=(document.getElementById('legend').offsetHeight+24)+'px'; };
+fitLegend(); window.addEventListener('resize',fitLegend);
+const volLbl={1:'Light',2:'Light',3:'Normal',4:'Normal',5:'Busy',6:'Busy',7:'Peak',8:'Peak',9:'Over plan',10:'Over plan'};
+document.getElementById('vol').oninput=e=>{vol=+e.target.value;document.getElementById('vollbl').textContent=volLbl[vol];};
+document.getElementById('vollbl').textContent=volLbl[vol];
+document.getElementById('play').onclick=e=>{playing=!playing;e.target.textContent=playing?'⏸ Pause':'▶ Play';};
+document.getElementById('speed').oninput=e=>speed=+e.target.value;
+const tip=document.getElementById('tip'), wrap=document.getElementById('mapwrap');
+gConv.querySelectorAll('.conv').forEach(p=>{
+  p.addEventListener('mousemove',e=>{const inf=INFO[p.dataset.info], c=inf.controls[0]||[]; const r=wrap.getBoundingClientRect();
+    tip.style.display='block'; tip.style.left=(e.clientX-r.left+14)+'px'; tip.style.top=(e.clientY-r.top+14)+'px';
+    tip.innerHTML=`<b>${p.dataset.label}</b><br>${c[0]?c[0]+': '+c[1]:''}<br><span style="opacity:.7">click for detail</span>`;});
+  p.addEventListener('mouseleave',()=>tip.style.display='none');
+});
+const panel=document.getElementById('panel');
+const EMPTY=`<div class="empty"><p class="eyebrow"><b>✦</b> THE RECEIVE DOCK · 17 TOUR STOPS</p><h2>Pick a stop.<br><span>See the process and the standard.</span></h2>Click a door, pallet zone, forklift, associate, conveyor, ball transfer table, label station, cage, waterspider or the full-cage buffer. Press <b>Guided tour</b> to walk the dock in flow order. Drag <b>Volume</b> up to watch the pallet zones fill, throwers double up, cages fill and the waterspiders swap them out.<p class="ref" style="margin-top:16px">Illustrative model with an invented layout — not a real site and not live data. Doors, lines, rates and capacities are animation settings.</p></div>`;
+panel.innerHTML=EMPTY;
+function infoOf(id){const z=zones[id];return {inf:INFO[z.info],name:z.label||INFO[z.info].title};}
+function deckHTML(inf){const s=inf.slides[Math.min(slideIdx,inf.slides.length-1)];
+  return `<div class="deck"><div class="slide"><div class="k">${inf.title.toUpperCase()} · ${slideIdx+1} / ${inf.slides.length}</div><h4>${s.title}</h4><ol>${s.bullets.map(b=>`<li>${b}</li>`).join('')}</ol></div>
+  <div class="deckbar"><button id="sprev" ${slideIdx===0?'disabled':''}>‹ Prev</button><button id="snext" ${slideIdx>=inf.slides.length-1?'disabled':''}>Next ›</button><span class="n">BUILT-IN SLIDES</span></div></div>`;}
+function render(){
+  const {inf,name}=infoOf(active), idx=order.indexOf(active);
+  const fa=document.activeElement, keep=panel.contains(fa)?(fa.dataset.t?`[data-t=${fa.dataset.t}]`:fa.id?'#'+fa.id:null):null;
+  panel.innerHTML=`
+   <div class="ph"><p class="eyebrow">${inf.lane}${idx>=0?` · <b>STOP ${idx+1} / ${order.length}</b>`:''}</p><h2>${name}</h2><div class="owner">${name!==inf.title?inf.title+' · ':''}Owner: ${inf.owner}</div></div>
+   <div class="tabs" role="tablist">${[['overview','OVERVIEW'],['slides','SLIDES']].map(([t,l])=>`<button role="tab" data-t="${t}" aria-selected="${tab===t}">${l}</button>`).join('')}</div>
+   <div class="tab ${tab==='overview'?'on':''}"><h3>WHAT HAPPENS HERE</h3><ul>${inf.what.map(w=>`<li>${w}</li>`).join('')}</ul>
+     ${inf.controls.length?`<h3>KEY CONTROLS & THRESHOLDS</h3><div class="kv">${inf.controls.map(([k,v,s])=>`<div>${k} <span class="ref">(${s})</span></div><div class="v">${v}</div>`).join('')}</div>`:''}
+     <p class="ref" style="margin-top:14px">(model) how this illustration works · (practice) common receive-dock practice · (anim) animation setting, not a measured rate. Illustrative model with an invented layout — not a real site.</p></div>
+   <div class="tab ${tab==='slides'?'on':''}">${deckHTML(inf)}</div>
+   <div class="navrow"><button id="prev" ${idx<=0?'disabled':''}>‹ Previous stop</button><button id="next" ${idx<0||idx>=order.length-1?'disabled':''}>Next stop ›</button></div>`;
+  panel.querySelectorAll('[role=tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.t;render();});
+  const sp=panel.querySelector('#sprev'),sn=panel.querySelector('#snext'); if(sp)sp.onclick=()=>{slideIdx--;render();}; if(sn)sn.onclick=()=>{slideIdx++;render();};
+  panel.querySelector('#prev').onclick=()=>select(order[idx-1]); panel.querySelector('#next').onclick=()=>select(order[idx+1]);
+  if(keep){const n=panel.querySelector(keep);(n&&!n.disabled?n:panel.querySelector('button:not([disabled])'))?.focus();}
+}
+function clearActive(){document.querySelectorAll('.active,.tourglow,.hot').forEach(z=>z.classList.remove('active','tourglow','hot'));}
+function select(id){
+  const z=zones[id]; if(!z)return; clearActive(); active=id; slideIdx=0;
+  z.g.classList.add(z.g.classList.contains('conv')?'hot':'active');
+  if(id.startsWith('door:')){const d=id.split(':')[1]; paths.filter(p=>p.kind==='feed'&&p.door===d).forEach(p=>p.el.classList.add('hot'));}
+  render();
+}
+document.addEventListener('keydown',e=>{if((e.key==='ArrowLeft'||e.key==='ArrowRight')&&e.target.closest&&e.target.closest('input,select,textarea,[role=tab]'))return;
+  if(e.key==='Escape'){stopTour();clearActive();active=null;panel.innerHTML=EMPTY;}
+  if(e.key==='ArrowRight'){const i=active?order.indexOf(active):-1;if(i<order.length-1)select(order[i+1]);}
+  if(e.key==='ArrowLeft'){const i=active?order.indexOf(active):order.length;if(i>0)select(order[i-1]);}
+});
+order.push('door:03','forkA','stall:03','dpl2a','conv2','table2','pconv2','label2','c2c2_0','cage2_0','ws1','buffer','door:01','conv1','door:02','flexL1','walk');
+const tourBtn=document.getElementById('tour');
+function stopTour(){if(tourTimer){clearInterval(tourTimer);tourTimer=null;tourBtn.textContent='▶ Guided tour';tourBtn.setAttribute('aria-pressed','false');}}
+function glow(id){const z=zones[id];if(z&&z.g.classList.contains('zone'))z.g.classList.add('tourglow');}
+tourBtn.onclick=()=>{ if(tourTimer){stopTour();return;} let i=0;tab='overview';select(order[0]);glow(order[0]);
+  tourBtn.textContent='■ Stop tour';tourBtn.setAttribute('aria-pressed','true');
+  tourTimer=setInterval(()=>{i++;if(i>=order.length){stopTour();return;}select(order[i]);glow(order[i]);},7000/Math.max(.5,speed)); };
+window.addEventListener('load',()=>{ if(q.get('sel'))select(q.get('sel')); if(q.get('tab')){tab=q.get('tab')==='slides'?'slides':'overview';if(active)render();} });
+</script>
+</body>
+</html>
