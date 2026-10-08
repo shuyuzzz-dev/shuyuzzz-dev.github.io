@@ -161,7 +161,7 @@ html:lang(zh) .intro-copy h1{line-height:1.22}
 .ai-map-frame a:focus-visible{outline-offset:-6px}
 .ai-map-frame a>span{opacity:0;font:700 13px/1 var(--mono);letter-spacing:.06em;color:var(--mint);background:#0c151df2;border:1px solid var(--mint);padding:10px 14px;box-shadow:4px 4px 0 #050d14;transition:opacity .12s}
 .ai-map-frame a:hover>span,.ai-map-frame a:focus-visible>span{opacity:1}
-@media (prefers-reduced-motion:reduce){.ai-map-frame iframe{display:none}}
+@media (prefers-reduced-motion:reduce),(max-width:680px){.ai-map-frame iframe{display:none}}
 .ai-hero-map figcaption{font-size:14px;color:var(--muted);margin-top:8px}
 @media(max-width:930px) and (min-width:681px){.project-stops{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.ai-screen-controls{grid-template-columns:1fr;gap:8px}.ai-screen-controls button{min-height:48px;padding:10px 14px}.ai-screen-content{padding:18px}.ai-facts{grid-template-columns:1fr}.resume-actions{align-items:flex-start;flex-direction:column}.resume-nav{font-size:14px}.site-header nav{gap:12px}}

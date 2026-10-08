@@ -184,7 +184,7 @@ path.conv:focus,path.walk:focus{stroke:var(--text)}
 </head>
 <body>
 <header>
-  <a class="back" href="/#work" aria-label="Back to shuyuzheng.com">← SHUYUZHENG.COM</a>
+  <a class="back" href="/#work" target="_top" aria-label="Back to shuyuzheng.com">← SHUYUZHENG.COM</a>
   <div>
     <p class="eyebrow"><b>✦</b> INBOUND RECEIVE DOCK · ILLUSTRATIVE MODEL</p>
     <h1>Animated flow map — trailer to cage</h1>
@@ -205,35 +205,35 @@ path.conv:focus,path.walk:focus{stroke:var(--text)}
   <aside id="panel"></aside>
 </main>
 <script>
-const DOORS = ["01","02","03","04","05","06","07","X","08","09","10","11","12","13","14"];
-const FLEX_DOORS = ["02","13"];
+const DOORS = ["01","02","03","04","05","06","07","X","08","09","10","11","12","13","14","15"];
+const FLEX_DOORS = ["02","12"];
 const DOOR_X0 = 390, DOOR_W = 60;
 const LINES = [
   {n:1, x:400,  type:"fluid", door:"01"},
   {n:2, x:570,  type:"map",   doors:["03","04"],      head:"03"},
   {n:3, x:740,  type:"map",   doors:["05","06","07"], head:"06"},
-  {n:4, x:910,  type:"map",   doors:["08","09"],      head:"08"},
-  {n:5, x:1080, type:"map",   doors:["10","11","12"], head:"11"},
-  {n:6, x:1250, type:"fluid", door:"14"},
+  {n:4, x:910,  type:"fluid", door:"08"},
+  {n:5, x:1080, type:"map",   doors:["10","11"],      head:"10"},
+  {n:6, x:1250, type:"map",   doors:["13","14","15"], head:"14"},
 ];
 const STALL_CAP = 6, CASES_PER_PALLET = 8, FLEX_CAP = 12, TABLE_CAP = 2, CAGE_CAP = 24;
 const BUFFER_PULL = 8.5, BUF_AMBER = 12, SEAL_T = 1.5;
 const CAGES = ["STOW","STOW","STOW","EACH", "STOW","STOW","XD","ITEM", "PSOL","MISC"];
 const PLACARD = {STOW:"blue", XD:"green", PSOL:"red", EACH:"yellow", ITEM:"grey", MISC:"grey"};
 const CAGE_WEIGHTS = [4.5,4,3,1.6, 4,3.5,1.1,0.7, 0.9,0.4];
-const FORKS = [ {id:"forkA", label:"Forklift 1", lines:[2,3]}, {id:"forkB", label:"Forklift 2", lines:[4,5]} ];
+const FORKS = [ {id:"forkA", label:"Forklift 1", lines:[2,3]}, {id:"forkB", label:"Forklift 2", lines:[5,6]} ];
 const WATERSPIDERS = [ {id:"ws1", label:"Waterspider 1", lines:[1,2,3]}, {id:"ws2", label:"Waterspider 2", lines:[4,5,6]} ];
 const FLEXZONES = [
   {id:"flexL1", door:"02", title:"FLEX L"},
-  {id:"flexR1", door:"13", title:"FLEX R"},
+  {id:"flexR1", door:"12", title:"FLEX R"},
 ];
 const INFO = {
   door:{lane:"DOCK DOOR",title:"Dock door & trailer",owner:"Dock manager",
-    what:["A trained associate releases the trailer to the dock before anyone works it, and every move starts with a door scan so the system knows which trailer is being unloaded.","Floor-loaded (fluid) trailers are hand-unloaded from inside the trailer straight onto a flex conveyor (lines 1 and 6). Palletized trailers are unloaded by forklift into the pallet zone right below the door (lines 2–5)."],
+    what:["A trained associate releases the trailer to the dock before anyone works it, and every move starts with a door scan so the system knows which trailer is being unloaded.","Floor-loaded (fluid) trailers are hand-unloaded from inside the trailer straight onto a flex conveyor (lines 1 and 4). Palletized trailers are unloaded by forklift into the pallet zone right below the door (lines 2, 3, 5 and 6)."],
     controls:[["Trailer release","nobody works a trailer until it is released to the dock","practice"],["Freight type","fluid → unloaders + flex conveyor · pallets → forklift to the door's pallet zone","model"],["Escalation","zones turn amber as they fill and red at capacity","model"]],
     slides:[{title:"Door discipline",bullets:["Freight type decides the line: fluid → unloaders feed the flex conveyor; pallets → forklift to the pallet zone under the door","Keep each zone inside its limit before the next trailer is pulled","Separate people from forklift traffic at unload and staging"]}]},
   flexdoor:{lane:"FLEX DOOR",title:"Flex door — pallet unload only",owner:"Dock manager",
-    what:["One extra door on each side, between the fluid lines and the pallet lines. No conveyor: pallets are unloaded by forklift straight into the flex zone below.","They add room for live unloads, overflow pallet staging and urgent trailers without tying up a conveyor line."],
+    what:["One extra door on each side, between two receive lines. No conveyor: pallets are unloaded by forklift straight into the flex zone below.","They add room for live unloads, overflow pallet staging and urgent trailers without tying up a conveyor line."],
     controls:[["Use cases","live unloads · overflow staging · urgent trailers","practice"]],
     slides:[{title:"Why flex doors",bullets:["Live unloads do not wait for a conveyor line","Overflow pallets stage here when a line's zones are full","Urgent trailers get worked on arrival instead of waiting in the yard"]}]},
   flexz:{lane:"FLEX PALLET ZONE",title:"Flex zone — overflow pallet staging",owner:"Dock manager · Receive manager",
@@ -332,7 +332,7 @@ for(let r=0;r<5;r++)for(let c=0;c<5;c++){ const x=160+c*340+(r%2)*170, y=120+r*1
 txt(1580,894,'CREATED & OWNED BY SHUYU ZHENG · SHUYUZHENG.COM · © 2026',{class:'credit'},svg);
 el('rect',{class:'fllane',x:DOOR_X0,y:FL_LANE-15,width:DOORS.length*DOOR_W,height:30},gAisle);
 el('path',{class:'aisle',d:`M${DOOR_X0},${FL_LANE} L${DOOR_X0+DOORS.length*DOOR_W},${FL_LANE}`},gAisle);
-txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE-2,'PIT LANE',{class:'north'},gAisle); txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE+10,'DOCK ZONE',{class:'north'},gAisle);
+txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE-2,'FORKLIFT LANE',{class:'north'},gAisle); txt(DOOR_X0+DOORS.length*DOOR_W+14,FL_LANE+10,'DOCK ZONE',{class:'north'},gAisle);
 const zones={}, order=[];
 function keyAct(g,id){g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(id);}});}
 function zone(id,cls,info,x,y,w,h,label,sub,parent,ly){
@@ -383,7 +383,7 @@ DOORS.forEach((d,i)=>{
     zones['door:'+d]={g,info:flex?'flexdoor':'door',label:'Door '+d+(flex?' (flex)':'')}; }
   else el('rect',{x:x+22,y:56,width:DOOR_W-44,height:18,fill:'#0c151d',opacity:.6},g);
 });
-txt(DOOR_X0-130,66,'DOCK DOORS',{class:'north'},gDoor); txt(DOOR_X0-130,78,'01 – 14',{class:'north'},gDoor);
+txt(DOOR_X0-130,66,'DOCK DOORS',{class:'north'},gDoor); txt(DOOR_X0-130,78,'01 – 15',{class:'north'},gDoor);
 const flexz={};
 FLEXZONES.forEach(f=>{const x=doorCenter(f.door)-26, z={...f,x,y:STALL_Y,w:52,h:FLEX_H,side:doorIdx(f.door)<DOORS.length/2?'L':'R'};
   const g=zone(f.id,'flexz','flexz',z.x,z.y,z.w,z.h,f.title,'door '+f.door,undefined,z.y+z.h-22); flexz[f.id]={...z,g,palG:el('g',{},g),pallets:0,drain:0};});
