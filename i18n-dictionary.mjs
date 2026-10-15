@@ -2209,5 +2209,25 @@ export const DICTIONARY = {
   "Pick a stop to begin": [
     "选一个站点开始",
     "Elige una parada para empezar"
+  ],
+  "the Rainbow storage racks": [
+    "Rainbow仓储货架",
+    "las estanterías Rainbow"
+  ],
+  "the stow drop zone": [
+    "上架暂存区",
+    "la zona de espera de almacenaje"
+  ],
+  "the manager’s desk": [
+    "经理办公桌",
+    "el escritorio del gerente"
+  ],
+  "the pallet picking area": [
+    "托盘拣选区",
+    "la zona de picking de palés"
+  ],
+  "the leadership sync": [
+    "领导团队协同区",
+    "el área de coordinación del liderazgo"
   ]
 };

@@ -226,7 +226,7 @@ function travelTo(target, stopId = null, toExit = false) {
   ring.style.top = `${destination.y/667*100}%`;
   ring.hidden = false;
   nearbyPrompt.hidden = true;
-  locationLabel.textContent = stopId ? `To ${STOPS[stopId].label.toLowerCase()}` : 'Walking the floor';
+  locationLabel.textContent = stopId ? `To ${STOPS[stopId].phrase}` : 'Walking the floor';
   announcement.textContent = toExit ? 'Walking to the exit. Time for a little basketball.' : stopId ? `Walking to ${PROJECTS[stopId].title}. The project will open when Shuyu arrives.` : 'Click a project marker whenever you want to explore its story.';
   if (reducedMotion.matches) {
     Object.assign(position, destination);
@@ -250,7 +250,7 @@ function arrive() {
   if (completed) {
     facing = STOPS[completed].facing;
     renderPosition(false);
-    announcement.textContent = `At ${STOPS[completed].label.toLowerCase()}. Opening ${PROJECTS[completed].title}.`;
+    announcement.textContent = `At ${STOPS[completed].phrase}. Opening ${PROJECTS[completed].title}.`;
     arrivalTimer = window.setTimeout(() => {
       arrivalTimer = null;
       if (active && !dialog.open) showProject(completed, world);
