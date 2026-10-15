@@ -1,5 +1,6 @@
 import { renderAIScreen, renderAIHero, aiHeroView } from './ai-operations.mjs';
 import { initI18n, getLocale } from './i18n.mjs';
+import { initTheme, getTheme, syncThemeArt } from './theme.mjs';
 import { STOPS, START, EXIT, walkable, findPath } from './navigation.mjs';
 import { PROJECTS, ADDITIONAL_WORK } from './projects.mjs';
 import { estimateStowGuidance } from './stowguidance-impact.mjs';
@@ -327,6 +328,7 @@ function openDialog(html, eyebrow = 'Project notes', returnFocus = null) {
   stopMotion();
   flowStep = -1;
   dialogContent.innerHTML = html;
+  syncThemeArt(dialogContent);
   dialog.classList.toggle('is-slideshow', Boolean(dialogContent.querySelector('.observation-view')));
   $('#dialog-eyebrow').textContent = eyebrow;
   document.body.classList.add('dialog-open');
@@ -530,7 +532,7 @@ function selectAIScreen(id, reveal = true) {
   $('#ai-screen-content').innerHTML = renderAIScreen(id);
   const hero = $('#ai-hero'), view = aiHeroView(id);
   if (hero && hero.dataset.view !== view) {
-    hero.dataset.view = view; hero.innerHTML = renderAIHero(view);
+    hero.dataset.view = view; hero.innerHTML = renderAIHero(view, getTheme()); syncThemeArt(hero);
     if (reveal && view !== 'art') {
       hero.style.scrollMarginTop = `${($('#project-dialog .dialog-top')?.offsetHeight || 0) + 12}px`;
       hero.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
@@ -820,4 +822,10 @@ window.addEventListener('portfolio-language-change', () => {
   updateSafetyEstimate('liners');
   updateSafetyEstimate('beams');
 });
+// An open flow map embed reloads in the new theme.
+window.addEventListener('portfolio-theme-change', ({ detail }) => {
+  const hero = $('#ai-hero[data-view="map"]');
+  if (hero) hero.innerHTML = renderAIHero('map', detail.theme);
+});
+initTheme();
 initI18n();

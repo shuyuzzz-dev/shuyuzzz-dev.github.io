@@ -2229,5 +2229,13 @@ export const DICTIONARY = {
   "the leadership sync": [
     "领导团队协同区",
     "el área de coordinación del liderazgo"
+  ],
+  "Switch to night mode": [
+    "切换到夜间模式",
+    "Cambiar al modo noche"
+  ],
+  "Switch to day mode": [
+    "切换到日间模式",
+    "Cambiar al modo día"
   ]
 };

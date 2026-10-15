@@ -2,6 +2,7 @@ import { BasketballGame, COURT, PERFECT } from './basketball-engine.mjs';
 import { drawBasketball } from './basketball-renderer.mjs';
 import { getLocale } from './i18n.mjs';
 import { translate } from './i18n-core.mjs';
+import { getTheme } from './theme.mjs';
 
 export function mountBasketball() {
   const root=document.querySelector('#outside');
@@ -14,9 +15,18 @@ export function mountBasketball() {
   const t=text=>translate(text,getLocale());
   const write=(selector,value)=>{const el=$(selector),text=String(value);if(el.textContent!==text)el.textContent=text;};
   const image=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;});
-  const ready=Promise.all([image('assets/basketball-court.webp'),image('assets/basketball-players.webp')]).then(([court,players])=>{
+  // The court art follows the day and night theme.
+  const courtSrc=()=>getTheme()==='night'?'assets/basketball-court-night.webp':'assets/basketball-court.webp';
+  let courtShown=courtSrc();
+  const ready=Promise.all([image(courtShown),image('assets/basketball-players.webp')]).then(([court,players])=>{
     assets.court=court;assets.players=players;loaded=true;if(visible){draw();hud(true);}
+    swapCourt();
   }).catch(()=>{failed=true;if(visible)hud(true);});
+  function swapCourt(){
+    const src=courtSrc();if(!loaded||src===courtShown)return;
+    image(src).then(court=>{if(courtSrc()!==src)return;assets.court=court;courtShown=src;if(visible)draw();}).catch(()=>{});
+  }
+  window.addEventListener('portfolio-theme-change',swapCourt);
   function draw(){if(ctx&&loaded)drawBasketball(ctx,game,assets);}
   function clearInput(){keys.clear();directions.clear();pointerShot=null;keyboardShot=false;game.cancelShot();game.moveTarget=null;root.querySelectorAll('[data-court-direction]').forEach(el=>el.classList.remove('is-held'));}
   function pause(){if(!visible)return;clearInput();if(game.running||game.finished)game.pause();if(raf!==null)cancelAnimationFrame(raf);raf=null;previous=0;hud(true);draw();}

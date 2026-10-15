@@ -6,22 +6,24 @@
   <title>Page not found | Shuyu Zheng</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#ffffff">
+  <script>(function(){var t;try{t=localStorage.getItem('shuyu-portfolio-theme')}catch(e){}if(t!=='day'&&t!=='night')t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';document.documentElement.dataset.theme=t;if(t==='night')document.querySelector('meta[name="theme-color"]').content='#121416'})()</script>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
     @font-face{font-family:Overpass;src:url('/assets/fonts/overpass-latin.woff2') format('woff2');font-weight:300 800;font-style:normal;font-display:swap}
-    :root{color-scheme:light}
+    :root{color-scheme:light;--bg:#ffffff;--text:#141718;--text-2:#30373a;--accent:#0b6a5c;--primary:#0b6a5c;--monogram:#141718;--monogram-ink:#ffffff;--shade:rgba(20,23,24,.22)}
+    :root[data-theme="night"]{color-scheme:dark;--bg:#121416;--text:#e8eaea;--text-2:#c5c9ca;--accent:#6cc3ad;--primary:#1d7766;--monogram:#e8eaea;--monogram-ink:#121416;--shade:rgba(0,0,0,.4)}
     *{box-sizing:border-box}
-    body{margin:0;min-height:100svh;display:grid;place-items:center;padding:40px 24px;background:#ffffff;color:#141718;font:17px/1.6 Overpass,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}
+    body{margin:0;min-height:100svh;display:grid;place-items:center;padding:40px 24px;background:var(--bg);color:var(--text);font:17px/1.6 Overpass,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}
     main{width:min(100%,600px)}
     .brand{display:inline-flex;align-items:center;gap:14px;color:inherit;text-decoration:none;font-weight:700;font-size:17px;margin-bottom:56px}
-    .monogram{display:grid;place-items:center;width:44px;height:44px;background:#141718;color:#ffffff;font-size:19px;border-radius:6px;box-shadow:0 1px 2px rgba(20,23,24,.22)}
+    .monogram{display:grid;place-items:center;width:44px;height:44px;background:var(--monogram);color:var(--monogram-ink);font-size:19px;border-radius:6px;box-shadow:0 1px 2px var(--shade)}
     h1{font-size:clamp(44px,8vw,68px);line-height:1.05;letter-spacing:-.04em;margin:0 0 18px;font-weight:700}
-    p{margin:0 0 32px;max-width:34em;color:#30373a}
+    p{margin:0 0 32px;max-width:34em;color:var(--text-2)}
     .actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
-    .button{display:inline-flex;align-items:center;min-height:52px;padding:0 23px;background:#0b6a5c;color:#ffffff;font-weight:650;font-size:16px;text-decoration:none;border-radius:6px;box-shadow:0 1px 2px rgba(20,23,24,.22)}
-    .link{display:inline-flex;align-items:center;min-height:44px;color:#0b6a5c;font-size:16px;text-underline-offset:4px}
-    a:focus-visible{outline:3px solid #0b6a5c;outline-offset:5px}
+    .button{display:inline-flex;align-items:center;min-height:52px;padding:0 23px;background:var(--primary);color:#ffffff;font-weight:650;font-size:16px;text-decoration:none;border-radius:6px;box-shadow:0 1px 2px var(--shade)}
+    .link{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:16px;text-underline-offset:4px}
+    a:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
   </style>
 </head>
 <body>
