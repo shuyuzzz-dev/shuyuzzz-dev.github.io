@@ -3,7 +3,6 @@ import { AI_COPY } from './ai-operations.mjs';
 import { AI_DECK_COPY } from './ai-decks.mjs';
 // Reviewed Simplified Chinese and Spanish copy, keyed by the English source.
 export const DICTIONARY = {
-  "Stow Guidance Tool Improvement Project": ["上架引导工具改进项目", "Proyecto de mejora de la herramienta de orientación de almacenamiento"],
   ...AI_COPY,
   ...AI_DECK_COPY,
   ...BASKETBALL_COPY,
@@ -19,10 +18,6 @@ export const DICTIONARY = {
     "跟我一起走走，看看我如何通过这些项目，让工作更安全、更简单、更高效。",
     "Acompáñame a descubrir los proyectos que he creado para hacer el trabajo más seguro, sencillo y eficiente."
   ],
-  "Let’s walk the floor": [
-    "一起走进现场",
-    "Recorramos el almacén"
-  ],
   "Skip to main content": [
     "跳转到主要内容",
     "Saltar al contenido principal"
@@ -35,13 +30,9 @@ export const DICTIONARY = {
     "SZ",
     "SZ"
   ],
-  "SHUYU ZHENG": [
-    "SHUYU ZHENG",
-    "SHUYU ZHENG"
-  ],
-  "OPERATIONS & QUALITY": [
-    "运营与质量",
-    "OPERACIONES Y CALIDAD"
+  "Shuyu Zheng": [
+    "Shuyu Zheng",
+    "Shuyu Zheng"
   ],
   "Main navigation": [
     "主导航",
@@ -59,14 +50,6 @@ export const DICTIONARY = {
     "持续寻找更好的方法",
     "SIEMPRE BUSCANDO UNA MEJOR MANERA"
   ],
-  "Shuyu Zheng.": [
-    "Shuyu Zheng。",
-    "Shuyu Zheng."
-  ],
-  "Let’s take a": [
-    "一起走进",
-    "Hagamos un"
-  ],
   "floor walk.": [
     "仓库现场。",
     "recorrido."
@@ -79,33 +62,13 @@ export const DICTIONARY = {
     "库存控制与质量保证负责人",
     "LÍDER DE ICQA"
   ],
-  "I lead operations and inventory quality at Amazon. Walk with me through the challenges I’ve tackled, the tools I’ve built, and the improvements behind each stop.": [
-    "我在亚马逊负责运营与库存质量管理。跟我走进仓库，了解我解决过的难题、开发的工具，以及每个项目背后的改善。",
-    "Dirijo operaciones y calidad de inventario en Amazon. Acompáñame para conocer los retos que he resuelto, las herramientas que he creado y las mejoras detrás de cada parada."
-  ],
-  "Start the floor walk": [
-    "开始现场走访",
-    "Iniciar el recorrido"
-  ],
-  "Or browse the projects": [
-    "或直接浏览项目",
-    "O explorar los proyectos"
-  ],
   "Choose a stop. See the problem, the approach, and the impact.": [
     "选择一站，了解问题、解决方法与成效。",
     "Elige una parada. Conoce el problema, la solución y su impacto."
   ],
-  "THE WAREHOUSE": [
+  "The warehouse": [
     "仓库现场",
-    "EL ALMACÉN"
-  ],
-  "4 PROJECTS TO DISCOVER": [
-    "探索4个项目",
-    "4 PROYECTOS POR DESCUBRIR"
-  ],
-  "Pixel art warehouse with tall red-beam shelf racks, white bin liners, upright cartons, order pickers, rolling cages, and a manager's desk.": [
-    "像素风仓库：红色横梁的高位货架、白色货位衬板、竖放纸箱、拣选车、移动笼车和经理办公桌。",
-    "Almacén en pixel art con estanterías altas de vigas rojas, separadores blancos, cajas verticales, preparadores de pedidos, jaulas rodantes y un escritorio."
+    "El almacén"
   ],
   "Real projects.": [
     "真实的项目。",
@@ -147,14 +110,6 @@ export const DICTIONARY = {
     "实用工具",
     "HERRAMIENTAS PRÁCTICAS"
   ],
-  "PERSONAL PORTFOLIO / 2026": [
-    "个人作品集 / 2026",
-    "PORTAFOLIO PERSONAL / 2026"
-  ],
-  "SHUYU'S WAREHOUSE": [
-    "SHUYU的仓库",
-    "EL ALMACÉN DE SHUYU"
-  ],
   "Your floor walk starts here.": [
     "从这里开始现场走访。",
     "Tu recorrido empieza aquí."
@@ -163,9 +118,9 @@ export const DICTIONARY = {
     "个人介绍",
     "Presentación"
   ],
-  "THE OPERATIONS FLOOR": [
+  "The operations floor": [
     "运营现场",
-    "EL ÁREA DE OPERACIONES"
+    "El área de operaciones"
   ],
   "At the entrance": [
     "入口处",
@@ -175,45 +130,25 @@ export const DICTIONARY = {
     "互动仓库。点击地面行走，或选择项目站点。方向键和W A S D也可移动经理；按回车键打开附近的项目。",
     "Almacén interactivo. Haz clic en el suelo para caminar o elige una parada. Las flechas y W A S D también mueven al gerente; Intro abre un proyecto cercano."
   ],
-  "Industrial warehouse floor: white-lined Rainbow shelf racks with upright items and an order picker at upper left, full-size cages and the Stow Guidance scan portal at center, the Onboarding Portal desk at right, and a separate floor-level pallet pick station at lower left.": [
-    "仓库现场：左上方为带白色衬板、竖放商品的Rainbow货架与拣选车；中央为笼车和StowGuidance扫描门架；右侧为入职培训门户办公桌；左下方为独立的地面托盘拣选站。",
-    "Almacén industrial: arriba a la izquierda, estanterías Rainbow con separadores blancos y artículos verticales; en el centro, jaulas y el pórtico de escaneo Stow Guidance; a la derecha, el escritorio del Portal de incorporación; abajo a la izquierda, una estación independiente de picking de palés a nivel del suelo."
-  ],
-  "Walk to the racks and explore Bin Liners": [
-    "走到货架，探索货位衬板项目",
-    "Caminar a las estanterías y explorar Separadores de ubicaciones"
-  ],
   "BIN LINERS": [
     "货位衬板",
     "SEPARADORES"
-  ],
-  "Walk to the satellite drop zone and explore Stow Guidance": [
-    "走到上架卫星暂存区，探索StowGuidance",
-    "Caminar a la zona satélite y explorar Stow Guidance"
   ],
   "STOW GUIDANCE": [
     "上架引导",
     "GUÍA DE ALMACENAMIENTO"
   ],
-  "Walk to the manager's desk and explore the Onboarding Portal": [
-    "走到经理办公桌，探索入职培训门户",
-    "Caminar al escritorio y explorar el Portal de incorporación"
-  ],
   "ONBOARDING PORTAL": [
     "入职培训门户",
     "PORTAL DE INCORPORACIÓN"
-  ],
-  "Walk to the picker and explore A-Level Beams": [
-    "走到拣选员旁，探索A层横梁项目",
-    "Caminar hasta el operario y explorar Vigas de nivel A"
   ],
   "A-LEVEL BEAMS": [
     "A层横梁",
     "VIGAS DE NIVEL A"
   ],
-  "SHUYU": [
-    "SHUYU",
-    "SHUYU"
+  "Shuyu": [
+    "Shuyu",
+    "Shuyu"
   ],
   "Explore project": [
     "探索项目",
@@ -222,10 +157,6 @@ export const DICTIONARY = {
   "Enter": [
     "回车",
     "Intro"
-  ],
-  "WAREHOUSE / EXPLORATION MAP": [
-    "仓库 / 探索地图",
-    "ALMACÉN / MAPA DEL RECORRIDO"
   ],
   "Click or tap to walk": [
     "点击或轻触即可行走",
@@ -239,21 +170,13 @@ export const DICTIONARY = {
     "探索站点",
     "Explorar una parada"
   ],
-  "You're on the floor. Choose a project marker, or click anywhere in an aisle.": [
+  "You’re on the floor. Choose a project marker, or click anywhere in an aisle.": [
     "你已进入现场。选择项目标记，或点击通道中的任意位置。",
     "Ya estás en el almacén. Elige un marcador de proyecto o haz clic en un pasillo."
-  ],
-  "YOUR FIELD GUIDE": [
-    "现场指南",
-    "TU GUÍA DEL RECORRIDO"
   ],
   "Choose your next stop.": [
     "选择下一站。",
     "Elige tu próxima parada."
-  ],
-  "Four stops. Better flow, stronger teams, and safer work.": [
-    "四个站点：更顺畅的流程、更强的团队、更安全的作业。",
-    "Cuatro paradas. Mejores flujos, equipos más sólidos y un trabajo más seguro."
   ],
   "PROJECTS EXPLORED": [
     "已探索项目",
@@ -271,21 +194,9 @@ export const DICTIONARY = {
     "少翻找，拣选更快、更安全。",
     "Menos búsqueda. Picking más rápido y seguro."
   ],
-  "STOW SATELLITE": [
-    "上架卫星区",
-    "ZONA SATÉLITE DE ALMACENAJE"
-  ],
   "Remove the scan-and-wait step.": [
     "省去扫描后的等待。",
     "Eliminar el paso de escanear y esperar."
-  ],
-  "MANAGER'S DESK": [
-    "经理办公桌",
-    "ESCRITORIO DEL GERENTE"
-  ],
-  "Six weeks. Clear goals. Visible readiness.": [
-    "六周路径，目标明确，就绪度可见。",
-    "Seis semanas. Objetivos claros. Preparación visible."
   ],
   "PALLET PICKING": [
     "托盘拣选",
@@ -298,26 +209,6 @@ export const DICTIONARY = {
   "Want to go straight to the stories?": [
     "想直接查看项目故事？",
     "¿Prefieres ir directamente a los proyectos?"
-  ],
-  "Open project index": [
-    "打开项目目录",
-    "Abrir índice de proyectos"
-  ],
-  "THERE’S ALWAYS SOMETHING TO IMPROVE.": [
-    "总有值得改善的地方。",
-    "SIEMPRE HAY ALGO QUE MEJORAR."
-  ],
-  "Meet the manager": [
-    "认识这位经理",
-    "Conoce al gerente"
-  ],
-  "The warehouse game uses JavaScript. Shuyu Zheng is an operations and ICQA leader at Amazon. Featured work includes Bin Liners at storage racks, Stow Guidance for automatic cage scanning and space direction, the Onboarding Portal for site managers, and A-Level Beams for ergonomic improvement.": [
-    "仓库游戏需要JavaScript。Shuyu Zheng在亚马逊负责运营与库存控制和质量保证（ICQA）。主要项目包括货位衬板、自动扫描笼车并推荐库区的StowGuidance、面向站点经理的入职培训门户，以及改善人体工学的A层横梁。",
-    "El juego requiere JavaScript. Shuyu Zheng dirige operaciones e ICQA en Amazon. Sus proyectos incluyen separadores de ubicaciones, Stow Guidance para escaneo automático de jaulas y asignación de zonas, un portal de incorporación para gerentes y vigas de nivel A para mejorar la ergonomía."
-  ],
-  "PROJECT FIELD NOTES": [
-    "项目现场笔记",
-    "NOTAS DEL PROYECTO"
   ],
   "Close and return": [
     "关闭并返回",
@@ -343,14 +234,6 @@ export const DICTIONARY = {
     "项目后报告结果",
     "Resultados posteriores reportados"
   ],
-  "Eight-site projection": [
-    "八站点推广测算",
-    "Proyección para ocho centros"
-  ],
-  "Replay the before-and-after sequence ↗": [
-    "重播改善前后流程 ↗",
-    "Repetir la secuencia del antes y después ↗"
-  ],
   "Reported Bin Liners results": [
     "货位衬板项目报告结果",
     "Resultados reportados de Separadores de ubicaciones"
@@ -362,22 +245,6 @@ export const DICTIONARY = {
   "Average time at bin, reported before and after": [
     "改善前后报告的平均货位停留时间",
     "Tiempo medio en la ubicación, antes y después"
-  ],
-  "75% less TAB": [
-    "TAB缩短75%",
-    "75% menos TAB"
-  ],
-  "90 seconds recovered per pick": [
-    "每次拣选节省90秒",
-    "90 segundos recuperados por picking"
-  ],
-  "60% lower RIR": [
-    "RIR降低60%",
-    "RIR un 60% menor"
-  ],
-  "Reported in Rainbow-bin picking after the project": [
-    "项目后Rainbow货位拣选的报告结果",
-    "Resultado reportado en picking Rainbow tras el proyecto"
   ],
   "The problem at the bin": [
     "货位中的问题",
@@ -423,21 +290,9 @@ export const DICTIONARY = {
     "。同时，项目后Rainbow货位拣选的",
     ". También reporté una"
   ],
-  "60% reduction in recordable incident rate (RIR)": [
-    "可记录工伤事故率（RIR）降低了60%",
-    "reducción del 60% en la tasa de incidentes registrables (RIR)"
-  ],
-  "in Rainbow-bin picking after the project.": [
-    "。",
-    "en el picking de ubicaciones Rainbow tras el proyecto."
-  ],
   "These outcomes are from my project account. The supporting Bin Liners white paper and measurement periods are still to be added. A 75% reduction in time at bin does not imply a 75% improvement in the full pick cycle, which also includes travel and other work.": [
     "这些结果来自我的项目陈述，货位衬板白皮书及测量周期尚待补充。货位停留时间缩短75%，不等于整个拣选周期提升75%；完整周期还包括行驶和其他作业。",
     "Estos resultados proceden de mi relato del proyecto. Aún se añadirán el documento técnico y los periodos de medición. Reducir el TAB un 75% no implica mejorar un 75% el ciclo completo de picking, que también incluye desplazamientos y otras tareas."
-  ],
-  "SITE AND NETWORK PROJECTION": [
-    "站点及网络测算",
-    "PROYECCIÓN POR CENTRO Y RED"
   ],
   "What does 90 seconds per pick recover?": [
     "每次拣选节省90秒意味着什么？",
@@ -563,10 +418,6 @@ export const DICTIONARY = {
     "工伤成本避免额，单独展示",
     "Costes de lesiones evitados, por separado"
   ],
-  "The 3–5 avoided cases below are a planning scenario supplied for this business case. They are not derived from the reported 60% RIR reduction.": [
-    "以下每年避免3–5起工伤是为本商业论证设定的规划情景，并非根据报告的RIR下降60%推算而来。",
-    "Los 3–5 casos evitados son un escenario de planificación propuesto para este análisis. No se derivan de la reducción reportada del 60% en RIR."
-  ],
   "Cases avoided / site / year: low": [
     "每站点每年避免工伤：低情景",
     "Casos evitados / centro / año: mínimo"
@@ -603,17 +454,9 @@ export const DICTIONARY = {
     "8个站点",
     "8 centros"
   ],
-  "The $67,248 reference comes from the OSHA Safety Pays estimate reproduced in my A-Level Beams paper: $32,023 direct cost plus $35,225 indirect cost per strain case. It is a historical planning proxy, not an Amazon claims rate. Update it with site-specific evidence.": [
-    "67,248美元的参考值来自我在A层横梁白皮书中引用的OSHA Safety Pays估算：每起劳损工伤直接成本32,023美元，加上间接成本35,225美元。这是历史规划参考值，并非亚马逊理赔标准，应以站点实际数据更新。",
-    "La referencia de 67.248 USD procede de la estimación de OSHA Safety Pays incluida en mi documento de Vigas de nivel A: 32.023 USD de costes directos y 35.225 USD indirectos por lesión por sobreesfuerzo. Es una referencia histórica de planificación, no una tarifa de reclamaciones de Amazon. Debe actualizarse con datos del centro."
-  ],
   "Labor capacity and injury-cost avoidance are kept separate because indirect injury costs may overlap with labor losses. Avoided incidents must also be separated from A-Level Beams cases before combining projects. Installation and maintenance costs are not deducted, and recovered time does not automatically reduce payroll.": [
     "人工产能与工伤成本避免额分开展示，因为工伤间接成本可能与人工损失重叠。合并项目效益前，还需排除与A层横梁项目重复计算的工伤。此处未扣除安装和维护成本；节省时间也不会自动减少工资支出。",
     "La capacidad laboral y los costes de lesiones evitados se muestran por separado porque los costes indirectos pueden solaparse con pérdidas laborales. Antes de combinar proyectos, también deben excluirse los casos ya atribuidos a Vigas de nivel A. No se deducen instalación ni mantenimiento; recuperar tiempo no reduce automáticamente la nómina."
-  ],
-  "STOW SATELLITE DROP ZONE": [
-    "上架卫星暂存区",
-    "ZONA SATÉLITE DE ALMACENAJE"
   ],
   "I moved cage scanning into the route stowers already travel, so aisle recommendations are ready before the cage is mounted.": [
     "我将笼车扫描融入上架人员原本的移动路线，使笼车装上拣选车之前，推荐巷道就已显示。",
@@ -626,10 +469,6 @@ export const DICTIONARY = {
   "Automatic barcode scanning": [
     "自动条码扫描",
     "Escaneo automático de códigos"
-  ],
-  "Adopted by another building": [
-    "已被另一站点采用",
-    "Adoptado por otro centro"
   ],
   "Stow Guidance impact": [
     "StowGuidance项目成效",
@@ -663,10 +502,6 @@ export const DICTIONARY = {
     "改善之前",
     "Antes del cambio"
   ],
-  "Stowers mounted a cage on their order picker, then used a Kindle tablet to scan its barcode and wait for the stow guidance system to return the recommended aisles or zones. The tablet camera was difficult to scan with, and the system responded slowly on the device.": [
-    "上架人员先将笼车装到拣选车上，再使用Kindle平板扫描条码，等待StowGuidance返回推荐巷道或库区。平板摄像头不易对准扫描，系统在设备上的响应也较慢。",
-    "Los operarios montaban la jaula en el preparador de pedidos y después escaneaban su código con una tableta Kindle, esperando la recomendación de Stow Guidance. La cámara dificultaba el escaneo y el sistema respondía lentamente en el dispositivo."
-  ],
   "Even when the scan worked on the first attempt, that process took about one minute per cage changeover. Retries could add more time.": [
     "即使一次扫描成功，每次更换笼车也约需一分钟；重试会耗费更多时间。",
     "Incluso si el escaneo funcionaba al primer intento, el proceso tardaba aproximadamente un minuto por cambio de jaula. Los reintentos podían añadir más tiempo."
@@ -675,17 +510,9 @@ export const DICTIONARY = {
     "我的设计",
     "Qué diseñé"
   ],
-  "I designed a doorway-shaped strut structure, bolted to the floor and supplied with power from the warehouse ceiling. I positioned it in the exit path from the work-in-progress cage lanes, so a cage being pulled out passes through the structure.": [
-    "我设计了一个门形支架，固定在地面，并从仓库天花板引下电源。我将其布置在待处理笼车通道的出口，让拉出的笼车必须经过门架。",
-    "Diseñé un pórtico anclado al suelo y alimentado eléctricamente desde el techo. Lo situé a la salida de los carriles de jaulas en espera, de modo que cada jaula pasara por él al salir."
-  ],
-  "A fixed Zebra scanner reads the cage barcode automatically. A TV mounted on the overhead strut displays the system’s recommended aisles or zones. By the time the stower has mounted the cage on the order picker, the recommendation is already on screen.": [
-    "固定式Zebra扫描器自动读取笼车条码，顶部支架上的电视显示StowGuidance推荐的巷道或库区。当上架人员将笼车装到拣选车上时，推荐信息已显示在屏幕上。",
-    "Un escáner fijo Zebra lee automáticamente el código de la jaula. Una pantalla instalada en el travesaño superior muestra los pasillos o zonas recomendados por Stow Guidance. Al terminar de montar la jaula, la recomendación ya está visible."
-  ],
-  "THE REDESIGNED CHANGEOVER": [
+  "The redesigned changeover": [
     "重新设计的换笼流程",
-    "EL NUEVO CAMBIO DE JAULA"
+    "El nuevo cambio de jaula"
   ],
   "Start walkthrough ▶": [
     "开始演示 ▶",
@@ -702,10 +529,6 @@ export const DICTIONARY = {
   "Scan in motion": [
     "移动中扫描",
     "Escanear en movimiento"
-  ],
-  "The Zebra scanner reads the cage barcode automatically.": [
-    "Zebra扫描器自动读取笼车条码。",
-    "El escáner Zebra lee el código de la jaula automáticamente."
   ],
   "Mount and go": [
     "装好即出发",
@@ -750,14 +573,6 @@ export const DICTIONARY = {
   "60 minutes of team labor recovered for each operating hour": [
     "每运营一小时释放60分钟团队人工时间",
     "recuperan 60 minutos de trabajo del equipo por hora operativa"
-  ],
-  ", or 5% of the team’s time at that cage rate. At least one other building adopted the design.": [
-    "，即该换笼频率下团队工时的5%。至少另一个站点已采用这一设计。",
-    ", equivalentes al 5% del tiempo del equipo a ese ritmo. Al menos otro centro adoptó el diseño."
-  ],
-  "MODEL THE BUILDING'S LABOR CAPACITY": [
-    "测算站点人工产能",
-    "MODELAR LA CAPACIDAD LABORAL DEL CENTRO"
   ],
   "What does one minute add up to?": [
     "一分钟累积起来有多少？",
@@ -847,33 +662,13 @@ export const DICTIONARY = {
     "此处按所选费率估算释放的人工产能价值，未扣除安装和维护成本。实际工资节省取决于真正减少的付薪工时或加班。当前薪酬参考不能证明历史节省金额。",
     "Se valora la capacidad laboral recuperada antes de instalación y mantenimiento. El ahorro real de nómina depende de horas pagadas o extras efectivamente evitadas. Las referencias salariales actuales no demuestran ahorros históricos."
   ],
-  "I built the Onboarding Portal end to end to give new Area Managers and Operations Managers a structured path from week one to verified readiness.": [
-    "我独立完成入职培训门户的端到端建设，为新任区域经理（AM）和运营经理（OM）提供从第一周到能力验证的结构化成长路径。",
-    "Desarrollé de principio a fin el Portal de incorporación para ofrecer a nuevos Area Managers y Operations Managers una ruta estructurada desde la primera semana hasta la validación de su preparación."
-  ],
   "End-to-end ownership": [
     "端到端负责",
     "Responsabilidad de principio a fin"
   ],
-  "Six-week roadmap": [
-    "六周学习路线",
-    "Hoja de ruta de seis semanas"
-  ],
-  "Site and regional visibility": [
-    "站点与区域可见性",
-    "Visibilidad del centro y la región"
-  ],
   "Onboarding Portal scope": [
     "入职培训门户范围",
     "Alcance del Portal de incorporación"
-  ],
-  "Weeks 1–6": [
-    "第1–6周",
-    "Semanas 1–6"
-  ],
-  "A roadmap based on regional guidance": [
-    "基于区域指导的学习路线",
-    "Una hoja de ruta basada en directrices regionales"
   ],
   "Built by me": [
     "由我独立开发",
@@ -887,37 +682,13 @@ export const DICTIONARY = {
     "站点 → 区域",
     "Centro → región"
   ],
-  "Readiness visibility for senior leaders": [
-    "让高级管理层掌握就绪度",
-    "Visibilidad de la preparación para la dirección"
-  ],
   "The business need": [
     "业务需求",
     "La necesidad del negocio"
   ],
-  "New operations managers need both technical skills and leadership development. In the onboarding experience I saw, learning roadmaps were unstructured, shadowing expectations were unclear, and leaders lacked a consistent way to validate whether a manager had been properly trained.": [
-    "新任运营经理既需要技术技能，也需要领导力发展。在我观察到的入职体验中，学习路线缺乏结构，跟岗要求不清晰，管理层也缺少一致的方法验证经理是否接受了充分培训。",
-    "Los nuevos gerentes necesitan habilidades técnicas y de liderazgo. En la incorporación que observé, las rutas de aprendizaje carecían de estructura, las expectativas de acompañamiento no eran claras y la dirección no tenía una forma consistente de validar la formación recibida."
-  ],
-  "Completing assignments or spending time with another manager did not, by itself, give site leadership a clear picture of readiness. The gaps created a risk of missed learning, repeated training, and managers entering their roles without the preparation they needed.": [
-    "仅完成作业或跟随另一位经理，并不能让站点管理层清楚了解就绪程度。这些缺口可能导致漏学、重复培训，以及经理在准备不足的情况下上岗。",
-    "Completar tareas o acompañar a otro gerente no bastaba para evaluar la preparación. Las carencias podían provocar aprendizajes omitidos, formación repetida y gerentes que asumían sus funciones sin la preparación necesaria."
-  ],
   "What I owned": [
     "我负责的部分",
     "Mi responsabilidad"
-  ],
-  "I identified the business need and built the Onboarding Portal end to end myself. I translated regional onboarding guidance into a six-week operating roadmap, designed the learning and review experience, developed the tool, and launched it as a pilot.": [
-    "我识别业务需求，并独立端到端构建了入职培训门户。我将区域入职指导转化为六周路线，设计学习与审核体验，完成工具开发并启动试点。",
-    "Identifiqué la necesidad y construí el portal de principio a fin. Convertí las directrices regionales en una ruta de seis semanas, diseñé la experiencia de aprendizaje y revisión, desarrollé la herramienta y la lancé como piloto."
-  ],
-  "The portal brings the roadmap, training calendar, learning evidence, and readiness assessment into one place. My role covered the complete solution, with AI assistance used in development.": [
-    "门户将学习路线、培训日历、学习记录和就绪度评估集中在一个平台。我负责完整解决方案，并在开发中使用AI辅助。",
-    "El portal reúne la hoja de ruta, el calendario, las evidencias de aprendizaje y la evaluación de preparación. Mi responsabilidad abarcó toda la solución, con ayuda de IA durante el desarrollo."
-  ],
-  "REGIONAL GUIDANCE, MADE ACTIONABLE": [
-    "将区域指导转化为实际行动",
-    "DIRECTRICES REGIONALES LLEVADAS A LA PRÁCTICA"
   ],
   "One connected six-week journey": [
     "连贯的六周成长路径",
@@ -927,17 +698,13 @@ export const DICTIONARY = {
     "学习路线涵盖全部六周",
     "La hoja de ruta cubre las seis semanas"
   ],
-  "WEEK": [
+  "Week": [
     "周",
-    "SEMANA"
+    "Semana"
   ],
   "Each week connects its learning goals with the assigned training, practical experience, and evidence leaders need to review progress.": [
     "每周将学习目标与指定培训、实践体验及管理层审核进展所需的证据连接起来。",
     "Cada semana conecta los objetivos con la formación asignada, la práctica y las evidencias que la dirección necesita para revisar el progreso."
-  ],
-  "01 / DIRECTION": [
-    "01 / 方向",
-    "01 / DIRECCIÓN"
   ],
   "Weekly learning goals": [
     "每周学习目标",
@@ -947,10 +714,6 @@ export const DICTIONARY = {
     "依据区域指导制定逐周路线，并包含公司学习平台指定的课程。",
     "Una ruta semanal basada en directrices regionales, con programas asignados de la plataforma de formación de la empresa."
   ],
-  "02 / PLANNING": [
-    "02 / 规划",
-    "02 / PLANIFICACIÓN"
-  ],
   "Daily and weekly calendars": [
     "每日与每周日历",
     "Calendarios diarios y semanales"
@@ -958,10 +721,6 @@ export const DICTIONARY = {
   "Visibility into in-person training and shadowing, so managers and leaders can see the learning schedule.": [
     "清晰展示线下培训与跟岗安排，让经理及管理层掌握学习日程。",
     "Visibilidad de la formación presencial y el acompañamiento para que gerentes y responsables conozcan el calendario."
-  ],
-  "03 / APPLICATION": [
-    "03 / 应用",
-    "03 / APLICACIÓN"
   ],
   "Observations and reflections": [
     "观察与反思",
@@ -971,10 +730,6 @@ export const DICTIONARY = {
     "每周作业记录经理的观察与学习，高级管理层可以持续跟踪和审核。",
     "Las tareas semanales registran observaciones y aprendizajes que la dirección puede seguir y revisar."
   ],
-  "04 / EVIDENCE": [
-    "04 / 记录",
-    "04 / EVIDENCIAS"
-  ],
   "Materials and attendance": [
     "材料与出勤",
     "Materiales y asistencia"
@@ -982,10 +737,6 @@ export const DICTIONARY = {
   "Stored in-person training materials and session records support attendance tracking and follow-up.": [
     "保存线下培训材料及课程记录，支持出勤跟踪和后续跟进。",
     "Los materiales y registros de sesiones presenciales permiten controlar la asistencia y realizar seguimiento."
-  ],
-  "05 / VALIDATION": [
-    "05 / 验证",
-    "05 / VALIDACIÓN"
   ],
   "Knowledge checks": [
     "知识测验",
@@ -995,10 +746,6 @@ export const DICTIONARY = {
     "通过学习测验及线下培训后的检查，验证理解程度并发现缺口。",
     "Las comprobaciones de aprendizaje, incluidas las posteriores a sesiones presenciales, validan la comprensión y detectan carencias."
   ],
-  "06 / READINESS": [
-    "06 / 就绪度",
-    "06 / PREPARACIÓN"
-  ],
   "A skill-readiness grading matrix": [
     "技能就绪度评分矩阵",
     "Matriz de evaluación de competencias"
@@ -1006,14 +753,6 @@ export const DICTIONARY = {
   "Assessment of technical skills and leadership development gives reviewers a consistent basis for readiness decisions.": [
     "评估技术技能与领导力发展，为审核者的就绪度判断提供一致依据。",
     "La evaluación de habilidades técnicas y liderazgo ofrece criterios consistentes para decidir si el gerente está preparado."
-  ],
-  "Visibility from the site to the region": [
-    "从站点到区域的可见性",
-    "Visibilidad desde el centro hasta la región"
-  ],
-  "Site senior leadership and regional directors can review how their teams are progressing through onboarding and launch readiness. The shared record connects planned learning, attendance, reflections, knowledge checks, and skill readiness.": [
-    "站点高级管理层和区域总监可以查看团队的入职及开站准备进展。共享记录串联学习计划、出勤、反思、知识测验与技能就绪度。",
-    "La dirección del centro y los directores regionales pueden revisar la incorporación y la preparación para el lanzamiento. El registro compartido conecta planes, asistencia, reflexiones, pruebas de conocimiento y competencias."
   ],
   "Build the business case around observable costs": [
     "以可观察的成本建立商业论证",
@@ -1026,10 +765,6 @@ export const DICTIONARY = {
   "The model below values reductions in that avoidable work. Delayed readiness is modeled separately. The figures are planning assumptions until before-and-after data are available.": [
     "以下模型估算减少这些可避免工作的价值。就绪延迟单独建模。在获得前后对比数据之前，这些数值均为规划假设。",
     "El modelo valora la reducción de ese trabajo evitable. Los retrasos en preparación se modelan por separado. Las cifras son supuestos de planificación hasta contar con datos comparativos."
-  ],
-  "HYPOTHETICAL REGIONAL MODEL · EDITABLE ASSUMPTIONS": [
-    "区域假设模型 · 可调整假设",
-    "MODELO REGIONAL HIPOTÉTICO · SUPUESTOS EDITABLES"
   ],
   "From one manager to a regional rollout": [
     "从一位经理到区域推广",
@@ -1235,121 +970,21 @@ export const DICTIONARY = {
     "如何验证成效",
     "Cómo validaría el impacto"
   ],
-  "Compare similar onboarding cohorts on time spent coordinating, repeated training, attendance, first-attempt knowledge-check results, weekly assignment completion, and days to readiness under the same grading criteria. A consistent rubric and reviewer calibration help distinguish real skill development from completion alone.": [
-    "在统一评分标准下，对比相似入职群体的协调时间、重复培训、出勤、知识测验首次通过表现、每周作业完成情况及达到就绪标准所需天数。一致的评分量表与审核者校准，可区分真实能力成长与仅完成任务。",
-    "Compararía grupos similares en tiempo de coordinación, formación repetida, asistencia, resultados al primer intento, tareas semanales y días hasta la preparación bajo los mismos criterios. Una rúbrica consistente y revisores calibrados distinguen el desarrollo real de competencias de la mera finalización."
-  ],
-  "FLOOR-LEVEL PALLET PICKING": [
+  "Floor-level pallet picking": [
     "地面托盘拣选",
-    "PICKING DE PALÉS A NIVEL DEL SUELO"
-  ],
-  "I identified an ergonomic gap in floor-level pallet picking and led the initiative to standardize A-level elevation.": [
-    "我发现地面托盘拣选中的人体工学缺口，并牵头推动A层抬高标准化。",
-    "Identifiqué una carencia ergonómica en el picking de palés a nivel del suelo y lideré la iniciativa para estandarizar su elevación en el nivel A."
-  ],
-  "Safety initiative": [
-    "安全改善项目",
-    "Iniciativa de seguridad"
-  ],
-  "Site project ownership": [
-    "站点项目负责人",
-    "Responsabilidad del proyecto en el centro"
-  ],
-  "Eight-site rollout opportunity": [
-    "八站点推广机会",
-    "Oportunidad de implantación en ocho centros"
-  ],
-  "Replay the floor observation ↗": [
-    "重播现场观察 ↗",
-    "Repetir la observación en el almacén ↗"
-  ],
-  "A-Level Beams project scope": [
-    "A层横梁项目范围",
-    "Alcance de Vigas de nivel A"
+    "Picking de palés a nivel del suelo"
   ],
   "11.5 inches": [
     "11.5英寸",
     "11,5 pulgadas"
   ],
-  "Planned elevation above floor level": [
-    "计划离地抬高高度",
-    "Elevación prevista sobre el suelo"
-  ],
-  "6,062 bins": [
-    "6,062个货位",
-    "6.062 ubicaciones"
-  ],
-  "Pilot-site scope in the white paper": [
-    "白皮书中的试点站点范围",
-    "Alcance del centro piloto en el documento"
-  ],
-  "Comparable-site projection": [
-    "可比站点测算",
-    "Proyección para centros comparables"
-  ],
-  "The safety gap I identified": [
-    "我识别的安全缺口",
-    "La carencia de seguridad que identifiqué"
-  ],
-  "At my site, many A-level pallets rested directly on the floor. Accessing low or deep inventory could require an associate to dismount the order picker, stoop, kneel, or reach forward while handling a product. The recurring physical setup was part of the problem.": [
-    "我所在站点的许多A层托盘直接放在地面。拿取低处或深处的商品，可能需要员工下车、弯腰、跪下或向前伸手搬动商品。这种反复出现的实体布局本身就是问题的一部分。",
-    "En mi centro, muchos palés de nivel A descansaban en el suelo. Acceder a productos bajos o profundos podía exigir bajar del preparador, agacharse, arrodillarse o inclinarse hacia delante. La configuración física recurrente formaba parte del problema."
-  ],
-  "I connected that task design with the building’s injury history and led the A-Level Pallet Bin Beam Standardization initiative. The proposal brought together Operations, Workplace Health and Safety, Learning/ICQA, maintenance, and installation partners.": [
-    "我将作业设计与站点工伤历史联系起来，牵头提出A层托盘货位横梁标准化方案，协调运营、工作场所健康与安全、Learning/ICQA、维修维护及安装合作方。",
-    "Relacioné el diseño de la tarea con el historial de lesiones y lideré la estandarización de vigas en ubicaciones de palés de nivel A. La propuesta reunió a Operaciones, Seguridad y Salud, Learning/ICQA, mantenimiento e instaladores."
-  ],
   "The engineering change": [
     "工程改善方案",
     "El cambio de ingeniería"
   ],
-  "The site design adds standardized beams, backstops, and wire decking beneath 6,062 floor-level bins, raising pallets by approximately 11.5 inches. The aim is to reduce repeated low-level access while preserving the pick workflow.": [
-    "方案为6,062个地面货位增加标准化横梁、后挡及网格层板，将托盘抬高约11.5英寸。目标是在保留拣选流程的同时，减少反复从低处取货。",
-    "El diseño incorpora vigas, topes posteriores y plataformas de malla estandarizados bajo 6.062 ubicaciones, elevando los palés unas 11,5 pulgadas. Busca reducir el acceso repetido a baja altura conservando el flujo de picking."
-  ],
-  "My work connected the ergonomic need with installation planning, vendor costs, storage-capacity tradeoffs, and a design that could inform other first-generation buildings.": [
-    "我的工作将人体工学需求与安装规划、供应商成本、存储容量取舍，以及可供其他第一代站点参考的设计相结合。",
-    "Conecté la necesidad ergonómica con la planificación, los costes de proveedores, las compensaciones de capacidad y un diseño útil para otros centros de primera generación."
-  ],
   "What the evidence supports": [
     "证据支持的结论",
     "Qué respaldan las evidencias"
-  ],
-  "The paper records": [
-    "白皮书记录，",
-    "El documento recoge"
-  ],
-  "9 of 23 wide-aisle recordable injuries": [
-    "23起广巷道可记录工伤中有9起",
-    "9 de 23 lesiones registrables en pasillos anchos"
-  ],
-  "as associated with A-level locations in": [
-    "与A层货位有关，统计期为",
-    "asociadas a ubicaciones de nivel A en"
-  ],
-  ". Following a separate double-stacked-pallet pilot, that share was": [
-    "。另一项双层托盘试点后，该占比为",
-    ". Tras un piloto independiente de palés apilados en dos alturas, la proporción fue de"
-  ],
-  "1 of 12 in 2024": [
-    "2024年12起中有1起",
-    "1 de 12 en 2024"
-  ],
-  "Those are shares of recorded cases across different periods. They are not an exposure-adjusted injury-rate comparison, and the pilot used stacked pallets rather than the proposed beams.": [
-    "这些是不同时间段的工伤案例占比，不是按暴露量调整后的事故率对比；该试点使用叠放托盘，并非拟议横梁。",
-    "Son proporciones de casos de distintos periodos, no una comparación de tasas ajustada por exposición. El piloto usó palés apilados, no las vigas propuestas."
-  ],
-  "The paper also cites a": [
-    "白皮书还引用了",
-    "El documento también cita una"
-  ],
-  "49–54% modeled reduction in ergonomic exposure": [
-    "模型预测的人体工学风险暴露降低49–54%",
-    "reducción modelada del 49–54% en la exposición ergonómica"
-  ],
-  ". Its simulation discussion includes reach tools and wire guidance alongside elevation. It does not establish that beams alone reduce actual injuries by that percentage.": [
-    "。其模拟讨论除抬高外，还包含辅助取物工具和导线引导，不能证明仅靠横梁就能按该比例减少实际工伤。",
-    ". La simulación considera herramientas de alcance y guiado por cable además de la elevación. No demuestra que las vigas por sí solas reduzcan las lesiones reales en ese porcentaje."
   ],
   "INJURY-COST AVOIDANCE SCENARIOS": [
     "工伤成本避免情景",
@@ -1358,10 +993,6 @@ export const DICTIONARY = {
   "Scale the safety case carefully": [
     "审慎扩展安全商业论证",
     "Escalar con rigor el análisis de seguridad"
-  ],
-  "The paper uses approximately four strain-related recordable cases per year as its site baseline. Select how many cases could be avoided; exposure reduction is not converted automatically into injury reduction.": [
-    "白皮书以站点每年约4起劳损相关可记录工伤为基线。请选择可能避免的起数；风险暴露下降不会自动换算为工伤下降。",
-    "El documento usa unas cuatro lesiones registrables por sobreesfuerzo al año como referencia del centro. Selecciona cuántas podrían evitarse; la reducción de exposición no se convierte automáticamente en reducción de lesiones."
   ],
   "Cases avoided per site per year": [
     "每站点每年避免工伤起数",
@@ -1379,17 +1010,9 @@ export const DICTIONARY = {
     "预计年度价值",
     "Valor anual estimado"
   ],
-  "Two avoided cases is an illustrative scenario. The paper’s four-case assumption yields $268,992 per site per year, or $2,151,936 across eight equivalent sites. Preventing all four baseline cases is an upper scenario, not a measured outcome.": [
-    "避免2起工伤是示例情景。按白皮书避免4起的假设，每站点每年为268,992美元，8个可比站点为2,151,936美元。避免全部4起基线工伤是上限情景，并非实测结果。",
-    "Evitar dos casos es ilustrativo. El supuesto de cuatro casos del documento produce 268.992 USD por centro y año, o 2.151.936 USD en ocho centros equivalentes. Evitar los cuatro casos de referencia es un escenario superior, no un resultado medido."
-  ],
   "Include the investment and storage tradeoff": [
     "纳入投资与存储容量取舍",
     "Incluir inversión y pérdida de capacidad"
-  ],
-  "The paper estimates approximately $0.728 million of site investment and a 2.73% storage-capacity reduction, valued at $188,623.80 per year. These planning figures require updated quotes and capacity validation.": [
-    "白皮书估计单站点投资约72.8万美元，存储容量减少2.73%，对应每年188,623.80美元。这些规划数据需要更新报价并验证容量。",
-    "El documento estima una inversión de unos 0,728 millones de USD por centro y una reducción del 2,73% en capacidad, valorada en 188.623,80 USD anuales. Las cifras requieren presupuestos actualizados y validación de capacidad."
   ],
   "Site investment (USD)": [
     "站点投资（美元）",
@@ -1399,25 +1022,9 @@ export const DICTIONARY = {
     "单站点年度存储机会成本（美元）",
     "Coste de oportunidad anual de almacenamiento por centro (USD)"
   ],
-  "The paper’s roughly 9.05-year simple payback assumes all four baseline cases are avoided and deducts its storage opportunity cost. At two avoided cases, this limited financial model does not cover that annual opportunity cost. The safety rationale remains separate from this financial sensitivity. No discounted cash flow, validated NPV, or quantified productivity benefit is claimed here.": [
-    "白皮书约9.05年的简单回收期假设全部4起基线工伤均被避免，并扣除存储机会成本。若仅避免2起，该有限财务模型无法覆盖年度机会成本。安全理由与财务敏感性分析分开；此处不声称已验证折现现金流、净现值或量化生产率效益。",
-    "El plazo simple de recuperación de unos 9,05 años supone evitar los cuatro casos y deducir el coste de oportunidad de almacenamiento. Con dos casos, este modelo limitado no cubre dicho coste anual. La justificación de seguridad se mantiene separada. No se afirma un flujo descontado, un VAN validado ni un beneficio de productividad cuantificado."
-  ],
-  "The $67,248 historical proxy includes $32,023 direct and $35,225 indirect costs, as reproduced from OSHA Safety Pays in the paper. It is not the actual cost of every injury. Network figures assume comparable risk and implementation at all selected sites; each building needs its own case history, bin count, costs, and rollout schedule.": [
-    "67,248美元的历史参考值来自白皮书引用的OSHA Safety Pays，包括32,023美元直接成本和35,225美元间接成本，并非每起工伤的实际成本。网络测算假设各选定站点风险与实施情况可比；各站点仍需使用自己的工伤历史、货位数量、成本及推广安排。",
-    "La referencia histórica de 67.248 USD de OSHA Safety Pays incluye 32.023 USD directos y 35.225 USD indirectos. No es el coste real de cada lesión. La proyección supone riesgos e implantación comparables; cada centro necesita su historial, ubicaciones, costes y calendario."
-  ],
-  "The source is a project white paper, not a final installation or post-installation benefits report. Avoided injuries and network benefits remain projections. Do not combine these cases with Bin Liners injury avoidance until overlapping incidents have been removed.": [
-    "来源为项目白皮书，并非最终安装或实施后效益报告。避免工伤与网络效益仍是预测。排除重复工伤之前，不应与货位衬板项目的工伤避免额合并。",
-    "La fuente es un documento técnico del proyecto, no un informe final de instalación o beneficios posteriores. Las lesiones evitadas y los beneficios de red siguen siendo proyecciones. No deben sumarse a los de Separadores de ubicaciones sin eliminar los casos duplicados."
-  ],
   "Build quality into the operation.": [
     "将质量融入运营。",
     "Integrar la calidad en la operación."
-  ],
-  "QUALITY & LAUNCH READINESS": [
-    "质量与开站就绪",
-    "CALIDAD Y PREPARACIÓN PARA EL LANZAMIENTO"
   ],
   "A risk-based framework for making quality ownership and daily execution part of a new operation.": [
     "以风险为导向，让质量责任与日常执行成为新站点运营的一部分。",
@@ -1486,10 +1093,6 @@ export const DICTIONARY = {
   "Make accuracy part of daily work.": [
     "让准确性成为日常习惯。",
     "Hacer de la precisión parte del trabajo diario."
-  ],
-  "INVENTORY & OPERATING DISCIPLINE": [
-    "库存与运营纪律",
-    "INVENTARIO Y DISCIPLINA OPERATIVA"
   ],
   "My operating focus in Inventory Control and Quality Assurance.": [
     "我在库存控制与质量保证中的运营重点。",
@@ -1595,10 +1198,6 @@ export const DICTIONARY = {
     "货位很宽，商品却被埋住。",
     "Una ubicación amplia. Un artículo oculto."
   ],
-  "BEFORE / HORIZONTAL STACKING": [
-    "改善前 / 横向堆叠",
-    "ANTES / APILADO HORIZONTAL"
-  ],
   "Watch the extra handling": [
     "观察额外搬动",
     "Ver la manipulación adicional"
@@ -1618,10 +1217,6 @@ export const DICTIONARY = {
   "Move other items just to reach one.": [
     "为了拿一件，先搬其他件。",
     "Mover otros artículos para alcanzar uno."
-  ],
-  "BEFORE / REPEATED PUSH AND PULL": [
-    "改善前 / 反复推拉",
-    "ANTES / EMPUJAR Y TIRAR REPETIDAMENTE"
   ],
   "Install the white liners": [
     "安装白色衬板",
@@ -1643,10 +1238,6 @@ export const DICTIONARY = {
     "白色衬板改变货位使用方式。",
     "Los separadores blancos cambian el uso de la ubicación."
   ],
-  "AFTER / UPRIGHT, LIBRARY-STYLE STOW": [
-    "改善后 / 像书一样竖放",
-    "DESPUÉS / ALMACENAJE VERTICAL TIPO LIBRERÍA"
-  ],
   "Watch the direct pick": [
     "观察直接拣选",
     "Ver la extracción directa"
@@ -1667,21 +1258,9 @@ export const DICTIONARY = {
     "找到、取出，继续作业。",
     "Identificar. Extraer. Continuar."
   ],
-  "AFTER / LESS HANDLING": [
-    "改善后 / 减少搬动",
-    "DESPUÉS / MENOS MANIPULACIÓN"
-  ],
-  "The picker can identify and retrieve an upright item without first moving the pile around it. The reported average time at bin fell from 120 to 30 seconds, with a 60% lower recordable incident rate in Rainbow-bin picking after the project.": [
-    "拣选员无需先移动周边堆叠，就能识别并取出竖放商品。报告的平均货位停留时间由120秒降至30秒，项目后Rainbow货位拣选的可记录工伤事故率降低60%。",
-    "El operario identifica y extrae el artículo vertical sin mover antes la pila que lo rodea. El TAB medio reportado pasó de 120 a 30 segundos, con una tasa de incidentes registrables un 60% menor en picking Rainbow tras el proyecto."
-  ],
   "The picker retrieves one upright carton directly from a white-lined shelf compartment onto the protected order-picker platform, leaving neighboring items in place.": [
     "拣选员将一个竖放纸箱从白色衬板货位直接取到有防护的拣选车平台，其他商品保持原位。",
     "El operario extrae una caja vertical directamente desde el compartimento con separadores blancos hacia la plataforma protegida, sin mover los artículos vecinos."
-  ],
-  "30 sec average time at bin · 90 sec recovered": [
-    "平均货位停留30秒 · 节省90秒",
-    "30 s de TAB medio · 90 s recuperados"
   ],
   "The character image could not load. You can still explore every project from the project index.": [
     "角色图片加载失败，仍可通过项目目录查看全部项目。",
@@ -1711,14 +1290,6 @@ export const DICTIONARY = {
     "返回现场",
     "Volver al almacén"
   ],
-  "All four projects explored. Revisit any stop or meet the manager to learn more.": [
-    "已探索全部四个项目。可以重访任何站点，或了解经理背景。",
-    "Ya exploraste los cuatro proyectos. Vuelve a una parada o conoce al gerente."
-  ],
-  "STOP 04 / A-LEVEL BEAMS": [
-    "第04站 / A层横梁",
-    "PARADA 04 / VIGAS DE NIVEL A"
-  ],
   "See the task through the picker’s eyes.": [
     "从拣选员的视角看作业。",
     "Mira la tarea desde la perspectiva del operario."
@@ -1735,14 +1306,6 @@ export const DICTIONARY = {
     "此场景用于说明人体工学风险，并非特定工伤的还原或安装图纸。",
     "Escena ilustrativa del riesgo ergonómico; no reconstruye una lesión concreta ni es un plano de instalación."
   ],
-  "Go straight to the project →": [
-    "直接查看项目 →",
-    "Ir directamente al proyecto →"
-  ],
-  "ON THE FLOOR / OBSERVATION": [
-    "现场 / 观察",
-    "EN EL ALMACÉN / OBSERVACIÓN"
-  ],
   "Replay sequence": [
     "重播流程",
     "Repetir secuencia"
@@ -1750,10 +1313,6 @@ export const DICTIONARY = {
   "Play sequence": [
     "播放流程",
     "Reproducir secuencia"
-  ],
-  "STOP 01 / BIN LINERS": [
-    "第01站 / 货位衬板",
-    "PARADA 01 / SEPARADORES"
   ],
   "From digging through a pile": [
     "从翻找堆叠商品",
@@ -1763,25 +1322,13 @@ export const DICTIONARY = {
     "到直接从货架取货。",
     "a extraer de una estantería."
   ],
-  "Or explore one step at a time.": [
-    "也可逐步查看。",
-    "O explora paso a paso."
-  ],
   "Illustrative workflow based on the project account. Pick times are reported averages; the animation is not a timed reenactment.": [
     "根据项目陈述制作的流程示意。拣选时间为报告平均值，动画并非按真实时长还原。",
     "Flujo ilustrativo basado en el relato del proyecto. Los tiempos son promedios reportados; la animación no reproduce la duración real."
   ],
-  "ON THE FLOOR / BEFORE & AFTER": [
-    "现场 / 改善前后",
-    "EN EL ALMACÉN / ANTES Y DESPUÉS"
-  ],
   "Pause sequence": [
     "暂停流程",
     "Pausar secuencia"
-  ],
-  "THE WORK, AT A GLANCE": [
-    "工作概览",
-    "EL TRABAJO, DE UN VISTAZO"
   ],
   "Project index.": [
     "项目目录。",
@@ -1795,10 +1342,6 @@ export const DICTIONARY = {
     "项目目录",
     "ÍNDICE DE PROYECTOS"
   ],
-  "MEET THE MANAGER": [
-    "认识这位经理",
-    "CONOCE AL GERENTE"
-  ],
   "A perspective built": [
     "扎根于一线的",
     "Una perspectiva construida"
@@ -1807,7 +1350,7 @@ export const DICTIONARY = {
     "运营视角。",
     "desde la primera línea."
   ],
-  "I'm Shuyu Zheng, an operations and inventory quality leader at Amazon.": [
+  "I’m Shuyu Zheng, an operations and inventory quality leader at Amazon.": [
     "我是Shuyu Zheng，在亚马逊负责运营和库存质量管理。",
     "Soy Shuyu Zheng, líder de operaciones y calidad de inventario en Amazon."
   ],
@@ -1815,21 +1358,21 @@ export const DICTIONARY = {
     "L4 区域经理（校园招聘）→ 运营经理 → ICQA 运营经理",
     "Area Manager L4 (contratación universitaria) → Operations Manager → ICQA Operations Manager"
   ],
-  "I've worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.": [
+  "I’ve worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.": [
     "我曾负责入库运营及库存控制与质量保证（ICQA），具备收货、上架、库存准确性、质量机制和团队发展的经验。",
     "He trabajado en operaciones de entrada y Control de Inventario y Garantía de Calidad (ICQA), con experiencia en recepción, almacenaje, precisión del inventario, mecanismos de calidad y desarrollo de equipos."
   ],
-  "BASED IN": [
+  "Based in": [
     "所在地",
-    "UBICACIÓN"
+    "Ubicación"
   ],
   "Bay Area, California": [
     "加利福尼亚州湾区",
     "Área de la Bahía, California"
   ],
-  "EDUCATION": [
+  "Education": [
     "教育背景",
-    "FORMACIÓN"
+    "Formación"
   ],
   "San Francisco State University": [
     "旧金山州立大学",
@@ -1863,41 +1406,9 @@ export const DICTIONARY = {
     "评估采用情况与成效，通过辅导和调整，让改善成为日常执行的一部分。",
     "Revisar adopción y eficacia. Acompañar, ajustar e integrar la mejora en la ejecución diaria."
   ],
-  "Quality & launch readiness ↗": [
-    "质量与开站就绪 ↗",
-    "Calidad y preparación para el lanzamiento ↗"
-  ],
-  "Inventory quality leadership ↗": [
-    "库存质量管理 ↗",
-    "Liderazgo en calidad de inventario ↗"
-  ],
-  "Explore my work": [
-    "探索我的项目",
-    "Explorar mi trabajo"
-  ],
-  "BACKGROUND & APPROACH": [
-    "背景与方法",
-    "TRAYECTORIA Y ENFOQUE"
-  ],
-  "About Shuyu ↗": [
-    "关于Shuyu ↗",
-    "Sobre Shuyu ↗"
-  ],
-  "LEADERSHIP & QUALITY": [
-    "领导力与质量",
-    "LIDERAZGO Y CALIDAD"
-  ],
   "The stower pulls a cage from its work-in-progress lane through the floor-mounted strut frame.": [
     "上架人员从待处理通道拉出笼车，穿过固定在地面的门架。",
     "El operario extrae una jaula de su carril de espera y la pasa por el pórtico anclado al suelo."
-  ],
-  "The fixed Zebra scanner reads the barcode while the stower continues moving the cage toward the order picker.": [
-    "固定式Zebra扫描器读取条码，同时员工继续将笼车移向拣选车。",
-    "El escáner fijo Zebra lee el código mientras el operario sigue moviendo la jaula hacia el preparador."
-  ],
-  "By the time the cage is mounted, the overhead TV displays the system’s recommended aisles. The separate tablet scan and wait are removed.": [
-    "笼车装好时，顶部电视已显示StowGuidance推荐的巷道，独立的平板扫描与等待步骤被省去。",
-    "Al terminar el montaje, la pantalla muestra los pasillos de Stow Guidance. Se elimina el escaneo y la espera independientes con la tableta."
   ],
   "Replay ↺": [
     "重播 ↺",
@@ -1907,17 +1418,9 @@ export const DICTIONARY = {
     "下一步 →",
     "Siguiente paso →"
   ],
-  "Complete all four fields using the values allowed.": [
-    "请按允许范围填写全部四个字段。",
-    "Completa los cuatro campos con valores permitidos."
-  ],
   "Update the schedule to calculate the capacity estimate.": [
     "调整班次安排以计算产能。",
     "Actualiza el horario para calcular la capacidad."
-  ],
-  "Complete the model fields using the values allowed.": [
-    "请按允许范围填写模型字段。",
-    "Completa los campos del modelo con valores permitidos."
   ],
   "Update the inputs to calculate regional participation.": [
     "调整输入以计算区域参与人数。",
@@ -1947,29 +1450,17 @@ export const DICTIONARY = {
     "语言",
     "Idioma"
   ],
-  "Automatic (browser language)": [
-    "自动（浏览器语言）",
-    "Automático (idioma del navegador)"
-  ],
   "Rainbow storage racks": [
     "Rainbow仓储货架",
     "Estanterías Rainbow"
   ],
-  "Stow satellite": [
-    "上架卫星区",
-    "Zona satélite de almacenaje"
-  ],
-  "Manager's desk": [
+  "Manager’s desk": [
     "经理办公桌",
     "Escritorio del gerente"
   ],
   "Floor-level pallet pick": [
     "地面托盘拣选站",
     "Picking de palés a nivel del suelo"
-  ],
-  "Complete each field using the values allowed.": [
-    "请按允许范围填写每个字段。",
-    "Completa cada campo con valores permitidos."
   ],
   "Update the inputs to calculate this scenario.": [
     "调整输入以计算此情景。",
@@ -2115,10 +1606,6 @@ export const DICTIONARY = {
     "· 或选择下方站点",
     "· O elige una parada abajo"
   ],
-  "Take a floor walk with Shuyu Zheng, an operations and ICQA leader at Amazon. Explore the process improvements and tools behind Bin Liners, Stow Guidance, the Onboarding Portal, and A-Level Beams.": [
-    "与亚马逊运营和ICQA负责人Shuyu Zheng一起走访仓库，探索货位衬板、Stow Guidance、入职培训门户和A层横梁背后的流程改善与工具。",
-    "Recorre el almacén con Shuyu Zheng, líder de operaciones e ICQA en Amazon. Descubre las mejoras de Separadores de ubicaciones, Stow Guidance, el Portal de incorporación y Vigas de nivel A."
-  ],
   "Next slide": [
     "下一页",
     "Siguiente"
@@ -2131,29 +1618,9 @@ export const DICTIONARY = {
     "从翻找堆叠货物，到直接取出所需商品。",
     "De rebuscar en una pila a recoger el artículo en el estante."
   ],
-  "Inside the Onboarding Portal.": [
-    "走进入职培训门户。",
-    "Así es el Portal de incorporación."
-  ],
-  "ACTUAL TOOL SCREENS": [
-    "工具实际界面",
-    "PANTALLAS REALES DE LA HERRAMIENTA"
-  ],
   "View full-size screenshot ↗": [
     "查看原尺寸截图 ↗",
     "Ver captura a tamaño completo ↗"
-  ],
-  "Original English screenshots from the working site-level build. Captions follow your selected language. The network backend and corporate sign-in are proposed next steps.": [
-    "截图来自已可用的站点版工具，界面为英文，说明文字随所选语言切换。跨站点后端和企业统一登录属于拟议的下一阶段。",
-    "Capturas originales en inglés de la versión funcional del centro. Los textos explicativos siguen el idioma seleccionado. El backend para la red y el acceso corporativo son próximos pasos propuestos."
-  ],
-  "ONBOARDING PORTAL / VISUAL WALKTHROUGH": [
-    "入职培训门户 / 界面导览",
-    "PORTAL DE INCORPORACIÓN / RECORRIDO VISUAL"
-  ],
-  "View the tool screenshots ↗": [
-    "查看工具界面截图 ↗",
-    "Ver las capturas de la herramienta ↗"
   ],
   "One place to begin.": [
     "统一的学习起点。",
@@ -2255,10 +1722,6 @@ export const DICTIONARY = {
     "组织学习状况。团队进度。学习成果验证。",
     "Salud del aprendizaje. Ritmo de los equipos. Aprendizaje validado."
   ],
-  "I built the Onboarding Portal end to end to make organizational learning health visible: how teams are progressing, who is on pace, and where Senior Operations, GMs, and regional directors need to follow up.": [
-    "我独立完成了入职培训门户的设计与开发，让组织的学习状况清晰可见：各团队的进展、哪些人员按计划推进，以及高级运营经理、站点总经理和区域总监需要跟进的事项。",
-    "Diseñé y desarrollé el Portal de incorporación de principio a fin para hacer visible el estado del aprendizaje en la organización: cómo avanzan los equipos, quién sigue el ritmo previsto y dónde deben intervenir los responsables sénior de Operaciones, los gerentes generales y los directores regionales."
-  ],
   "Organization-wide learning health": [
     "全组织学习状况",
     "Estado del aprendizaje en toda la organización"
@@ -2271,10 +1734,6 @@ export const DICTIONARY = {
     "从组织到个人，看清学习状况。",
     "El aprendizaje, de la organización a cada persona."
   ],
-  "MANAGER / INDIVIDUAL LEARNING": [
-    "经理视角 / 个人学习",
-    "GERENTES / APRENDIZAJE INDIVIDUAL"
-  ],
   "Org → team → person": [
     "组织 → 团队 → 个人",
     "Organización → equipo → persona"
@@ -2282,10 +1741,6 @@ export const DICTIONARY = {
   "Learning health across the organization": [
     "全组织学习状况一目了然",
     "Visibilidad del aprendizaje en toda la organización"
-  ],
-  "Visibility for Senior Operations, GMs, and regional directors": [
-    "供高级运营经理、站点总经理和区域总监查看",
-    "Visibilidad para Operaciones sénior, gerentes generales y directores regionales"
   ],
   "Senior leaders needed a consistent picture of organizational learning health: which teams were progressing, who was on pace, and where support was needed before launch. Unstructured roadmaps, unclear shadowing expectations, and fragmented learning records made readiness difficult to assess.": [
     "高级领导需要统一了解组织的学习状况：哪些团队在持续推进、哪些人员跟得上计划，以及在站点启动前哪里需要支持。缺乏结构的学习路线、不明确的跟岗要求和分散的学习记录，使岗位准备度难以评估。",
@@ -2299,14 +1754,6 @@ export const DICTIONARY = {
     "面向领导的组织学习全景",
     "Una visión del aprendizaje organizativo para los líderes"
   ],
-  "Senior Operations can focus coaching by team and shift. GMs can review learning health across the site. Regional directors gain a consistent view for discussing progress and launch readiness with site leaders.": [
-    "高级运营经理可按团队和班次安排辅导；站点总经理可查看全站点的学习状况；区域总监可依据统一信息，与站点领导讨论进度和启动准备情况。",
-    "Operaciones sénior puede orientar el acompañamiento por equipo y turno. Los gerentes generales pueden revisar el aprendizaje de todo el centro. Los directores regionales disponen de una visión consistente para hablar con los líderes de cada centro sobre avances y preparación para la apertura."
-  ],
-  "01 / ORGANIZATION": [
-    "01 / 组织全景",
-    "01 / ORGANIZACIÓN"
-  ],
   "See the whole team": [
     "看清整个团队",
     "Ver al equipo completo"
@@ -2314,10 +1761,6 @@ export const DICTIONARY = {
   "The admin overview connects reporting lines, roles, and learning progress. Leaders can move from the organization chart to a team or individual to understand where support is needed.": [
     "管理员概览将汇报关系、岗位和学习进度联系起来。领导可从组织架构下钻到团队或个人，了解哪里需要支持。",
     "La vista administrativa conecta líneas de reporte, funciones y progreso de aprendizaje. Los líderes pueden pasar del organigrama a un equipo o una persona para identificar dónde hace falta apoyo."
-  ],
-  "02 / PACE": [
-    "02 / 推进节奏",
-    "02 / RITMO"
   ],
   "Know which teams are on track": [
     "了解哪些团队按计划推进",
@@ -2327,10 +1770,6 @@ export const DICTIONARY = {
     "团队汇总将作业完成合规情况、主动参与度以及相对计划的进度集中呈现。待跟进指标帮助领导明确关注重点。",
     "Los resúmenes por equipo reúnen cumplimiento de tareas, participación activa y progreso frente al ritmo previsto. Los indicadores de seguimiento ayudan a los líderes a centrar su atención."
   ],
-  "03 / ENGAGEMENT": [
-    "03 / 主动参与",
-    "03 / PARTICIPACIÓN"
-  ],
   "Recognize active learners and strong progress": [
     "识别积极参与和进展突出的学员",
     "Reconocer la participación activa y los avances destacados"
@@ -2338,10 +1777,6 @@ export const DICTIONARY = {
   "Separate rankings cover assignments, active engagement, weekly progress, and completion. Leaders can recognize momentum and identify coaching needs using distinct learning signals.": [
     "作业、主动参与、每周进展和完成情况分别排名。领导可通过不同的学习指标认可持续进步，并识别需要辅导的人员。",
     "Las clasificaciones separadas cubren tareas, participación activa, progreso semanal y nivel de finalización. Los líderes pueden reconocer avances e identificar necesidades de apoyo a partir de señales de aprendizaje diferenciadas."
-  ],
-  "04 / TRAINING": [
-    "04 / 培训管理",
-    "04 / FORMACIÓN"
   ],
   "Connect attendance with learning validation": [
     "将出勤与学习验证联系起来",
@@ -2375,17 +1810,9 @@ export const DICTIONARY = {
     "从全组织的学习状况看起。",
     "Empezar por el aprendizaje de toda la organización."
   ],
-  "I built the portal to connect individual learning with a leadership view of the whole organization. The admin overview maps learning progress to teams, shifts, roles, and reporting lines, giving Senior Operations, GMs, and regional directors a starting point to identify gaps and focus support.": [
-    "我构建这个门户，将个人学习与面向领导的组织全景连接起来。管理员概览按团队、班次、岗位和汇报关系呈现学习进度，帮助高级运营经理、站点总经理和区域总监发现差距并安排有针对性的支持。",
-    "Construí el portal para conectar el aprendizaje individual con una visión de toda la organización para los líderes. La vista administrativa relaciona el progreso con equipos, turnos, funciones y líneas de reporte, dando a Operaciones sénior, gerentes generales y directores regionales un punto de partida para identificar brechas y orientar el apoyo."
-  ],
   "Program Admin overview with a role breakdown and organization chart showing learning-progress indicators across shift teams, Quality, and Learning; names pixelated, values blurred.": [
     "项目管理员概览，包含岗位分布和组织架构，展示各轮班团队、质量团队与培训团队的学习进度指标；姓名已像素化，数值已模糊处理。",
     "Vista del administrador del programa con desglose por función y un organigrama que muestra indicadores de progreso de aprendizaje por equipos de turno, Calidad y Formación; nombres pixelados y valores difuminados."
-  ],
-  "LEADERSHIP / ORGANIZATION HEALTH": [
-    "领导视角 / 组织学习状况",
-    "LIDERAZGO / APRENDIZAJE ORGANIZATIVO"
   ],
   "See who is on pace, and where to follow up.": [
     "看清谁在按计划推进，以及哪里需要跟进。",
@@ -2419,10 +1846,6 @@ export const DICTIONARY = {
     "从扫码等待，到装好即走。",
     "De escanear y esperar a acoplar y continuar."
   ],
-  "STOW GUIDANCE / BEFORE & AFTER": [
-    "STOW GUIDANCE / 改善前后",
-    "STOW GUIDANCE / ANTES Y DESPUÉS"
-  ],
   "Illustrated from my project account and warehouse photos. The sequence is not timed; the approximate one-minute recovery covers the old scan-and-wait process together.": [
     "根据我的项目描述及仓库照片绘制。演示并非实时计时；约一分钟的节省指原流程中扫码与等待的合计时间。",
     "Ilustraciones basadas en mi descripción del proyecto y en fotos del almacén. La secuencia no reproduce tiempos reales; el minuto aproximado recuperado corresponde al escaneo y la espera del proceso anterior en conjunto."
@@ -2431,10 +1854,6 @@ export const DICTIONARY = {
     "我设计了三条平行通道的“洗车通道式”布局，每条通道都有独立的门形支架。支架用螺栓固定在地面，并从仓库顶部引电，将扫描器布置在笼车离开待上架队列的必经路径上。",
     "Diseñé la disposición tipo «túnel de lavado» con tres carriles paralelos y un marco en forma de puerta sobre cada uno. Los marcos se fijan al suelo con pernos y reciben alimentación desde el techo, situando los escáneres en la ruta de salida de las jaulas de la cola de trabajo pendiente."
   ],
-  "The cage mounts behind the OP and attaches to the same lifting assembly as the operator platform. During stowing, the cage and operator platform elevate together.": [
-    "笼车安装在 OP 后部，与操作员平台连接在同一升降组件上。上架作业时，笼车与操作员平台同步升降。",
-    "La jaula se acopla detrás del OP y se conecta al mismo conjunto elevador que la plataforma del operario. Durante la ubicación de mercancía, ambos suben y bajan juntos."
-  ],
   "See the real drop zone": [
     "查看实际暂存区",
     "Ver la zona de espera real"
@@ -2442,14 +1861,6 @@ export const DICTIONARY = {
   "Warehouse photos from my project reference. Select a photo to view it full size.": [
     "项目参考仓库照片。点击照片可查看原尺寸。",
     "Fotos del almacén utilizadas como referencia del proyecto. Selecciona una foto para verla a tamaño completo."
-  ],
-  "Full cages in the WIP lanes.": [
-    "待上架通道中的满载笼车。",
-    "Jaulas llenas en los carriles de trabajo pendiente."
-  ],
-  "The stow drop zone and OP staging.": [
-    "上架暂存区与 OP 准备区域。",
-    "Zona de espera para ubicación de mercancía y preparación de los OP."
   ],
   "Cages, lane separation, and overhead displays.": [
     "笼车、通道分隔与顶部显示屏。",
@@ -2467,69 +1878,25 @@ export const DICTIONARY = {
     "仓库上架区的带轮网格笼车、标记通道及顶部电视。",
     "Jaulas de malla con ruedas, carriles señalizados y una pantalla elevada en la zona de ubicación de mercancía."
   ],
-  "BEFORE / MOUNT THE CAGE": [
-    "改善前 / 安装笼车",
-    "ANTES / ACOPLAR LA JAULA"
-  ],
   "The cage is mounted. The scanning still has to happen.": [
     "笼车已装好，扫码尚未完成。",
     "La jaula está acoplada. Aún falta escanear."
-  ],
-  "The stower first mounts the full cage behind the order picker (OP). The cage attaches to the same lifting assembly as the operator platform, so both move up and down together during stowing. The old process still requires a separate tablet scan.": [
-    "上架员先将满载笼车安装在高位拣选车（OP）后部。笼车与操作员平台连接在同一升降组件上，上架时同步升降。原流程在此之后仍需单独用平板扫码。",
-    "El operario primero acopla la jaula llena detrás del preparador de pedidos (OP). La jaula se une al mismo conjunto elevador que la plataforma del operario, por lo que ambos suben y bajan juntos durante la ubicación de mercancía. El proceso anterior todavía exige un escaneo independiente con la tableta."
   ],
   "One cage changeover": [
     "一次笼车更换",
     "Un cambio de jaula"
   ],
-  "A stationary stand-up order picker with a loaded mesh cage mounted behind the operator platform; the stower takes out a Kindle tablet.": [
-    "静止的站驾式高位拣选车，其操作员平台后部已安装满载网格笼车；上架员取出 Kindle 平板。",
-    "Preparador de pedidos de pie, detenido, con una jaula de malla cargada acoplada detrás de la plataforma del operario, que saca una tableta Kindle."
-  ],
-  "BEFORE / KINDLE SCAN": [
-    "改善前 / KINDLE 扫码",
-    "ANTES / ESCANEO CON KINDLE"
-  ],
-  "Aim the Kindle at the cage barcode.": [
-    "将 Kindle 对准笼车条码。",
-    "Apuntar el Kindle al código de la jaula."
-  ],
-  "The stower uses the Kindle camera to read the mounted cage’s barcode. The camera can be difficult to align and scan successfully, so a failed attempt means trying again.": [
-    "上架员使用 Kindle 摄像头读取已安装笼车的条码。摄像头对准和识别并不容易，扫码失败就需要重试。",
-    "El operario utiliza la cámara del Kindle para leer el código de la jaula acoplada. Alinear la cámara y conseguir una lectura puede resultar difícil; si falla, hay que volver a intentarlo."
-  ],
   "Manual barcode capture": [
     "手动读取条码",
     "Lectura manual del código"
-  ],
-  "The stower aims a handheld Kindle tablet at the barcode on the rear-mounted mesh cage.": [
-    "上架员手持 Kindle 平板，对准后部网格笼车的条码。",
-    "El operario apunta una tableta Kindle al código de la jaula de malla acoplada en la parte posterior."
-  ],
-  "BEFORE / WAIT FOR STOW GUIDANCE": [
-    "改善前 / 等待 STOW GUIDANCE",
-    "ANTES / ESPERAR A STOW GUIDANCE"
   ],
   "Wait for the recommended aisles.": [
     "等待推荐巷道。",
     "Esperar los pasillos recomendados."
   ],
-  "After scanning, the stower waits for Stow Guidance to update on the Kindle before heading to the recommended aisles. Scanning and waiting together take about one minute per cage even when the scan succeeds on the first try.": [
-    "扫码后，上架员需等待 Kindle 上的 Stow Guidance 更新，再前往推荐巷道。即使一次扫码成功，每次换笼的扫码与等待合计也约需一分钟。",
-    "Tras escanear, el operario espera a que Stow Guidance se actualice en el Kindle antes de dirigirse a los pasillos recomendados. El escaneo y la espera suman aproximadamente un minuto por jaula, incluso cuando la lectura funciona al primer intento."
-  ],
   "≈60 seconds for scanning + waiting": [
     "扫码 + 等待 ≈60 秒",
     "≈60 segundos entre escaneo y espera"
-  ],
-  "The order picker and rear-mounted cage remain stationary while the stower waits for the Kindle to load the aisle recommendation.": [
-    "上架员等待 Kindle 加载推荐巷道期间，高位拣选车及后部笼车保持静止。",
-    "El preparador de pedidos y la jaula trasera permanecen detenidos mientras el operario espera a que el Kindle cargue los pasillos recomendados."
-  ],
-  "AFTER / PULL THROUGH": [
-    "改善后 / 拉过扫描通道",
-    "DESPUÉS / PASAR POR EL MARCO"
   ],
   "Make the exit route do the scanning.": [
     "让出笼路径完成扫码。",
@@ -2539,25 +1906,13 @@ export const DICTIONARY = {
     "我围绕三条平行通道设计了“洗车通道式”布局。每条通道都有独立的门形支架，用螺栓固定在地面，并从顶部引电。上架员将笼车拉向 OP 时，就会经过该支架。",
     "Diseñé la disposición tipo «túnel de lavado» en torno a tres carriles paralelos. Cada carril tiene su propio marco en forma de puerta, fijado al suelo y alimentado desde arriba. El operario tira de la jaula y la hace pasar por el marco de camino al OP."
   ],
-  "3 lanes · one frame per lane": [
-    "3 条通道 · 每条各一座支架",
-    "3 carriles · un marco por carril"
-  ],
   "Three parallel cage lanes each have a floor-mounted doorway frame and overhead TV; a stower pulls a full cage through the middle lane.": [
     "三条平行笼车通道各配有固定在地面的门形支架和顶部电视；上架员拉着满载笼车通过中间通道。",
     "Tres carriles paralelos para jaulas, cada uno con un marco fijado al suelo y una pantalla superior; un operario pasa una jaula llena por el carril central."
   ],
-  "AFTER / AUTOMATIC SCAN": [
-    "改善后 / 自动扫码",
-    "DESPUÉS / ESCANEO AUTOMÁTICO"
-  ],
   "The barcode is read while the cage moves.": [
     "笼车移动中，条码自动读取。",
     "El código se lee mientras la jaula avanza."
-  ],
-  "A fixed Zebra scanner reads the cage barcode as it passes through the lane’s frame. Stow Guidance processes the recommendation while the stower continues toward the OP; the TV above the frame displays the recommended aisles.": [
-    "笼车通过通道支架时，固定式 Zebra 扫描器自动读取条码。上架员继续拉车前往 OP 的同时，Stow Guidance 处理推荐结果，支架上方的电视显示推荐巷道。",
-    "Un escáner Zebra fijo lee el código cuando la jaula pasa por el marco del carril. Stow Guidance procesa la recomendación mientras el operario sigue hacia el OP; la pantalla sobre el marco muestra los pasillos recomendados."
   ],
   "Scanning overlaps with movement": [
     "扫码与移动同步进行",
@@ -2567,17 +1922,9 @@ export const DICTIONARY = {
     "固定扫描器读取移动笼车上的条码，顶部电视显示巷道指引。",
     "Un escáner fijo lee el código de una jaula en movimiento mientras la pantalla superior muestra una indicación de pasillos."
   ],
-  "AFTER / MOUNT AND GO": [
-    "改善后 / 装好即走",
-    "DESPUÉS / ACOPLAR Y CONTINUAR"
-  ],
   "The direction is ready when the cage is mounted.": [
     "笼车装好，指引已就绪。",
     "La dirección está lista al acoplar la jaula."
-  ],
-  "By the time the cage is secured behind the OP, the overhead screen already shows the recommended aisles. The stower can continue without a separate Kindle scan and wait. During stowing, the attached cage elevates with the operator platform.": [
-    "笼车固定在 OP 后部时，顶部屏幕已显示推荐巷道。上架员无需再单独用 Kindle 扫码等待，即可继续作业。上架过程中，安装好的笼车随操作员平台同步升降。",
-    "Cuando la jaula queda asegurada detrás del OP, la pantalla superior ya muestra los pasillos recomendados. El operario puede continuar sin realizar un escaneo y una espera independientes con el Kindle. Durante la ubicación de mercancía, la jaula acoplada se eleva junto con la plataforma del operario."
   ],
   "≈60 seconds recovered per cage": [
     "每次换笼节省 ≈60 秒",
@@ -2591,8 +1938,408 @@ export const DICTIONARY = {
     "上架员先将满载笼车直接安装在高位拣选车（OP）后部，与车身纵向成一直线。笼车与操作员平台共用升降组件，上架时同步升降。原流程在此之后仍需单独用平板扫码。",
     "El operario primero acopla la jaula llena directamente detrás del preparador de pedidos (OP), alineada longitudinalmente con el vehículo. La jaula y la plataforma comparten el conjunto elevador y suben y bajan juntas durante la ubicación de mercancía. El proceso anterior todavía exige un escaneo independiente con la tableta."
   ],
-  "The cage attaches directly to the back of the OP, aligned straight along the same longitudinal axis. It shares the lifting assembly with the operator platform, so the cage and platform elevate together during stowing.": [
-    "笼车直接连接在 OP 后部，与车身沿同一纵轴成一直线。笼车与操作员平台共用升降组件，上架时同步升降。",
-    "La jaula se acopla directamente a la parte posterior del OP, alineada sobre el mismo eje longitudinal. Comparte el conjunto elevador con la plataforma del operario, de modo que ambos suben y bajan juntos durante la ubicación de mercancía."
+  "Project notes": [
+    "项目笔记",
+    "Notas del proyecto"
+  ],
+  "Floor observation": [
+    "现场观察",
+    "Observación en el almacén"
+  ],
+  "Before and after": [
+    "改善前后",
+    "Antes y después"
+  ],
+  "Portal walkthrough": [
+    "门户界面导览",
+    "Recorrido por el portal"
+  ],
+  "Manager view: individual learning": [
+    "经理视角：个人学习",
+    "Vista del gerente: aprendizaje individual"
+  ],
+  "Leadership view: organization health": [
+    "领导视角：组织学习状况",
+    "Vista del liderazgo: aprendizaje organizativo"
+  ],
+  "Background and approach": [
+    "背景与方法",
+    "Trayectoria y enfoque"
+  ],
+  "Quality and launch readiness": [
+    "质量与开站就绪",
+    "Calidad y preparación para el lanzamiento"
+  ],
+  "Inventory and operating discipline": [
+    "库存与运营纪律",
+    "Inventario y disciplina operativa"
+  ],
+  "Inventory quality leadership": [
+    "库存质量管理",
+    "Liderazgo en calidad de inventario"
+  ],
+  "Go straight to the project": [
+    "直接查看项目",
+    "Ir directamente al proyecto"
+  ],
+  "Walk the floor": [
+    "走进现场",
+    "Recorrer el almacén"
+  ],
+  "Auto": [
+    "自动",
+    "Automático"
+  ],
+  "Space": [
+    "空格",
+    "Espacio"
+  ],
+  "E": [
+    "E",
+    "E"
+  ],
+  "Q": [
+    "Q",
+    "Q"
+  ],
+  "Always looking for a better way. Take a walk with me through the projects I’ve built to make work safer, simpler, and more efficient.": [
+    "持续寻找更好的方法。跟我一起走走，看看我如何通过这些项目，让工作更安全、更简单、更高效。",
+    "Siempre buscando una mejor manera. Acompáñame a descubrir los proyectos que he creado para hacer el trabajo más seguro, sencillo y eficiente."
+  ],
+  "Operations Manager leading Inventory Control and Quality Assurance (ICQA)": [
+    "运营经理，负责库存控制与质量保证（ICQA）",
+    "Gerente de Operaciones al frente de Control de Inventario y Garantía de Calidad (ICQA)"
+  ],
+  "Operations and quality": [
+    "运营与质量",
+    "Operaciones y calidad"
+  ],
+  "People, process and practical tools": [
+    "团队、流程与实用工具",
+    "Personas, procesos y herramientas prácticas"
+  ],
+  "Personal portfolio, 2026": [
+    "个人作品集，2026",
+    "Portafolio personal, 2026"
+  ],
+  "Stow drop zone": [
+    "上架暂存区",
+    "Zona de espera de almacenaje"
+  ],
+  "Bin Liners, stop 1: walk to the racks": [
+    "货位衬板，第 1 站：走到货架",
+    "Separadores de ubicaciones, parada 1: camina a las estanterías"
+  ],
+  "Stow Guidance, stop 2: walk to the drop zone": [
+    "Stow Guidance，第 2 站：走到暂存区",
+    "Stow Guidance, parada 2: camina a la zona de espera"
+  ],
+  "Onboarding Portal, stop 3: walk to the manager’s desk": [
+    "入职培训门户，第 3 站：走到经理办公桌",
+    "Portal de incorporación, parada 3: camina al escritorio del gerente"
+  ],
+  "A-Level Beams, stop 4: walk to the picker": [
+    "A层横梁，第 4 站：走到拣选员旁",
+    "Vigas de nivel A, parada 4: camina hasta el operario"
+  ],
+  "More than 50%": [
+    "50%以上",
+    "Más del 50%"
+  ],
+  "Lower recordable incident rate (RIR) in Rainbow-bin picking, as reported after the project": [
+    "项目后报告的 Rainbow 货位拣选可记录工伤事故率（RIR）降幅",
+    "Menor tasa de incidentes registrables (RIR) en picking Rainbow, según lo reportado tras el proyecto"
+  ],
+  "Approved for rollout; a regional safety committee owns execution": [
+    "已批准推广，由区域安全委员会负责执行",
+    "Aprobado para su implantación; un comité regional de seguridad se encarga de la ejecución"
+  ],
+  "Replay the before-and-after sequence": [
+    "重播改善前后流程",
+    "Repetir la secuencia del antes y después"
+  ],
+  ". I also reported a recordable incident rate (RIR) in Rainbow-bin picking more than 50% lower after the project.": [
+    "。我还报告，项目后 Rainbow 货位拣选的可记录工伤事故率（RIR）降低了50%以上。",
+    ". También reporté que, tras el proyecto, la tasa de incidentes registrables (RIR) en el picking Rainbow fue más de un 50% menor."
+  ],
+  "The pilot was then approved for rollout at eight comparable first-generation sites. A regional safety committee owns that rollout; my part was the pilot, the design and the case for it.": [
+    "该试点随后获批在八个可比的第一代站点推广。推广由区域安全委员会负责；我负责的是试点、设计以及支持它的论证。",
+    "Después, el piloto se aprobó para implantarse en ocho centros comparables de primera generación. Un comité regional de seguridad se encarga de esa implantación; mi parte fue el piloto, el diseño y el análisis que lo respaldó."
+  ],
+  "A projection for one site and for eight. The inputs are illustrative, not site data; change them to test the idea.": [
+    "单个站点和八个站点的测算。输入值仅为示例，并非站点数据；可修改它们来检验这个设想。",
+    "Una proyección para un centro y para ocho. Los valores son ilustrativos, no datos del centro; cámbialos para poner a prueba la idea."
+  ],
+  "The $67,248 reference comes from the OSHA Safety Pays estimate reproduced in the A-Level Beams proposal: $32,023 direct cost plus $35,225 indirect cost per strain case. It is a historical planning proxy, not an Amazon claims rate. Update it with site-specific evidence.": [
+    "67,248美元的参考值来自A层横梁方案中引用的OSHA Safety Pays估算：每起劳损工伤直接成本32,023美元，加上间接成本35,225美元。这是历史规划参考值，并非亚马逊理赔标准，应以站点实际数据更新。",
+    "La referencia de 67.248 USD procede de la estimación de OSHA Safety Pays incluida en la propuesta de Vigas de nivel A: 32.023 USD de costes directos y 35.225 USD indirectos por lesión por sobreesfuerzo. Es una referencia histórica de planificación, no una tarifa de reclamaciones de Amazon. Debe actualizarse con datos del centro."
+  ],
+  "The 3–5 avoided cases below are an illustrative planning scenario, not site data. They are not derived from the reported RIR reduction.": [
+    "以下每年避免3–5起工伤是示例规划情景，并非站点数据，也不是根据报告的RIR下降推算而来。",
+    "Los 3–5 casos evitados son un escenario de planificación ilustrativo, no datos del centro. No se derivan de la reducción reportada de la RIR."
+  ],
+  "Before: horizontal stacking": [
+    "改善前：横向堆叠",
+    "Antes: apilado horizontal"
+  ],
+  "Before: repeated push and pull": [
+    "改善前：反复推拉",
+    "Antes: empujar y tirar repetidamente"
+  ],
+  "After: upright, library-style stow": [
+    "改善后：像书一样竖放",
+    "Después: almacenaje vertical tipo librería"
+  ],
+  "After: less handling": [
+    "改善后：减少搬动",
+    "Después: menos manipulación"
+  ],
+  "30 sec average time at bin, 90 sec recovered": [
+    "平均货位停留30秒，节省90秒",
+    "30 s de TAB medio, 90 s recuperados"
+  ],
+  "The picker can identify and retrieve an upright item without first moving the pile around it. The reported average time at bin fell from 120 to 30 seconds, and the recordable incident rate in Rainbow-bin picking was reported more than 50% lower after the project.": [
+    "拣选员无需先移动周边堆叠，就能识别并取出竖放商品。报告的平均货位停留时间由120秒降至30秒；据报告，项目后 Rainbow 货位拣选的可记录工伤事故率降低了50%以上。",
+    "El operario identifica y extrae el artículo vertical sin mover antes la pila que lo rodea. El TAB medio reportado pasó de 120 a 30 segundos, y la tasa de incidentes registrables en picking Rainbow fue, según lo reportado, más de un 50% menor tras el proyecto."
+  ],
+  "Replay the floor observation": [
+    "重播现场观察",
+    "Repetir la observación en el almacén"
+  ],
+  "Safety proposal": [
+    "安全方案",
+    "Propuesta de seguridad"
+  ],
+  "Co-authored business case": [
+    "合著的商业论证",
+    "Análisis de negocio en coautoría"
+  ],
+  "Conditional approval": [
+    "有条件批准",
+    "Aprobación condicional"
+  ],
+  "I co-authored a proposal to lift floor-level pallets onto standard beams, and I priced the storage it would cost into the case.": [
+    "我与同事合写了一份方案，用标准横梁把地面托盘抬高，并把由此损失的存储容量计入成本论证。",
+    "Escribí en coautoría una propuesta para elevar los palés a nivel del suelo sobre vigas estándar e incluí en el análisis el coste del almacenamiento que se perdería."
+  ],
+  "A-Level Beams proposal at a glance": [
+    "A层横梁方案概览",
+    "Vigas de nivel A: resumen de la propuesta"
+  ],
+  "Planned lift for the bottom pallet": [
+    "底层托盘的计划抬高高度",
+    "Elevación prevista del palé inferior"
+  ],
+  "≈$190K a year": [
+    "每年约19万美元",
+    "≈190.000 USD al año"
+  ],
+  "Storage cost I priced into the case": [
+    "我计入论证的存储成本",
+    "Coste de almacenamiento incluido en el análisis"
+  ],
+  "Co-authored proposal, not yet installed": [
+    "合著方案，尚未安装",
+    "Propuesta en coautoría, aún sin instalar"
+  ],
+  "The safety gap": [
+    "安全缺口",
+    "La carencia de seguridad"
+  ],
+  "The A-level is the bottom storage level of a pallet rack, and many A-level pallets rested directly on the floor. Reaching low or deep inventory could mean stepping off the order picker, then stooping, kneeling or reaching forward with a product in hand. The physical setup made awkward access part of the task.": [
+    "A层是托盘货架最底部的存储层，许多A层托盘直接放在地面上。拿取低处或深处的库存，可能需要先走下拣选车，再弯腰、跪地或手持商品向前伸够。这种实体布局让别扭的取货姿势成了作业的一部分。",
+    "El nivel A es el nivel de almacenamiento más bajo de una estantería de palés, y muchos palés de nivel A estaban directamente en el suelo. Alcanzar inventario bajo o profundo podía obligar a bajar del preparador de pedidos y luego agacharse, arrodillarse o estirarse con un producto en la mano. La disposición física hacía del acceso incómodo parte de la tarea."
+  ],
+  "With a colleague, I wrote the A-Level Pallet Bin Beam Standardization proposal. It brought together Operations, Workplace Health and Safety, Learning, ICQA, maintenance and installation partners.": [
+    "我与一位同事共同撰写了A层托盘货位横梁标准化方案，协调了运营、工作场所健康与安全、Learning、ICQA、维修维护及安装合作方。",
+    "Escribí en coautoría la propuesta de estandarización de vigas en ubicaciones de palés de nivel A. Reunió a Operaciones, Seguridad y Salud en el Trabajo, Learning, ICQA, mantenimiento e instaladores."
+  ],
+  "The design adds standard beams, backstops and wire decking under the floor-level positions, lifting each pallet about 11.5 inches. The pick workflow stays the same; the bend gets smaller.": [
+    "方案在地面货位下方增加标准横梁、后挡和网格层板，将每个托盘抬高约11.5英寸。拣选流程不变，弯腰幅度变小。",
+    "El diseño añade vigas estándar, topes posteriores y plataformas de malla bajo las posiciones a nivel del suelo, y eleva cada palé unas 11,5 pulgadas. El flujo de picking no cambia; la flexión es menor."
+  ],
+  "The work connected the ergonomic need with installation planning, vendor quotes and a design other first-generation buildings could reuse.": [
+    "这项工作将人体工学需求与安装规划、供应商报价，以及可供其他第一代站点复用的设计结合起来。",
+    "El trabajo conectó la necesidad ergonómica con la planificación de la instalación, los presupuestos de proveedores y un diseño que otros centros de primera generación podrían reutilizar."
+  ],
+  "The cost I put in the case": [
+    "我计入论证的成本",
+    "El coste que incluí en el análisis"
+  ],
+  "Lifting the bottom pallet takes height out of every rack it touches, so the building stores less. I valued that lost space as an annual cost, about $190,000 a year for one site, and set it against the safety benefit instead of showing the gross figure alone.": [
+    "抬高底层托盘会占用所涉每个货架的高度，站点的存储量随之减少。我把损失的空间计为年度成本，单个站点每年约19万美元，并将其与安全收益相抵，而不是只展示总收益。",
+    "Elevar el palé inferior resta altura a cada estantería afectada, así que el edificio almacena menos. Valoré ese espacio perdido como un coste anual, unos 190.000 USD al año para un centro, y lo resté del beneficio de seguridad en lugar de mostrar solo la cifra bruta."
+  ],
+  "That made the case weaker on paper and easier to trust. It reached conditional approval as a safety investment, not on payback alone. The beams are not installed yet, so there are no post-installation results.": [
+    "这让方案在纸面上显得更弱，却更可信。它作为安全投资获得了有条件批准，而不是只凭回收期。横梁尚未安装，因此还没有安装后的结果。",
+    "Eso debilitó el caso sobre el papel y lo hizo más creíble. Obtuvo una aprobación condicional como inversión en seguridad, no solo por su recuperación. Las vigas aún no están instaladas, así que no hay resultados posteriores a la instalación."
+  ],
+  "The proposal draws on the site’s injury history and on an ergonomic model. The model also credited reach tools and wire guidance, so it does not show what beams alone would change. Site injury data stays internal, so the calculator below starts from inputs you choose.": [
+    "方案依据站点的工伤历史和一个人体工学模型。该模型同时计入了伸够工具和线导系统的作用，因此无法单独说明横梁带来的变化。站点工伤数据仅限内部使用，所以下方计算器从你选择的输入值开始。",
+    "La propuesta se basa en el historial de lesiones del centro y en un modelo ergonómico. El modelo también atribuía efecto a las herramientas de alcance y al guiado por cable, así que no muestra qué cambiarían las vigas por sí solas. Los datos de lesiones del centro son internos, por eso la calculadora parte de valores que eliges tú."
+  ],
+  "Choose how many strain cases a site might avoid each year. The inputs are illustrative, not site data, and lower exposure is not converted automatically into fewer injuries.": [
+    "选择一个站点每年可能避免的劳损工伤起数。输入值仅为示例，并非站点数据；降低暴露不会自动换算为工伤减少。",
+    "Elige cuántos casos por sobreesfuerzo podría evitar un centro cada año. Los valores son ilustrativos, no datos del centro, y una menor exposición no se convierte automáticamente en menos lesiones."
+  ],
+  "Two avoided cases is an illustrative scenario, not a measured outcome.": [
+    "每年避免两起工伤只是示例情景，并非实测结果。",
+    "Dos casos evitados es un escenario ilustrativo, no un resultado medido."
+  ],
+  "The proposal estimates about $0.73 million of investment and about $190,000 a year of lost storage for one site. These planning figures need updated quotes and a capacity check.": [
+    "方案估计单个站点需投资约73万美元，每年损失的存储容量约值19万美元。这些规划数据需要更新报价并核实容量。",
+    "La propuesta estima unos 0,73 millones de USD de inversión y unos 190.000 USD al año de almacenamiento perdido para un centro. Estas cifras de planificación requieren presupuestos actualizados y una revisión de capacidad."
+  ],
+  "At two avoided cases, injury-cost avoidance does not cover the annual storage cost, so this limited financial model shows no simple payback. The safety rationale stands apart from this financial view. No discounted cash flow, validated NPV or quantified productivity benefit is claimed here.": [
+    "若每年避免两起工伤，避免的工伤成本不足以覆盖每年的存储成本，因此这一有限的财务模型不显示简单回收期。安全理由独立于这一财务视角。此处不声称任何折现现金流、经验证的净现值或量化的生产率收益。",
+    "Con dos casos evitados, el ahorro en costes de lesiones no cubre el coste anual de almacenamiento, así que este modelo financiero limitado no muestra una recuperación simple. La justificación de seguridad es independiente de esta visión financiera. Aquí no se afirma ningún flujo de caja descontado, VAN validado ni beneficio de productividad cuantificado."
+  ],
+  "The $67,248 historical proxy includes $32,023 direct and $35,225 indirect costs, as reproduced from OSHA Safety Pays in the proposal. It is not the actual cost of every injury. Network figures assume comparable risk and implementation at all selected sites; each building needs its own case history, bin count, costs, and rollout schedule.": [
+    "67,248美元的历史参考值来自方案中引用的OSHA Safety Pays，包括32,023美元直接成本和35,225美元间接成本，并非每起工伤的实际成本。网络测算假设各选定站点风险与实施情况可比；各站点仍需使用自己的工伤历史、货位数量、成本及推广安排。",
+    "La referencia histórica de 67.248 USD de OSHA Safety Pays, recogida en la propuesta, incluye 32.023 USD directos y 35.225 USD indirectos. No es el coste real de cada lesión. La proyección supone riesgos e implantación comparables; cada centro necesita su historial, ubicaciones, costes y calendario."
+  ],
+  "The source is a project proposal, not an installation or post-installation benefits report. Avoided injuries and network benefits remain projections. Do not combine these cases with Bin Liners injury avoidance until overlapping incidents have been removed.": [
+    "来源为项目方案，并非安装报告或实施后效益报告。避免工伤与网络效益仍是预测。排除重复工伤之前，不应与货位衬板项目的工伤避免额合并。",
+    "La fuente es una propuesta de proyecto, no un informe de instalación ni de beneficios posteriores. Las lesiones evitadas y los beneficios de red siguen siendo proyecciones. No deben sumarse a los de Separadores de ubicaciones sin eliminar los casos duplicados."
+  ],
+  "Recovered per cage changeover, as reported": [
+    "据报告，每次换笼节省的时间",
+    "Recuperados por cambio de jaula, según lo reportado"
+  ],
+  "Recovered per team operating hour, modeled at 20 stowers": [
+    "按20名上架员测算，团队每运营一小时释放的人工时间",
+    "Recuperada por hora operativa del equipo, con un modelo de 20 operarios"
+  ],
+  "Reported adoption at another building": [
+    "据报告已被另一站点采用",
+    "Adopción reportada en otro centro"
+  ],
+  "Stowers mounted a cage on their order picker, then used a tablet to scan its barcode and wait for the stow guidance system to return the recommended aisles or zones. The tablet camera was difficult to scan with, and the system responded slowly on the device.": [
+    "上架人员先将笼车装到拣选车上，再使用平板扫描条码，等待 Stow Guidance 返回推荐巷道或库区。平板摄像头不易对准扫描，系统在设备上的响应也较慢。",
+    "Los operarios montaban la jaula en el preparador de pedidos y después escaneaban su código con una tableta, esperando la recomendación de Stow Guidance. La cámara dificultaba el escaneo y el sistema respondía lentamente en el dispositivo."
+  ],
+  "A fixed-mount barcode scanner reads the cage barcode automatically. A TV mounted on the overhead strut displays the system’s recommended aisles or zones. By the time the stower has mounted the cage on the order picker, the recommendation is already on screen.": [
+    "固定式条码扫描器自动读取笼车条码，顶部支架上的电视显示 Stow Guidance 推荐的巷道或库区。当上架人员将笼车装到拣选车上时，推荐信息已显示在屏幕上。",
+    "Un escáner de códigos fijo lee automáticamente el código de la jaula. Una pantalla instalada en el travesaño superior muestra los pasillos o zonas recomendados por Stow Guidance. Al terminar de montar la jaula, la recomendación ya está visible."
+  ],
+  "The cage attaches directly to the back of the order picker (OP), aligned straight along the same axis. It shares the lifting assembly with the operator platform, so the cage and platform rise together during stowing.": [
+    "笼车直接连接在拣选车（OP）后部，与车身沿同一轴线对齐。笼车与操作员平台共用升降组件，上架时两者一起升起。",
+    "La jaula se acopla directamente a la parte posterior del preparador de pedidos (OP), alineada sobre el mismo eje. Comparte el conjunto elevador con la plataforma del operario, de modo que ambas suben juntas durante la ubicación de mercancía."
+  ],
+  "Full cages in the work-in-progress (WIP) lanes.": [
+    "在制品（WIP）通道中的满载笼车。",
+    "Jaulas llenas en los carriles de trabajo en curso (WIP)."
+  ],
+  "The stow drop zone and order picker staging.": [
+    "上架暂存区与拣选车准备区域。",
+    "Zona de espera de almacenaje y zona de los preparadores de pedidos."
+  ],
+  "The fixed scanner reads the cage barcode automatically.": [
+    "固定扫描器自动读取笼车条码。",
+    "El escáner fijo lee el código de la jaula automáticamente."
+  ],
+  ", or 5% of the team’s time at that cage rate. At least one other building adopted the design, as reported.": [
+    "，即该换笼频率下团队工时的5%。据报告，至少另一个站点已采用这一设计。",
+    ", equivalentes al 5% del tiempo del equipo a ese ritmo. Según lo reportado, al menos otro centro adoptó el diseño."
+  ],
+  "Before: mount the cage": [
+    "改善前：安装笼车",
+    "Antes: acoplar la jaula"
+  ],
+  "Before: tablet scan": [
+    "改善前：平板扫码",
+    "Antes: escaneo con tableta"
+  ],
+  "Before: wait for Stow Guidance": [
+    "改善前：等待 Stow Guidance",
+    "Antes: esperar a Stow Guidance"
+  ],
+  "After: pull through": [
+    "改善后：拉过扫描通道",
+    "Después: pasar por el marco"
+  ],
+  "After: automatic scan": [
+    "改善后：自动扫码",
+    "Después: escaneo automático"
+  ],
+  "After: mount and go": [
+    "改善后：装好即走",
+    "Después: acoplar y continuar"
+  ],
+  "3 lanes, one frame per lane": [
+    "3 条通道，每条各一座支架",
+    "3 carriles, un marco por carril"
+  ],
+  "A stationary stand-up order picker with a loaded mesh cage mounted behind the operator platform; the stower takes out a tablet.": [
+    "静止的站驾式高位拣选车，其操作员平台后部已安装满载网格笼车；上架员取出平板。",
+    "Preparador de pedidos de pie, detenido, con una jaula de malla cargada acoplada detrás de la plataforma del operario, que saca una tableta."
+  ],
+  "Aim the tablet at the cage barcode.": [
+    "将平板对准笼车条码。",
+    "Apuntar la tableta al código de la jaula."
+  ],
+  "The stower uses the tablet camera to read the mounted cage’s barcode. The camera can be difficult to align and scan successfully, so a failed attempt means trying again.": [
+    "上架员使用平板摄像头读取已安装笼车的条码。摄像头对准和识别并不容易，扫码失败就需要重试。",
+    "El operario utiliza la cámara de la tableta para leer el código de la jaula acoplada. Alinear la cámara y conseguir una lectura puede resultar difícil; si falla, hay que volver a intentarlo."
+  ],
+  "The stower aims a handheld tablet at the barcode on the rear-mounted mesh cage.": [
+    "上架员手持平板，对准后部网格笼车的条码。",
+    "El operario apunta una tableta al código de la jaula de malla acoplada en la parte posterior."
+  ],
+  "After scanning, the stower waits for Stow Guidance to update on the tablet before heading to the recommended aisles. Scanning and waiting together take about one minute per cage even when the scan succeeds on the first try.": [
+    "扫码后，上架员需等待平板上的 Stow Guidance 更新，再前往推荐巷道。即使一次扫码成功，每次换笼的扫码与等待合计也约需一分钟。",
+    "Tras escanear, el operario espera a que Stow Guidance se actualice en la tableta antes de dirigirse a los pasillos recomendados. El escaneo y la espera suman aproximadamente un minuto por jaula, incluso cuando la lectura funciona al primer intento."
+  ],
+  "The order picker and rear-mounted cage remain stationary while the stower waits for the tablet to load the aisle recommendation.": [
+    "上架员等待平板加载推荐巷道期间，高位拣选车及后部笼车保持静止。",
+    "El preparador de pedidos y la jaula trasera permanecen detenidos mientras el operario espera a que la tableta cargue los pasillos recomendados."
+  ],
+  "A fixed-mount barcode scanner reads the cage barcode as it passes through the lane’s frame. Stow Guidance processes the recommendation while the stower continues toward the order picker; the TV above the frame displays the recommended aisles.": [
+    "笼车通过通道支架时，固定式条码扫描器自动读取条码。上架员继续拉车前往拣选车的同时，Stow Guidance 处理推荐结果，支架上方的电视显示推荐巷道。",
+    "Un escáner de códigos fijo lee el código cuando la jaula pasa por el marco del carril. Stow Guidance procesa la recomendación mientras el operario sigue hacia el preparador de pedidos; la pantalla sobre el marco muestra los pasillos recomendados."
+  ],
+  "By the time the cage is secured behind the order picker, the overhead screen already shows the recommended aisles. The stower can continue without a separate tablet scan and wait. During stowing, the attached cage rises with the operator platform.": [
+    "笼车固定在拣选车后部时，顶部屏幕已显示推荐巷道。上架员无需再单独用平板扫码等待，即可继续作业。上架过程中，安装好的笼车随操作员平台一起升起。",
+    "Cuando la jaula queda asegurada detrás del preparador de pedidos, la pantalla superior ya muestra los pasillos recomendados. El operario puede continuar sin un escaneo y una espera aparte con la tableta. Durante la ubicación de mercancía, la jaula acoplada se eleva junto con la plataforma del operario."
+  ],
+  "I built the Onboarding Portal end to end to make learning health visible: how teams are progressing, who is on pace, and where leaders need to follow up. It is designed for site and regional review and runs today as a site pilot.": [
+    "我独立完成了入职培训门户的设计与开发，让学习状况清晰可见：各团队的进展、哪些人员按计划推进，以及领导者需要跟进的地方。它为站点和区域审阅而设计，目前作为站点试点运行。",
+    "Diseñé y desarrollé el Portal de incorporación de principio a fin para hacer visible el estado del aprendizaje: cómo avanzan los equipos, quién sigue el ritmo previsto y dónde deben intervenir los líderes. Está pensado para la revisión del centro y la región, y hoy funciona como piloto en un centro."
+  ],
+  "Designed for site and regional review; running as a site pilot": [
+    "为站点和区域审阅而设计，目前作为站点试点运行",
+    "Diseñado para la revisión del centro y la región; en marcha como piloto en un centro"
+  ],
+  "The design lets operations leaders focus coaching by team and shift, lets site leaders review learning health across the building, and gives regional reviewers a consistent view of progress and launch readiness. Today it runs as a site pilot.": [
+    "这一设计让运营领导者可以按团队和班次聚焦辅导，让站点领导者查看整个站点的学习状况，并为区域审阅者提供一致的进度与开站就绪视图。目前它作为站点试点运行。",
+    "El diseño permite a los líderes de operaciones enfocar el coaching por equipo y turno, a los líderes del centro revisar el aprendizaje en todo el edificio, y ofrece a quienes revisan a nivel regional una visión coherente del progreso y la preparación para el lanzamiento. Hoy funciona como piloto en un centro."
+  ],
+  "I built the portal to connect individual learning with a leadership view of the whole organization. The admin overview maps learning progress to teams, shifts, roles, and reporting lines, designed to give site and regional leaders a starting point to identify gaps and focus support.": [
+    "我构建这个门户，将个人学习与面向领导的组织全景连接起来。管理员概览按团队、班次、岗位和汇报关系呈现学习进度，旨在帮助站点和区域领导者发现差距并安排有针对性的支持。",
+    "Construí el portal para conectar el aprendizaje individual con una visión de toda la organización para los líderes. La vista administrativa relaciona el progreso con equipos, turnos, funciones y líneas de reporte, y está pensada para dar a los líderes del centro y de la región un punto de partida para identificar brechas y orientar el apoyo."
+  ],
+  "The fixed scanner reads the barcode while the stower continues moving the cage toward the order picker.": [
+    "上架员继续把笼车拉向拣选车的同时，固定扫描器读取条码。",
+    "El escáner fijo lee el código mientras el operario sigue moviendo la jaula hacia el preparador de pedidos."
+  ],
+  "By the time the cage is mounted, the overhead TV displays Stow Guidance’s recommended aisles. The separate tablet scan and wait are removed.": [
+    "笼车安装好时，顶部电视已显示 Stow Guidance 推荐的巷道，不再需要单独用平板扫码和等待。",
+    "Cuando la jaula ya está montada, la pantalla superior muestra los pasillos recomendados por Stow Guidance. Se eliminan el escaneo aparte con la tableta y la espera."
+  ],
+  "Page not found": [
+    "找不到页面",
+    "Página no encontrada"
+  ],
+  "There’s no page at this address. Start from the home page to take the floor walk or open a project.": [
+    "这个地址没有页面。请从首页开始现场走访，或打开一个项目。",
+    "No hay ninguna página en esta dirección. Empieza en la página de inicio para hacer el recorrido o abrir un proyecto."
+  ],
+  "Go to the home page": [
+    "前往首页",
+    "Ir a la página de inicio"
+  ],
+  "Open the project index": [
+    "打开项目目录",
+    "Abrir el índice de proyectos"
   ]
 };

@@ -9,7 +9,7 @@ import { LINER_SCENES } from './liner-scenes.mjs';
 import { STOW_GUIDANCE_SCENES } from './stowguidance-scenes.mjs';
 import { PORTAL_SCENES } from './portal-scenes.mjs';
 import { AI_DECKS } from './ai-decks.mjs';
-import { updateSafetyEstimate } from './safety-ui.mjs';
+import { updateSafetyEstimate, fieldProblem } from './safety-ui.mjs';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -46,7 +46,16 @@ spriteImage.addEventListener('load', () => { lastSprite = ''; drawSprite(false);
 spriteImage.addEventListener('error', () => {
   announcement.textContent = 'The character image could not load. You can still explore every project from the project index.';
 });
-spriteImage.src = 'assets/manager.png';
+// The sprite is only drawn on the floor, so it loads after the landing page has finished.
+function loadSprite() {
+  if (!spriteImage.src) spriteImage.src = 'assets/manager.webp';
+}
+function loadSpriteWhenIdle() {
+  if ('requestIdleCallback' in window) requestIdleCallback(loadSprite, { timeout: 2000 });
+  else setTimeout(loadSprite, 200);
+}
+if (document.readyState === 'complete') loadSpriteWhenIdle();
+else window.addEventListener('load', loadSpriteWhenIdle, { once: true });
 function drawSprite(walking) {
   if (!spriteImage.complete || !spriteImage.naturalWidth || !spriteContext) return;
   const step = walking && !reducedMotion.matches ? [0, 1, 2, 1][Math.floor(walkingClock / 130) % 4] : 1;
@@ -88,7 +97,7 @@ function updateNearby() {
   nearbyExit = Math.hypot(EXIT.x-position.x, EXIT.y-position.y) < 45;
   nearbyPrompt.hidden = !(nearbyStop || nearbyExit) || route.length > 0 || !active;
   if (nearbyExit) {
-    nearbyPrompt.innerHTML = '<span>Step outside</span> <kbd>Enter</kbd>';
+    nearbyPrompt.innerHTML = '<span>Step outside for basketball</span> <kbd>Enter</kbd>';
     locationLabel.textContent = 'Life outside work';
   } else if (nearbyStop) {
     nearbyPrompt.innerHTML = `Explore ${PROJECTS[nearbyStop].title} <kbd>Enter</kbd>`;
@@ -105,6 +114,8 @@ function highlightStop(id) {
   });
 }
 function enterWarehouse(focus = true, updateHistory = true) {
+  loadSprite();
+  if (updateHistory) setProjectUrl(null);
   if (outsideActive) Object.assign(position, START);
   outsideActive = false;
   courtController?.hide();
@@ -121,6 +132,7 @@ function enterWarehouse(focus = true, updateHistory = true) {
   updateNearby();
 }
 async function showOutside(updateHistory = true) {
+  if (updateHistory) setProjectUrl(null);
   stopMotion();
   active = false;
   outsideActive = true;
@@ -144,6 +156,7 @@ function walkOutside() {
   travelTo(EXIT, null, true);
 }
 function goHome(updateHistory = true) {
+  if (updateHistory) setProjectUrl(null);
   courtController?.hide();
   outsideActive = false;
   outside.hidden = true;
@@ -165,7 +178,7 @@ function updateProgress() {
     const done = visited.has(el.dataset.stop);
     el.classList.toggle('is-visited', done);
     const state = el.querySelector('.stop-state');
-    if (state) state.textContent = done ? '✓' : '↗';
+    if (state) state.textContent = done ? '✓' : '';
   });
 }
 function travelTo(target, stopId = null, toExit = false) {
@@ -216,7 +229,7 @@ function arrive() {
     }, reducedMotion.matches ? 0 : 180);
   } else {
     renderPosition(false);
-    announcement.textContent = nearbyStop ? `You're near ${PROJECTS[nearbyStop].title}. Press Enter or use the project marker.` : 'Choose a project marker, or keep exploring the floor.';
+    announcement.textContent = nearbyStop ? `You’re near ${PROJECTS[nearbyStop].title}. Press Enter or use the project marker.` : 'Choose a project marker, or keep exploring the floor.';
   }
 }
 function direction(dx, dy) {
@@ -268,7 +281,18 @@ function frame(time) {
 function startLoop() {
   if (frameRequest === null) frameRequest = requestAnimationFrame(frame);
 }
-function openDialog(html, eyebrow = 'PROJECT FIELD NOTES', returnFocus = null) {
+// Each project's notes have their own address, so a project can be linked to directly.
+const PROJECT_SLUGS = { liners: 'bin-liners', stowguidance: 'stow-guidance', portal: 'onboarding-portal', beams: 'a-level-beams', ai: 'ai-operations' };
+const linkedProject = () => Object.keys(PROJECT_SLUGS).find(id => location.hash === `#${PROJECT_SLUGS[id]}`);
+const defaultTitle = document.title;
+function setProjectUrl(id) {
+  const slug = id && PROJECT_SLUGS[id];
+  if (slug && location.hash !== `#${slug}`) history.replaceState(null, '', `#${slug}`);
+  else if (!slug && linkedProject()) history.replaceState(null, '', outsideActive ? '#outside' : active ? '#warehouse' : location.pathname + location.search);
+  document.title = slug ? `${PROJECTS[id].title} | Shuyu Zheng` : defaultTitle;
+}
+function openDialog(html, eyebrow = 'Project notes', returnFocus = null) {
+  setProjectUrl(null);
   stopLinerPlayback();
   stopStowGuidancePlayback();
   if (outsideActive) courtController?.pause();
@@ -302,17 +326,18 @@ function showProject(id, returnFocus = null, skipEncounter = false) {
   updateProgress();
   highlightStop(id);
   const ids = Object.keys(PROJECTS), nextId = ids[(ids.indexOf(id)+1)%ids.length];
-  openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><div class="dialog-identity"><span class="dialog-number">${project.number}</span><span class="dialog-place">${project.place}</span></div><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor <span aria-hidden="true">↗</span></button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title} <span aria-hidden="true">→</span></button></div></article>`, 'PROJECT FIELD NOTES', returnFocus);
+  openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><p class="dialog-place">${project.place}</p><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title}</button></div></article>`, 'Project notes', returnFocus);
+  setProjectUrl(id);
   if (id === 'stowguidance') updateImpactEstimate();
   if (id === 'portal') updateOnboardingEstimate();
   if (id === 'liners' || id === 'beams') updateSafetyEstimate(id);
   const total = Object.keys(PROJECTS).length;
-  announcement.textContent = visited.size === total ? 'All five stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you're ready.`;
+  announcement.textContent = visited.size === total ? 'All five stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you’re ready.`;
 }
 function showBeamObservation(returnFocus = null) {
   beamStep = 0;
   highlightStop('beams');
-  openDialog(`<section class="dialog-body beam-observation observation-view" style="--project-accent:var(--safety)"><h2 id="dialog-title">See the task through the picker’s eyes.</h2><div class="observation-progress" id="beam-scene-progress" aria-label="Observation progress">1 / 4</div><div class="slide-viewport"><button type="button" class="slide-advance" data-advance-beams aria-label="Next slide" aria-describedby="beam-scene-title beam-scene-text"><span class="observation-art" id="beam-scene-image" role="img" aria-label=""></span></button></div><div class="observation-actions"><button type="button" class="plain-link" id="beam-scene-back">Previous</button><button type="button" class="button primary" id="beam-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="beam-scene-title"></h3><p id="beam-scene-text"></p></div><p class="impact-method">An illustrative scene showing ergonomic risk, not a reconstruction of a specific injury or an installation drawing.</p><button type="button" class="plain-link" data-read-beams>Go straight to the project →</button></div></section>`, 'ON THE FLOOR / OBSERVATION', returnFocus);
+  openDialog(`<section class="dialog-body beam-observation observation-view" style="--project-accent:var(--safety)"><h2 id="dialog-title">See the task through the picker’s eyes.</h2><div class="observation-progress" id="beam-scene-progress" aria-label="Observation progress">1 / 4</div><div class="slide-viewport"><div class="slide-advance" data-advance-beams><span class="observation-art" id="beam-scene-image" role="img" aria-label=""></span></div></div><div class="observation-actions"><button type="button" class="plain-link" id="beam-scene-back">Previous</button><button type="button" class="button primary" id="beam-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="beam-scene-title"></h3><p id="beam-scene-text"></p></div><p class="impact-method">An illustrative scene showing ergonomic risk, not a reconstruction of a specific injury or an installation drawing.</p><button type="button" class="plain-link" data-read-beams>Go straight to the project</button></div></section>`, 'Floor observation', returnFocus);
   renderBeamObservation();
 }
 function renderBeamObservation() {
@@ -324,7 +349,6 @@ function renderBeamObservation() {
   $('#beam-scene-text').textContent = scene.text;
   $('#beam-scene-progress').textContent = `${beamStep + 1} / ${BEAM_SCENES.length}`;
   $('#beam-scene-next').textContent = beamStep === BEAM_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
-  $('[data-advance-beams]').setAttribute('aria-label', $('#beam-scene-next').textContent);
   $('#beam-scene-back').disabled = beamStep === 0;
 }
 function advanceBeamObservation(direction = 1) {
@@ -345,7 +369,7 @@ function stopLinerPlayback() {
 function showLinerObservation(returnFocus = null) {
   linerStep = 0;
   highlightStop('liners');
-  openDialog(`<section class="dialog-body liner-observation observation-view" style="--project-accent:var(--mint)"><h2 id="dialog-title">From digging through a pile to picking from a shelf.</h2><div class="liner-scene-heading"><span id="liner-scene-phase"></span><span id="liner-scene-progress" aria-label="Observation progress">1 / 4</span></div><div class="slide-viewport"><button type="button" class="slide-advance" data-advance-liners aria-label="Next slide" aria-describedby="liner-scene-title liner-scene-text"><span class="observation-art liner-stage" id="liner-scene-image" role="img" aria-label=""><span class="liner-scene-layer" id="liner-scene-current" aria-hidden="true"></span><span class="liner-scene-layer liner-scene-outgoing" id="liner-scene-outgoing" aria-hidden="true"></span></span></button></div><div class="observation-actions"><button type="button" class="plain-link" id="liner-scene-back">Previous</button><button type="button" class="outline-button" id="liner-scene-play" aria-pressed="false">Play sequence</button><button type="button" class="button primary" id="liner-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="liner-scene-metric" id="liner-scene-metric"></p><h3 id="liner-scene-title"></h3><p id="liner-scene-text"></p></div><p class="impact-method">Illustrative workflow based on the project account. Pick times are reported averages; the animation is not a timed reenactment.</p><button type="button" class="plain-link" data-read-liners>Go straight to the project →</button></div></section>`, 'ON THE FLOOR / BEFORE & AFTER', returnFocus);
+  openDialog(`<section class="dialog-body liner-observation observation-view" style="--project-accent:var(--mint)"><h2 id="dialog-title">From digging through a pile to picking from a shelf.</h2><div class="liner-scene-heading"><span id="liner-scene-phase"></span><span id="liner-scene-progress" aria-label="Observation progress">1 / 4</span></div><div class="slide-viewport"><div class="slide-advance" data-advance-liners><span class="observation-art liner-stage" id="liner-scene-image" role="img" aria-label=""><span class="liner-scene-layer" id="liner-scene-current" aria-hidden="true"></span><span class="liner-scene-layer liner-scene-outgoing" id="liner-scene-outgoing" aria-hidden="true"></span></span></div></div><div class="observation-actions"><button type="button" class="plain-link" id="liner-scene-back">Previous</button><button type="button" class="outline-button" id="liner-scene-play" aria-pressed="false">Play sequence</button><button type="button" class="button primary" id="liner-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="liner-scene-metric" id="liner-scene-metric"></p><h3 id="liner-scene-title"></h3><p id="liner-scene-text"></p></div><p class="impact-method">Illustrative workflow based on the project account. Pick times are reported averages; the animation is not a timed reenactment.</p><button type="button" class="plain-link" data-read-liners>Go straight to the project</button></div></section>`, 'Before and after', returnFocus);
   renderLinerObservation(false);
 }
 function renderLinerObservation(animate = true) {
@@ -366,7 +390,6 @@ function renderLinerObservation(animate = true) {
   $('#liner-scene-metric').textContent = scene.metric;
   $('#liner-scene-progress').textContent = `${linerStep + 1} / ${LINER_SCENES.length}`;
   $('#liner-scene-next').textContent = linerStep === LINER_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
-  $('[data-advance-liners]').setAttribute('aria-label', $('#liner-scene-next').textContent);
   $('#liner-scene-back').disabled = linerStep === 0;
   const play = $('#liner-scene-play');
   play.textContent = linerPlaying ? 'Pause sequence' : linerStep === LINER_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
@@ -414,10 +437,10 @@ function showStowGuidanceObservation(returnFocus = null) {
   openDialog(`<section class="dialog-body stowguidance-observation observation-view" style="--project-accent:var(--amber)">
     <h2 id="dialog-title">From scan and wait to mount and go.</h2>
     <div class="liner-scene-heading"><span id="stowguidance-scene-phase"></span><span id="stowguidance-scene-progress" aria-label="Observation progress"></span></div>
-    <div class="slide-viewport"><button type="button" class="slide-advance" data-advance-stowguidance aria-label="Next slide" aria-describedby="stowguidance-scene-title stowguidance-scene-text"><span class="observation-art stowguidance-stage" id="stowguidance-scene-image" role="img" aria-label=""><span class="stowguidance-scene-layer" id="stowguidance-scene-current" aria-hidden="true"></span><span class="stowguidance-scene-layer stowguidance-scene-outgoing" id="stowguidance-scene-outgoing" aria-hidden="true"></span></span></button></div>
+    <div class="slide-viewport"><div class="slide-advance" data-advance-stowguidance><span class="observation-art stowguidance-stage" id="stowguidance-scene-image" role="img" aria-label=""><span class="stowguidance-scene-layer" id="stowguidance-scene-current" aria-hidden="true"></span><span class="stowguidance-scene-layer stowguidance-scene-outgoing" id="stowguidance-scene-outgoing" aria-hidden="true"></span></span></div></div>
     <div class="observation-actions"><button type="button" class="plain-link" id="stowguidance-scene-back">Previous</button><button type="button" class="outline-button" id="stowguidance-scene-play" aria-pressed="false">Play sequence</button><button type="button" class="button primary" id="stowguidance-scene-next">Next slide</button></div>
-    <div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="stowguidance-scene-metric" id="stowguidance-scene-metric"></p><h3 id="stowguidance-scene-title"></h3><p id="stowguidance-scene-text"></p></div><p class="impact-method">Illustrated from my project account and warehouse photos. The sequence is not timed; the approximate one-minute recovery covers the old scan-and-wait process together.</p><button type="button" class="plain-link" data-read-stowguidance>Go straight to the project →</button></div>
-  </section>`, 'STOW GUIDANCE / BEFORE & AFTER', returnFocus);
+    <div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="stowguidance-scene-metric" id="stowguidance-scene-metric"></p><h3 id="stowguidance-scene-title"></h3><p id="stowguidance-scene-text"></p></div><p class="impact-method">Illustrated from my project account and warehouse photos. The sequence is not timed; the approximate one-minute recovery covers the old scan-and-wait process together.</p><button type="button" class="plain-link" data-read-stowguidance>Go straight to the project</button></div>
+  </section>`, 'Before and after', returnFocus);
   renderStowGuidanceObservation(false);
 }
 function renderStowGuidanceObservation(animate = true) {
@@ -439,7 +462,6 @@ function renderStowGuidanceObservation(animate = true) {
   $('#stowguidance-scene-text').textContent = scene.text;
   $('#stowguidance-scene-back').disabled = stowguidanceStep === 0;
   $('#stowguidance-scene-next').textContent = stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
-  $('[data-advance-stowguidance]').setAttribute('aria-label', $('#stowguidance-scene-next').textContent);
   const play = $('#stowguidance-scene-play');
   play.textContent = stowguidancePlaying ? 'Pause sequence' : stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
   play.setAttribute('aria-pressed', String(stowguidancePlaying));
@@ -475,9 +497,9 @@ function toggleStowGuidancePlayback() {
 const DECKS = {
   portal: {
     project: 'portal', accent: 'var(--blue)', scenes: PORTAL_SCENES,
-    eyebrow: 'ONBOARDING PORTAL / VISUAL WALKTHROUGH',
+    eyebrow: 'Portal walkthrough',
     title: 'Learning health, from organization to individual.',
-    audience: 'MANAGER / INDIVIDUAL LEARNING',
+    audience: 'Manager view: individual learning',
     note: 'Screenshots from the working portal, with names pixelated, sensitive values blurred and internal labels made generic; everything obscured is placeholder content. Original interface in English; captions follow your selected language.',
   },
   ...AI_DECKS,
@@ -488,7 +510,7 @@ function showDeck(key, returnFocus = null) {
   deckKey = key;
   deckStep = 0;
   highlightStop(deck.project);
-  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent}"${deck.screen ? ` data-return-screen="${deck.screen}"` : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><button type="button" class="slide-advance" data-advance-${key} aria-label="Next slide" aria-describedby="${key}-scene-title ${key}-scene-text"><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></button></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button></div><div class="observation-details"><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><p class="impact-method">${deck.note}</p><button type="button" class="plain-link" data-read-${key}>Go straight to the project →</button></div></section>`, deck.eyebrow, returnFocus);
+  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent}"${deck.screen ? ` data-return-screen="${deck.screen}"` : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button></div><div class="observation-details"><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><p class="impact-method">${deck.note}</p><button type="button" class="plain-link" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
   renderDeck();
 }
 function renderDeck() {
@@ -506,7 +528,6 @@ function renderDeck() {
   part('scene-progress').textContent = `${deckStep + 1} / ${scenes.length}`;
   part('scene-back').disabled = deckStep === 0;
   part('scene-next').textContent = deckStep === scenes.length - 1 ? deck.endLabel || 'Explore the project' : 'Next slide';
-  $(`[data-advance-${deckKey}]`).setAttribute('aria-label', part('scene-next').textContent);
   const next = scenes[deckStep + 1];
   if (next) { const preload = new Image(); preload.src = next.src; }
 }
@@ -552,15 +573,15 @@ function selectAIScreen(id, reveal = true) {
   }
 }
 function showProjectMenu() {
-  openDialog(`<div class="dialog-body"><p class="eyebrow">THE WORK, AT A GLANCE</p><h2 id="dialog-title">Project index.</h2><p class="dialog-lead">Explore the stories directly, or meet them on the warehouse floor.</p><div class="project-index">${Object.entries(PROJECTS).map(([id, p])=>`<button type="button" class="index-card" data-project="${id}" style="--stop-color:${p.color}"><span class="index-number">${p.number}</span><span><strong>${p.title}</strong><small>${p.summary}</small></span><span class="index-arrow" aria-hidden="true">${visited.has(id)?'✓':'↗'}</span></button>`).join('')}</div><div class="project-end"><button type="button" class="button primary" data-return-floor>Start the floor walk <span aria-hidden="true">▶</span></button></div></div>`, 'PROJECT INDEX');
+  openDialog(`<div class="dialog-body"><h2 id="dialog-title">Project index.</h2><p class="dialog-lead">Explore the stories directly, or meet them on the warehouse floor.</p><div class="project-index">${Object.entries(PROJECTS).map(([id, p])=>`<button type="button" class="index-card" data-project="${id}" style="--stop-color:${p.color}"><span><strong>${p.title}</strong><small>${p.summary}</small></span><span class="index-arrow" aria-hidden="true">${visited.has(id)?'✓':''}</span></button>`).join('')}</div><div class="project-end"><button type="button" class="button primary" data-return-floor>Walk the floor</button></div></div>`, 'Project index');
 }
 function showAbout() {
-  openDialog(`<div class="dialog-body"><p class="eyebrow">MEET THE MANAGER</p><h2 id="dialog-title">A perspective built<br>from the floor up.</h2><p class="dialog-lead">I'm Shuyu Zheng, an operations and inventory quality leader at Amazon.</p><div class="resume-actions"><a class="outline-button" href="assets/Shuyu_Zheng_Resume.pdf" target="_blank" rel="noopener noreferrer"><span>View résumé (PDF, English)</span> <span aria-hidden="true">↗</span></a><a class="plain-link" href="assets/Shuyu_Zheng_Resume.pdf" download="Shuyu_Zheng_Resume.pdf">Download résumé (PDF, English)</a><p>One page covering operations leadership and program delivery.</p></div><div class="about-path">L4 Area Manager (college hire) → Operations Manager → ICQA Operations Manager</div><p>I've worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.</p><div class="about-grid"><div><span>BASED IN</span><strong>Bay Area, California</strong></div><div><span>EDUCATION</span><strong>San Francisco State University</strong></div></div><section class="story-section"><h3>Start close to the work</h3><p>Understand the actual workflow and where it breaks. Connect the data with what associates and managers experience.</p></section><section class="story-section"><h3>Make the response clear</h3><p>Define the next action, the owner, and the checkpoint. Build standard work around the problem being solved.</p></section><section class="story-section"><h3>Build what helps</h3><p>I use practical tools and AI-assisted development to turn operational needs into usable solutions, including my Onboarding Portal.</p></section><section class="story-section"><h3>Follow through</h3><p>Review adoption and effectiveness. Coach, adjust, and make the improvement part of everyday execution.</p></section><div class="more-work"><button type="button" class="outline-button" data-additional="quality">Quality & launch readiness ↗</button><button type="button" class="outline-button" data-additional="inventory">Inventory quality leadership ↗</button></div><div class="project-end"><button class="button primary" type="button" data-return-floor>Explore my work <span aria-hidden="true">↗</span></button></div></div>`, 'BACKGROUND & APPROACH');
+  openDialog(`<div class="dialog-body"><h2 id="dialog-title">A perspective built<br>from the floor up.</h2><p class="dialog-lead">I’m Shuyu Zheng, an operations and inventory quality leader at Amazon.</p><div class="resume-actions"><a class="outline-button" href="assets/Shuyu_Zheng_Resume.pdf" target="_blank" rel="noopener noreferrer"><span>View résumé (PDF, English)</span> <span aria-hidden="true">↗</span></a><a class="plain-link" href="assets/Shuyu_Zheng_Resume.pdf" download="Shuyu_Zheng_Resume.pdf">Download résumé (PDF, English)</a><p>One page covering operations leadership and program delivery.</p></div><div class="about-path">L4 Area Manager (college hire) → Operations Manager → ICQA Operations Manager</div><p>I’ve worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.</p><div class="about-grid"><div><span>Based in</span><strong>Bay Area, California</strong></div><div><span>Education</span><strong>San Francisco State University</strong></div></div><section class="story-section"><h3>Start close to the work</h3><p>Understand the actual workflow and where it breaks. Connect the data with what associates and managers experience.</p></section><section class="story-section"><h3>Make the response clear</h3><p>Define the next action, the owner, and the checkpoint. Build standard work around the problem being solved.</p></section><section class="story-section"><h3>Build what helps</h3><p>I use practical tools and AI-assisted development to turn operational needs into usable solutions, including my Onboarding Portal.</p></section><section class="story-section"><h3>Follow through</h3><p>Review adoption and effectiveness. Coach, adjust, and make the improvement part of everyday execution.</p></section><div class="more-work"><button type="button" class="outline-button" data-additional="quality">Quality and launch readiness</button><button type="button" class="outline-button" data-additional="inventory">Inventory quality leadership</button></div><div class="project-end"><button class="button primary" type="button" data-return-floor>Walk the floor</button></div></div>`, 'Background and approach');
 }
 function showAdditional(id) {
   const item = ADDITIONAL_WORK[id];
   if (!item) return;
-  openDialog(`<div class="dialog-body"><p class="eyebrow">${item.label}</p><h2 id="dialog-title">${item.title}</h2><p class="dialog-lead">${item.lead}</p>${item.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-about>About Shuyu ↗</button></div></div>`, 'LEADERSHIP & QUALITY');
+  openDialog(`<div class="dialog-body"><h2 id="dialog-title">${item.title}</h2><p class="dialog-lead">${item.lead}</p>${item.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-about>About me</button></div></div>`, item.label);
 }
 function advanceFlow() {
   const button = $('#flow-next');
@@ -569,7 +590,7 @@ function advanceFlow() {
   $$('[data-flow-step]').forEach((el, i)=>el.classList.toggle('is-lit', i<=flowStep));
   $('#flow-status').textContent = [
     'The stower pulls a cage from its work-in-progress lane through the floor-mounted strut frame.',
-    'The fixed Zebra scanner reads the barcode while the stower continues moving the cage toward the order picker.',
+    'The fixed scanner reads the barcode while the stower continues moving the cage toward the order picker.',
     'By the time the cage is mounted, the overhead TV displays Stow Guidance’s recommended aisles. The separate tablet scan and wait are removed.',
   ][flowStep];
   button.textContent = flowStep === 2 ? 'Replay ↺' : 'Next step →';
@@ -581,7 +602,8 @@ function updateImpactEstimate() {
   const error = $('#impact-error');
   const outputs = ['daily','weekly','annual'];
   try {
-    if (!form.checkValidity()) throw new RangeError('Complete all four fields using the values allowed.');
+    const invalid = fieldProblem(form, 'impact-error');
+    if (invalid) throw new RangeError(invalid);
     const scenario = Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,Number(value)]));
     const result = estimateStowGuidance(scenario);
     const hours = new Intl.NumberFormat(getLocale(), {maximumFractionDigits:1});
@@ -623,7 +645,8 @@ function updateOnboardingEstimate() {
     total: ['rolloutHours', 'rolloutValue'],
   };
   try {
-    if (!form.checkValidity()) throw new RangeError('Complete the model fields using the values allowed.');
+    const invalid = fieldProblem(form, 'onboarding-error');
+    if (invalid) throw new RangeError(invalid);
     const input = Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,Number(value)]));
     const result = estimateOnboarding(input);
     const regional = estimateRegionalOnboarding(input, input);
@@ -677,7 +700,7 @@ for (const eventName of ['input', 'change', 'submit']) {
 
 $('#enter-button').addEventListener('click', () => enterWarehouse());
 document.addEventListener('click', (event) => {
-  const trigger = event.target.closest('button');
+  const trigger = event.target.closest('button, .slide-advance');
   if (!trigger) return;
   if (trigger.hasAttribute('data-home')) { if (dialog.open) dialog.close(); goHome(); }
   else if (trigger.hasAttribute('data-walk-outside')) walkOutside();
@@ -792,6 +815,7 @@ dialog.addEventListener('click', (event) => {
   if (event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) closeDialogOrDeck();
 });
 dialog.addEventListener('close', () => {
+  setProjectUrl(null);
   stopLinerPlayback();
   stopStowGuidancePlayback();
   document.body.classList.remove('dialog-open');
@@ -801,6 +825,7 @@ dialog.addEventListener('close', () => {
   else (active?world:$('#enter-button')).focus({preventScroll:true});
 });
 window.addEventListener('popstate', () => {
+  if (linkedProject()) { showProject(linkedProject(), null, true); return; }
   if (dialog.open) dialog.close();
   if (location.hash === '#outside') showOutside(false);
   else if (location.hash === '#warehouse') enterWarehouse(true, false);
@@ -810,6 +835,7 @@ if (location.hash === '#outside') showOutside(false);
 else if (location.hash === '#warehouse') enterWarehouse(false, false);
 else if (['#background', '#approach'].includes(location.hash)) showAbout();
 else if (location.hash === '#work') showProjectMenu();
+else if (linkedProject()) showProject(linkedProject(), null, true);
 renderPosition();
 
 window.addEventListener('portfolio-language-change', () => {

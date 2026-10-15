@@ -10,10 +10,10 @@ export const FLOOR = [
 ];
 export const STOPS = {
   liners: { x: 170, y: 310, label: 'Rainbow storage racks', facing: 3 },
-  stowguidance: { x: 500, y: 240, label: 'Stow satellite', facing: 3 },
-  portal: { x: 800, y: 300, label: "Manager's desk", facing: 3 },
-  beams: { x: 360, y: 510, label: 'Floor-level pallet pick', facing: 1 },
-  ai: { x: 600, y: 450, label: 'Leadership sync area', facing: 2 },
+  stowguidance: { x: 500, y: 240, label: 'Stow drop zone', facing: 3 },
+  portal: { x: 800, y: 300, label: "Manager’s desk", facing: 3 },
+  beams: { x: 360, y: 510, label: 'Floor-level pallet picking', facing: 1 },
+  ai: { x: 600, y: 450, label: 'Leadership sync', facing: 2 },
 };
 export const EXIT = { x: 500, y: 600 };
 export const START = { x: 500, y: 510 };

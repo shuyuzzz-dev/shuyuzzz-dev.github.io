@@ -180,6 +180,12 @@ html.embed #mapwrap{padding-bottom:0!important}
 @media (max-width:1000px){html:not(.embed),html:not(.embed) body{height:auto}html:not(.embed) body{display:block}html:not(.embed) header{flex-wrap:wrap}html:not(.embed) .controls{margin-left:0;flex-basis:100%}html:not(.embed) main{display:block;height:auto}html:not(.embed) svg{height:auto;aspect-ratio:16/9}html:not(.embed) aside{position:static;max-height:none;border-left:0;border-top:1px solid var(--line)}}
 .door:focus rect.d,.fork:focus .body,.aa:focus .vest{stroke:var(--text);stroke-width:2}
 path.conv:focus,path.walk:focus{stroke:var(--text)}
+:root{--dim:#7d909e}
+.wm text{opacity:.03}
+.wm>g:nth-child(even){display:none}
+#legend{font-size:12px}
+.ref{font-size:12px}
+@media (pointer:coarse){html:not(.embed) button{min-height:44px;min-width:44px}html:not(.embed) .back{display:inline-flex;align-items:center;min-height:44px}html:not(.embed) label.ctl input[type=range]{height:44px}}
 </style>
 </head>
 <body>
@@ -613,10 +619,10 @@ function step(dt){
   });
   for(let i=cases.length-1;i>=0;i--){ const c=cases[i]; stepCase(c,dt); if(c.stage==='gone'){ c.el.remove(); cases.splice(i,1); } }
 }
-function tick(now){const dt=Math.max(0,Math.min(0.05,(now-last)/1000));last=now;if(playing)step(dt*speed);requestAnimationFrame(tick);}
+let idleParked=false;function tick(now){if(!playing||document.hidden){idleParked=true;return;}const dt=Math.max(0,Math.min(0.05,(now-last)/1000));last=now;step(dt*speed);requestAnimationFrame(tick);}function wakeLoop(){if(idleParked&&playing&&!document.hidden){idleParked=false;last=performance.now();requestAnimationFrame(tick);}}document.addEventListener('visibilitychange',wakeLoop);
 const q=new URLSearchParams(location.search);
 if(q.get('vol')){vol=+q.get('vol');document.getElementById('vol').value=vol;}
-if(q.get('t')){for(let k=0;k<(+q.get('t'))/0.05;k++)step(0.05);}if(document.documentElement.classList.contains('embed'))new IntersectionObserver(es=>{playing=es[0].isIntersecting;}).observe(document.getElementById('map'));
+if(q.get('t')){for(let k=0;k<(+q.get('t'))/0.05;k++)step(0.05);}if(document.documentElement.classList.contains('embed'))new IntersectionObserver(es=>{playing=es[0].isIntersecting&&!matchMedia('(prefers-reduced-motion: reduce)').matches;wakeLoop();}).observe(document.getElementById('map'));
 requestAnimationFrame(tick);
 document.getElementById('legend').innerHTML=[
   `<span><i class="sw" style="background:var(--case);box-shadow:inset -3px 3px 0 var(--safety)"></i>CASE · YELLOW TAB = DESTINATION LABEL</span>`,
@@ -641,7 +647,7 @@ fitLegend(); window.addEventListener('resize',fitLegend);
 const volLbl={1:'Light',2:'Light',3:'Normal',4:'Normal',5:'Busy',6:'Busy',7:'Peak',8:'Peak',9:'Over plan',10:'Over plan'};
 document.getElementById('vol').oninput=e=>{vol=+e.target.value;document.getElementById('vollbl').textContent=volLbl[vol];};
 document.getElementById('vollbl').textContent=volLbl[vol];
-document.getElementById('play').onclick=e=>{playing=!playing;e.target.textContent=playing?'⏸ Pause':'▶ Play';};
+document.getElementById('play').onclick=e=>{playing=!playing;e.target.textContent=playing?'⏸ Pause':'▶ Play';wakeLoop();};if(matchMedia('(prefers-reduced-motion: reduce)').matches){playing=false;document.getElementById('play').textContent='▶ Play';}
 document.getElementById('speed').oninput=e=>speed=+e.target.value;
 const tip=document.getElementById('tip'), wrap=document.getElementById('mapwrap');
 gConv.querySelectorAll('.conv').forEach(p=>{

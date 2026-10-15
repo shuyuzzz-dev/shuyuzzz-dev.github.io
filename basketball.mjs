@@ -14,7 +14,7 @@ export function mountBasketball() {
   const t=text=>translate(text,getLocale());
   const write=(selector,value)=>{const el=$(selector),text=String(value);if(el.textContent!==text)el.textContent=text;};
   const image=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;});
-  const ready=Promise.all([image('assets/basketball-court.png'),image('assets/basketball-players.png')]).then(([court,players])=>{
+  const ready=Promise.all([image('assets/basketball-court.webp'),image('assets/basketball-players.webp')]).then(([court,players])=>{
     assets.court=court;assets.players=players;loaded=true;if(visible){draw();hud(true);}
   }).catch(()=>{failed=true;if(visible)hud(true);});
   function draw(){if(ctx&&loaded)drawBasketball(ctx,game,assets);}

@@ -10,7 +10,7 @@ export const LINER_DEFAULTS = Object.freeze({
 });
 export const BEAM_DEFAULTS = Object.freeze({
   avoidedCases: 2, injuryCost: INJURY_COST_REFERENCE, sites: 8,
-  siteCapex: 727283.09, annualCapacityCost: 188623.80,
+  siteCapex: 730000, annualCapacityCost: 190000,
 });
 function range(value, low, high, label, integer = false) {
   if (!Number.isFinite(value) || value < low || value > high || (integer && !Number.isInteger(value))) {
@@ -49,7 +49,7 @@ export function estimateLiners(input = LINER_DEFAULTS) {
 }
 export function estimateBeams(input = BEAM_DEFAULTS) {
   const {avoidedCases, injuryCost, sites, siteCapex, annualCapacityCost} = input;
-  range(avoidedCases,0,4,'Avoided cases per site per year');
+  range(avoidedCases,0,1000,'Avoided cases per site per year');
   range(injuryCost,0,10000000,'Cost per injury'); range(sites,1,10000,'Sites',true);
   range(siteCapex,0,100000000,'Site investment'); range(annualCapacityCost,0,100000000,'Annual storage opportunity cost');
   const siteAvoidance = avoidedCases * injuryCost;

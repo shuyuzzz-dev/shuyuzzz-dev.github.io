@@ -2,8 +2,22 @@ import { getLocale } from './i18n.mjs';
 import { estimateLiners, estimateBeams } from './warehouse-impact.mjs';
 
 const put = (id, text) => { const element = document.getElementById(id); if (element) element.textContent = text; };
-const values = form => {
-  if (!form.checkValidity()) throw new RangeError('Complete each field using the values allowed.');
+// Marks each field outside its allowed values and names the first one, with the range it accepts.
+export function fieldProblem(form, errorId) {
+  const fields = [...form.querySelectorAll('input')];
+  for (const field of fields) {
+    if (field.checkValidity()) { field.removeAttribute('aria-invalid'); field.removeAttribute('aria-describedby'); }
+    else { field.setAttribute('aria-invalid', 'true'); field.setAttribute('aria-describedby', errorId); }
+  }
+  const field = fields.find(item => !item.checkValidity());
+  if (!field) return null;
+  const label = [...(field.closest('label')?.childNodes || [])].filter(node => node.nodeType === 3).map(node => node.data).join(' ').trim() || field.name;
+  const number = new Intl.NumberFormat(getLocale(), { maximumFractionDigits: 2 });
+  return `${label}: enter ${field.step === '1' ? 'a whole number' : 'a number'} from ${number.format(Number(field.min))} to ${number.format(Number(field.max))}.`;
+}
+const values = (form, errorId) => {
+  const problem = fieldProblem(form, errorId);
+  if (problem) throw new RangeError(problem);
   return Object.fromEntries([...new FormData(form)].map(([key, value]) => [key, Number(value)]));
 };
 
@@ -15,7 +29,7 @@ export function updateSafetyEstimate(project) {
   if (!form) return;
   const error = document.getElementById(`${prefix}-error`);
   try {
-    const input = values(form);
+    const input = values(form, `${prefix}-error`);
     if (project === 'liners') {
       const r = estimateLiners(input);
       for (const period of ['shift', 'daily', 'weekly', 'annual']) {
@@ -25,8 +39,8 @@ export function updateSafetyEstimate(project) {
       put('liner-network-label', `Annual / ${number.format(input.sites)} sites`);
       put('liner-network-hours', `${number.format(r.networkAnnualHours)} h`);
       put('liner-network-value', money.format(r.networkAnnualValue));
-      put('liner-volume', `${number.format(r.rainbowUnits)} Rainbow units ÷ ${number.format(input.unitsPerPick)} units per bin visit = ${number.format(r.picksPerShift)} bin visits per shift × ${number.format(r.secondsSaved)} seconds recovered.`);
-      put('liner-formula', `${number.format(input.unitsPerShift)} units/shift × ${number.format(input.rainbowPercent)}% Rainbow share ÷ ${number.format(input.unitsPerPick)} units/visit × ${number.format(r.secondsSaved)} seconds ÷ 3,600 = ${number.format(r.shiftHours)} labor-hours per shift.`);
+      put('liner-volume', `${number.format(r.rainbowUnits)} Rainbow units ÷ ${number.format(input.unitsPerPick)} unit${input.unitsPerPick === 1 ? '' : 's'} per bin visit = ${number.format(r.picksPerShift)} bin visits per shift × ${number.format(r.secondsSaved)} seconds recovered.`);
+      put('liner-formula', `${number.format(input.unitsPerShift)} units/shift × ${number.format(input.rainbowPercent)}% Rainbow share ÷ ${number.format(input.unitsPerPick)} unit${input.unitsPerPick === 1 ? '' : 's'}/visit × ${number.format(r.secondsSaved)} seconds ÷ 3,600 = ${number.format(r.shiftHours)} labor-hours per shift.`);
       put('liner-summary', `At ${input.shiftsPerDay} shift${input.shiftsPerDay === 1 ? '' : 's'}/day, ${input.daysPerWeek} days/week and ${input.weeksPerYear} weeks/year: ${money.format(r.annualValue)} of potential annual labor capacity per site, or ${money.format(r.networkAnnualValue)} across ${number.format(input.sites)} sites.`);
       put('liner-injury-site-cases', `${number.format(input.injuriesLow)}–${number.format(input.injuriesHigh)}`);
       put('liner-injury-site-value', `${money.format(r.injurySiteLow)}–${money.format(r.injurySiteHigh)}`);
