@@ -2,6 +2,17 @@ import { getLocale } from './i18n.mjs';
 import { estimateLiners, estimateBeams } from './warehouse-impact.mjs';
 
 const put = (id, text) => { const element = document.getElementById(id); if (element) element.textContent = text; };
+// Outputs start quiet: a value takes the project colour only once the visitor's inputs change it. Digits are
+// compared, read before the translator runs, so a language switch alone never counts as a change.
+export function markChangedOutputs(formId) {
+  const calculator = document.getElementById(formId)?.closest('.impact-calculator');
+  if (!calculator) return;
+  calculator.querySelectorAll('td[id], .impact-summary, .readiness-result').forEach((output) => {
+    const digits = output.textContent.replace(/\D/g, '');
+    if (output.dataset.base === undefined) output.dataset.base = digits;
+    output.classList.toggle('is-changed', digits !== '' && digits !== output.dataset.base);
+  });
+}
 // Marks each field outside its allowed values and names the first one, with the range it accepts.
 export function fieldProblem(form, errorId) {
   const fields = [...form.querySelectorAll('input')];
@@ -73,4 +84,5 @@ export function updateSafetyEstimate(project) {
       for (const id of ['beam-net', 'beam-payback', 'beam-investment']) put(id, '');
     }
   }
+  markChangedOutputs(`${prefix}-form`);
 }

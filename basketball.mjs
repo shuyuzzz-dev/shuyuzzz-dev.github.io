@@ -59,7 +59,11 @@ export function mountBasketball() {
     if(visible&&(game.canAct()||game.netReaction&&!game.paused))raf=requestAnimationFrame(frame);
   }
   function run(){if(visible&&raf===null){previous=0;raf=requestAnimationFrame(frame);}}
-  function start(){if(!loaded)return;clearInput();game.finished?game.start():game.paused?game.resume():game.start();focus();hud(true);run();}
+  // Phones and touch screens switch to a full-screen court. A desktop window scrolls the scoreboard to
+  // the top, which brings the timing bar and the controls on screen with it.
+  const fullScreenCourt=matchMedia('(max-width:680px),(pointer:coarse)'),reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  function bringIntoView(){if(!fullScreenCourt.matches)$('.court-scoreboard').scrollIntoView({block:'start',behavior:reduceMotion.matches?'instant':'smooth'});}
+  function start(){if(!loaded)return;clearInput();game.finished?game.start():game.paused?game.resume():game.start();focus();hud(true);run();bringIntoView();}
   function point(event){const r=canvas.getBoundingClientRect();return{x:(event.clientX-r.left)/r.width*COURT.width,y:(event.clientY-r.top)/r.height*COURT.height};}
   function shotDown(event){
     if(event.button!==0||pointerShot!==null||keyboardShot||!game.canAct())return;

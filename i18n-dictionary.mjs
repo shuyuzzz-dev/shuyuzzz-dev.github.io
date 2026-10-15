@@ -358,10 +358,6 @@ export const DICTIONARY = {
     "每班2,000次Rainbow货位访问 × 每次节省90秒。",
     "2.000 visitas Rainbow por turno × 90 segundos recuperados."
   ],
-  "Projected picking labor capacity": [
-    "预计释放的拣选人工产能",
-    "Capacidad laboral de picking proyectada"
-  ],
   "Period / scope": [
     "周期 / 范围",
     "Periodo / alcance"
@@ -410,10 +406,6 @@ export const DICTIONARY = {
     "145,600小时",
     "145.600 h"
   ],
-  "The default is one shift per day, seven days per week, 52 weeks per year, and an illustrative $30/hour. Volume must represent outbound Rainbow picks; batch picks should use their actual units per bin visit. Network scaling assumes equivalent volume, bin mix, and time improvement at each site, with a full year of operation after rollout.": [
-    "默认假设为每天1班、每周7天、每年52周，以及每小时30美元的示例人工价值。件数应对应出库Rainbow拣选；批量拣选应使用实际每次访问货位的件数。网络测算假设各站点件量、货位构成和时间改善相当，且推广后完整运营一年。",
-    "El modelo usa un turno diario, siete días semanales, 52 semanas anuales y un valor ilustrativo de 30 USD/h. El volumen debe corresponder a picks Rainbow de salida; los picks por lotes deben usar sus unidades reales por visita. La proyección de red supone volumen, mezcla de ubicaciones y mejora de tiempo equivalentes, con un año completo de operación tras la implantación."
-  ],
   "Injury-cost avoidance, shown separately": [
     "工伤成本避免额，单独展示",
     "Costes de lesiones evitados, por separado"
@@ -429,10 +421,6 @@ export const DICTIONARY = {
   "Estimated total cost per strain injury (USD)": [
     "每起劳损工伤的预计总成本（美元）",
     "Coste total estimado por lesión por sobreesfuerzo (USD)"
-  ],
-  "Separate projected injury-cost avoidance per year": [
-    "单独测算的年度工伤成本避免额",
-    "Costes anuales de lesiones evitados, por separado"
   ],
   "Annual scope": [
     "年度范围",
@@ -453,10 +441,6 @@ export const DICTIONARY = {
   "8 sites": [
     "8个站点",
     "8 centros"
-  ],
-  "Labor capacity and injury-cost avoidance are kept separate because indirect injury costs may overlap with labor losses. Avoided incidents must also be separated from A-Level Beams cases before combining projects. Installation and maintenance costs are not deducted, and recovered time does not automatically reduce payroll.": [
-    "人工产能与工伤成本避免额分开展示，因为工伤间接成本可能与人工损失重叠。合并项目效益前，还需排除与A层横梁项目重复计算的工伤。此处未扣除安装和维护成本；节省时间也不会自动减少工资支出。",
-    "La capacidad laboral y los costes de lesiones evitados se muestran por separado porque los costes indirectos pueden solaparse con pérdidas laborales. Antes de combinar proyectos, también deben excluirse los casos ya atribuidos a Vigas de nivel A. No se deducen instalación ni mantenimiento; recuperar tiempo no reduce automáticamente la nómina."
   ],
   "I moved cage scanning into the route stowers already travel, so aisle recommendations are ready before the cage is mounted.": [
     "我将笼车扫描融入上架人员原本的移动路线，使笼车装上拣选车之前，推荐巷道就已显示。",
@@ -606,10 +590,6 @@ export const DICTIONARY = {
     "3班",
     "3 turnos"
   ],
-  "Estimated labor capacity and equivalent value under the selected schedule": [
-    "所选班次安排下的预计人工产能及等值金额",
-    "Capacidad laboral y valor equivalente con el horario seleccionado"
-  ],
   "Period": [
     "周期",
     "Periodo"
@@ -646,21 +626,9 @@ export const DICTIONARY = {
     "示例年度产能：7,280个人工小时，价值218,400美元。",
     "Capacidad anual ilustrativa: 7.280 horas de trabajo, valoradas en 218.400 USD."
   ],
-  "Uses 52 operating weeks per year and assumes the stated staffing, cage rate, and time recovery hold throughout the selected active hours. The default schedule is an illustration, not a confirmed historical schedule.": [
-    "按每年52个运营周计算，并假设在所选有效作业时间内，人员数量、换笼频率与时间改善均保持稳定。默认安排仅为示例，并非已确认的历史班次。",
-    "Se usan 52 semanas de operación al año y se supone que la dotación, el ritmo de jaulas y el ahorro de tiempo se mantienen durante las horas activas elegidas. El horario predeterminado es ilustrativo, no un horario histórico confirmado."
-  ],
-  "The $30/hour value is a rounded compensation benchmark. Amazon reports average U.S. fulfillment and transportation pay above $23/hour and total compensation above $30/hour including benefits. It is not the building’s verified fully loaded labor rate.": [
-    "每小时30美元为取整后的薪酬参考。亚马逊报告，美国履约与运输员工平均时薪超过23美元，含福利总薪酬超过30美元。这不是经核实的本站点完整人工成本。",
-    "Los 30 USD/h son una referencia redondeada de remuneración. Amazon informa de un salario medio superior a 23 USD/h para sus empleados de logística y transporte en EE. UU., y una compensación total superior a 30 USD/h con beneficios. No es el coste laboral completo verificado del centro."
-  ],
   "Amazon compensation announcement, September 2025 ↗": [
     "亚马逊薪酬公告，2025年9月 ↗",
     "Anuncio de remuneración de Amazon, septiembre de 2025 ↗"
-  ],
-  "This values recovered labor capacity at the selected rate, before installation and maintenance costs. Realized payroll savings depend on paid hours or overtime actually avoided. Current compensation benchmarks do not establish the historical dollar savings.": [
-    "此处按所选费率估算释放的人工产能价值，未扣除安装和维护成本。实际工资节省取决于真正减少的付薪工时或加班。当前薪酬参考不能证明历史节省金额。",
-    "Se valora la capacidad laboral recuperada antes de instalación y mantenimiento. El ahorro real de nómina depende de horas pagadas o extras efectivamente evitadas. Las referencias salariales actuales no demuestran ahorros históricos."
   ],
   "End-to-end ownership": [
     "端到端负责",
@@ -774,10 +742,6 @@ export const DICTIONARY = {
     "假设情景：两年内新增50个站点，每站点约40位经理，即2,000名潜在入职培训参与者。模型假设每名参与者仅完成一次六周课程。",
     "Un escenario hipotético: 50 nuevos centros en dos años, con unos 40 gerentes por centro: 2.000 posibles participantes. El modelo supone que cada gerente realiza el programa de seis semanas una sola vez."
   ],
-  "The site count is a modeling input, not a company plan. Time reductions and hourly costs below are illustrative assumptions, not measured results or verified Amazon labor rates. Required teaching and the full six-week program remain intact.": [
-    "站点数量是建模输入，并非公司计划。以下节省时间和小时成本是示例假设，并非实测结果或经核实的亚马逊人工费率。必要教学和完整六周课程均予以保留。",
-    "El número de centros es un dato del modelo, no un plan de la empresa. Las reducciones de tiempo y los costes horarios son ilustrativos, no resultados medidos ni tarifas verificadas de Amazon. Se mantienen la enseñanza necesaria y el programa completo de seis semanas."
-  ],
   "Time and hourly cost assumptions": [
     "时间与小时成本假设",
     "Supuestos de tiempo y coste horario"
@@ -805,10 +769,6 @@ export const DICTIONARY = {
   "A repeat-training hour includes one new manager and one trainer, so it represents two labor-hours. Coordination time excludes these repeat sessions and necessary teaching.": [
     "一小时重复培训涉及一位新经理和一位培训者，因此相当于两个人工小时。协调时间不包括这些重复课程和必要教学。",
     "Una hora de formación repetida incluye a un gerente y a un formador: equivale a dos horas de trabajo. La coordinación excluye esas sesiones y la enseñanza necesaria."
-  ],
-  "Potential direct time recovery per manager": [
-    "每位经理可能直接释放的工时",
-    "Tiempo directo potencialmente recuperado por gerente"
   ],
   "Source": [
     "来源",
@@ -870,10 +830,6 @@ export const DICTIONARY = {
     "50个新增站点 × 每站40位经理 = 2,000位经理。按100%参与率计算：两年内2,000位经理各完成一次入职培训。",
     "50 centros adicionales × 40 gerentes/centro = 2.000 gerentes. Con un 100% de participación: 2.000 gerentes formados una vez en 2 años."
   ],
-  "Projected gross labor capacity from launch onboarding": [
-    "开站入职培训预计释放的人工产能总量",
-    "Capacidad laboral bruta proyectada de la incorporación"
-  ],
   "Scope": [
     "范围",
     "Alcance"
@@ -909,10 +865,6 @@ export const DICTIONARY = {
   "If only half the modeled time reduction is achieved at the selected participation level: 26,000 hours, valued at $1,860,000 across the rollout.": [
     "在所选参与率下，若仅实现模型假设一半的时间改善：推广期共26,000小时，价值1,860,000美元。",
     "Si solo se logra la mitad de la reducción prevista con la participación elegida: 26.000 horas, valoradas en 1.860.000 USD durante la implantación."
-  ],
-  "The annual average assumes launches and onboarding are spread evenly across the rollout. This is a one-time benefit for each participating manager, not a recurring annual saving after launch. Existing sites and future replacement hires are excluded. Reduce participation if some managers do not require the full onboarding program.": [
-    "年均值假设开站与入职培训在推广期内均匀分布。每位经理仅产生一次该效益，并非开站后每年重复节省。不包括现有站点及未来补招人员。如部分经理不需要完整培训，应降低参与率。",
-    "El promedio anual supone lanzamientos e incorporaciones distribuidos uniformemente. Es un beneficio único por participante, no un ahorro anual recurrente tras el lanzamiento. Se excluyen centros existentes y futuras contrataciones de sustitución. Reduce la participación si algunos gerentes no necesitan el programa completo."
   ],
   "Compare a separate annual onboarding cohort": [
     "对比独立的年度入职群体",
@@ -954,18 +906,6 @@ export const DICTIONARY = {
     "示例就绪价值：每位经理600美元；24位经理共14,400美元。",
     "Valor ilustrativo de preparación: 600 USD por gerente; 14.400 USD para 24 gerentes."
   ],
-  "This is capacity-equivalent value, excluded from both the regional rollout and direct time-recovery totals. Count only time outside coordination and repeat training, and validate the change in readiness before attributing it to the portal.": [
-    "这是产能等值金额，不计入区域推广和直接释放工时总额。仅计算协调与重复培训之外的时间，并在归因于门户前验证就绪度变化。",
-    "Es un valor equivalente de capacidad, excluido de los totales regionales y directos. Cuenta solo tiempo ajeno a coordinación y formación repetida, y valida la mejora de preparación antes de atribuirla al portal."
-  ],
-  "Hourly costs should reflect the actual AM, OM, trainer, and reviewer mix. These are gross labor-capacity values before development, rollout, training, support, and maintenance costs. Cash savings require a demonstrated reduction in paid labor, overtime, or hiring costs; recovered salaried time alone does not reduce payroll. Net savings and ROI are not established.": [
-    "小时成本应反映实际AM、OM、培训者和审核者的人员组合。所示为未扣除开发、推广、培训、支持和维护成本的人工产能毛值。现金节省需要证明付薪工时、加班或招聘成本实际减少；仅释放固定薪资人员的时间不会降低工资。净节省和ROI尚未确立。",
-    "Los costes horarios deben reflejar la mezcla real de AM, OM, formadores y revisores. Son valores brutos antes de desarrollo, implantación, formación, soporte y mantenimiento. El ahorro de efectivo exige demostrar una reducción en trabajo pagado, horas extras o contratación; recuperar tiempo de personal asalariado no reduce por sí solo la nómina. No se han establecido ahorro neto ni ROI."
-  ],
-  "Quality defects, safety outcomes, retention, and site-launch delays are excluded from the dollar estimate until a measurable connection is established.": [
-    "在建立可量化关联之前，质量缺陷、安全结果、留任率和开站延迟不计入金额估算。",
-    "Se excluyen defectos de calidad, seguridad, retención y retrasos de lanzamiento hasta establecer una relación medible."
-  ],
   "How I would validate the impact": [
     "如何验证成效",
     "Cómo validaría el impacto"
@@ -997,10 +937,6 @@ export const DICTIONARY = {
   "Cases avoided per site per year": [
     "每站点每年避免工伤起数",
     "Casos evitados por centro y año"
-  ],
-  "Annual A-Level Beams injury-cost avoidance scenarios": [
-    "A层横梁年度工伤成本避免情景",
-    "Escenarios anuales de costes evitados con Vigas de nivel A"
   ],
   "Cases avoided": [
     "避免的工伤起数",
@@ -1622,18 +1558,6 @@ export const DICTIONARY = {
     "查看原尺寸截图 ↗",
     "Ver captura a tamaño completo ↗"
   ],
-  "One place to begin.": [
-    "统一的学习起点。",
-    "Un único punto de partida."
-  ],
-  "I designed and built the Onboarding Portal end to end. Managers select their profile and return to a structured learning journey, with saved progress and team-folder syncing in the site-level build.": [
-    "我独立完成了入职培训门户的设计与开发。经理选择个人档案后，即可继续有结构的学习计划；站点版工具支持保存进度并通过团队文件夹同步。",
-    "Diseñé y desarrollé el Portal de incorporación de principio a fin. Los gerentes seleccionan su perfil y retoman un itinerario de aprendizaje estructurado; la versión del centro guarda el progreso y permite sincronizarlo mediante una carpeta compartida del equipo."
-  ],
-  "Onboarding Portal entry screen with profile search, saved progress, and team-folder controls.": [
-    "入职培训门户入口界面，包含个人档案搜索、进度保存和团队文件夹功能。",
-    "Pantalla de entrada al Portal de incorporación con búsqueda de perfiles, progreso guardado y controles de la carpeta del equipo."
-  ],
   "A roadmap with visible progress.": [
     "学习路线清晰，进展一目了然。",
     "Una hoja de ruta con progreso visible."
@@ -1642,34 +1566,6 @@ export const DICTIONARY = {
     "时间轴按学习、实践和独立负责三个阶段组织培训。每周的目标与完成状态清晰可见，帮助经理及其导师明确下一步。",
     "El cronograma organiza el aprendizaje en tres fases: Aprender, Practicar y Asumir la responsabilidad. Cada semana muestra su objetivo y estado de avance, para que el gerente y su mentor sepan cuál es el siguiente paso."
   ],
-  "Training timeline with Learn, Experience, and Own phases and weekly completion indicators.": [
-    "培训时间轴展示学习、实践、独立负责三个阶段，以及每周完成进度。",
-    "Cronograma de formación con las fases Aprender, Practicar y Asumir la responsabilidad e indicadores de avance semanales."
-  ],
-  "Turn expectations into weekly actions.": [
-    "将培训要求转化为每周行动。",
-    "Convertir expectativas en acciones semanales."
-  ],
-  "Weekly checklists separate team development from the manager’s own development. Concrete activities give shadowing a purpose and create a consistent record of what has been completed.": [
-    "每周清单将团队培养与经理自身发展分开呈现。具体的任务让跟岗学习有明确目标，并形成统一的完成记录。",
-    "Las listas semanales separan el desarrollo del equipo del desarrollo del propio gerente. Las actividades concretas dan un propósito al acompañamiento en el puesto y dejan un registro consistente de lo completado."
-  ],
-  "Weekly learning tracker with separate checklists for team development and manager development.": [
-    "每周学习跟踪界面，分别列出团队培养与经理自身发展的任务清单。",
-    "Seguimiento semanal del aprendizaje con listas separadas para el desarrollo del equipo y del gerente."
-  ],
-  "The right training, in the right week.": [
-    "将培训资料与每周计划对应。",
-    "La formación adecuada, en la semana adecuada."
-  ],
-  "Training materials sit alongside the weekly plan. Managers can find the relevant modules and launch the learning resources without piecing together links from different messages.": [
-    "培训资料与每周计划集中呈现。经理可以直接找到相关课程并打开学习资源，无需从不同消息中逐一搜集链接。",
-    "Los materiales de formación están junto al plan semanal. Los gerentes pueden encontrar los módulos relevantes y abrir los recursos sin reunir enlaces dispersos en distintos mensajes."
-  ],
-  "Training Materials tab showing learning modules and buttons to launch the resources.": [
-    "培训资料页展示学习模块及打开资源的按钮。",
-    "Pestaña de materiales de formación con módulos de aprendizaje y botones para abrir los recursos."
-  ],
   "Validate learning before moving on.": [
     "验证学习成果，再进入下一阶段。",
     "Validar el aprendizaje antes de avanzar."
@@ -1677,46 +1573,6 @@ export const DICTIONARY = {
   "Knowledge checks show a passing threshold, question-level feedback, and scores by topic. Managers can see where to revisit the material and retake the check, giving coaches evidence of learning gaps.": [
     "知识测验展示通过标准、逐题反馈及各主题得分。经理可以据此复习薄弱内容并重新测验，导师也能获得判断学习差距的依据。",
     "Las comprobaciones de conocimientos muestran el umbral de aprobación, comentarios por pregunta y puntuaciones por tema. Los gerentes pueden identificar qué repasar y repetir la evaluación; sus mentores obtienen evidencia de las lagunas de aprendizaje."
-  ],
-  "Knowledge check results with a passing threshold, question overview, topic scores, and a retake button; name pixelated, scores and question results blurred.": [
-    "知识测验结果展示通过标准、题目概览、主题得分和重新测验按钮；姓名已像素化，分数与答题结果已模糊处理。",
-    "Resultados de una comprobación de conocimientos con umbral de aprobación, resumen de preguntas, puntuaciones por tema y botón para repetirla; nombre pixelado, puntuaciones y resultados por pregunta difuminados."
-  ],
-  "Make observations reviewable.": [
-    "让观察与反思成为可评审的成果。",
-    "Observaciones que se pueden revisar."
-  ],
-  "Weekly assignments capture strengths and observations about safety, quality, and cost. Structured reflections turn time spent shadowing into evidence that senior leaders can review and discuss.": [
-    "每周作业记录优势，以及对安全、质量和成本的观察。结构化反思将跟岗经历转化为可供高级领导审阅和讨论的学习成果。",
-    "Las tareas semanales recogen fortalezas y observaciones sobre seguridad, calidad y costes. Las reflexiones estructuradas convierten el tiempo de acompañamiento en evidencia que los líderes sénior pueden revisar y comentar."
-  ],
-  "Blank weekly assignment form with fields for strengths, safety, quality, and cost observations.": [
-    "尚未填写的每周作业表单，包含优势、安全、质量和成本观察等字段。",
-    "Formulario de tarea semanal sin completar, con campos para fortalezas y observaciones de seguridad, calidad y costes."
-  ],
-  "Give operational standards a home.": [
-    "集中呈现运营标准。",
-    "Un lugar para los estándares operativos."
-  ],
-  "The Core Standards page brings recurring management practices into one reference point. Managers can connect their weekly development to the operational routines they need to understand and own.": [
-    "核心标准页集中呈现日常管理实践。经理可以将每周学习与需要掌握并独立负责的运营工作联系起来。",
-    "La página de Estándares fundamentales reúne las prácticas recurrentes de gestión en un único punto de consulta. Los gerentes pueden relacionar su desarrollo semanal con las rutinas operativas que deben comprender y asumir."
-  ],
-  "Core Standards page listing operational management practices and learning resources.": [
-    "核心标准页列出运营管理实践及学习资源。",
-    "Página de Estándares fundamentales con prácticas de gestión operativa y recursos de aprendizaje."
-  ],
-  "Keep a record of learning on the floor.": [
-    "记录发生在现场的学习。",
-    "Dejar constancia del aprendizaje en planta."
-  ],
-  "The training log records the week, training type, and reflection. It gives in-person learning a visible history and helps a manager and their coach follow up on what was learned.": [
-    "培训日志记录周次、培训类型与学习反思，让线下培训留下可查阅的记录，帮助经理及其导师持续跟进学习成果。",
-    "El registro de formación recoge la semana, el tipo de formación y la reflexión. Crea un historial visible del aprendizaje presencial y ayuda al gerente y a su mentor a dar seguimiento a lo aprendido."
-  ],
-  "Training Log screen with week and training-type selectors, a reflection field, and log history.": [
-    "培训日志界面包含周次与培训类型选择、反思填写区域及历史记录。",
-    "Pantalla del registro de formación con selectores de semana y tipo, un campo de reflexión y el historial."
   ],
   "Organization health. Team pace. Verified learning.": [
     "组织学习状况。团队进度。学习成果验证。",
@@ -1825,18 +1681,6 @@ export const DICTIONARY = {
   "Compliance Analysis dashboard with team rollups, on-track indicators, a follow-up count, and four separate learning rankings; names pixelated, values blurred.": [
     "学习合规分析看板，包含团队汇总、进度达标指标、待跟进人数及四类独立学习排名；姓名已像素化，数值已模糊处理。",
     "Panel de análisis de cumplimiento con resúmenes por equipo, indicadores de ritmo, personas que requieren seguimiento y cuatro clasificaciones de aprendizaje; nombres pixelados y valores difuminados."
-  ],
-  "Connect training delivery to learning evidence.": [
-    "让培训开展与学习成果相连接。",
-    "Conectar la formación impartida con evidencia de aprendizaje."
-  ],
-  "The admin training view brings the schedule, eligible population, attendance, and knowledge-check results together. Attendance is recorded through knowledge-check submissions; pass rates and repeat attempts help leaders identify sessions and learners that need follow-up.": [
-    "管理员培训视图集中展示日程、应参训人员、出勤和知识测验结果。出勤以提交知识测验为依据；通过率和重复测验次数帮助领导识别需要跟进的课程及学员。",
-    "La vista administrativa de formación reúne calendario, participantes previstos, asistencia y resultados de conocimientos. La asistencia se registra mediante las entregas de las evaluaciones; las tasas de aprobación y los intentos repetidos ayudan a identificar sesiones y participantes que necesitan seguimiento."
-  ],
-  "On-site Training admin screen with session attendance, knowledge-check pass rates, repeat attempts, and training-event scheduling; names pixelated, values blurred.": [
-    "现场培训管理员界面，展示课程出勤、知识测验通过率、重复测验次数及培训安排；姓名已像素化，数值已模糊处理。",
-    "Pantalla administrativa de formación presencial con asistencia por sesión, tasas de aprobación, intentos repetidos y programación de actividades; nombres pixelados y valores difuminados."
   ],
   "Screenshots from the working portal, with names pixelated, sensitive values blurred and internal labels made generic; everything obscured is placeholder content. Original interface in English; captions follow your selected language.": [
     "截图来自已可用的门户。姓名已像素化，敏感数值已模糊处理，内部标签已改为通用名称；所有被遮挡的内容均为占位内容。原始界面为英文，说明文字随所选语言切换。",
@@ -1974,10 +1818,6 @@ export const DICTIONARY = {
     "库存与运营纪律",
     "Inventario y disciplina operativa"
   ],
-  "Inventory quality leadership": [
-    "库存质量管理",
-    "Liderazgo en calidad de inventario"
-  ],
   "Go straight to the project": [
     "直接查看项目",
     "Ir directamente al proyecto"
@@ -2069,14 +1909,6 @@ export const DICTIONARY = {
   "A projection for one site and for eight. The inputs are illustrative, not site data; change them to test the idea.": [
     "单个站点和八个站点的测算。输入值仅为示例，并非站点数据；可修改它们来检验这个设想。",
     "Una proyección para un centro y para ocho. Los valores son ilustrativos, no datos del centro; cámbialos para poner a prueba la idea."
-  ],
-  "The $67,248 reference comes from the OSHA Safety Pays estimate reproduced in the A-Level Beams proposal: $32,023 direct cost plus $35,225 indirect cost per strain case. It is a historical planning proxy, not an Amazon claims rate. Update it with site-specific evidence.": [
-    "67,248美元的参考值来自A层横梁方案中引用的OSHA Safety Pays估算：每起劳损工伤直接成本32,023美元，加上间接成本35,225美元。这是历史规划参考值，并非亚马逊理赔标准，应以站点实际数据更新。",
-    "La referencia de 67.248 USD procede de la estimación de OSHA Safety Pays incluida en la propuesta de Vigas de nivel A: 32.023 USD de costes directos y 35.225 USD indirectos por lesión por sobreesfuerzo. Es una referencia histórica de planificación, no una tarifa de reclamaciones de Amazon. Debe actualizarse con datos del centro."
-  ],
-  "The 3–5 avoided cases below are an illustrative planning scenario, not site data. They are not derived from the reported RIR reduction.": [
-    "以下每年避免3–5起工伤是示例规划情景，并非站点数据，也不是根据报告的RIR下降推算而来。",
-    "Los 3–5 casos evitados son un escenario de planificación ilustrativo, no datos del centro. No se derivan de la reducción reportada de la RIR."
   ],
   "Before: horizontal stacking": [
     "改善前：横向堆叠",
@@ -2182,25 +2014,9 @@ export const DICTIONARY = {
     "选择一个站点每年可能避免的劳损工伤起数。输入值仅为示例，并非站点数据；降低暴露不会自动换算为工伤减少。",
     "Elige cuántos casos por sobreesfuerzo podría evitar un centro cada año. Los valores son ilustrativos, no datos del centro, y una menor exposición no se convierte automáticamente en menos lesiones."
   ],
-  "Two avoided cases is an illustrative scenario, not a measured outcome.": [
-    "每年避免两起工伤只是示例情景，并非实测结果。",
-    "Dos casos evitados es un escenario ilustrativo, no un resultado medido."
-  ],
   "The proposal estimates about $0.73 million of investment and about $190,000 a year of lost storage for one site. These planning figures need updated quotes and a capacity check.": [
     "方案估计单个站点需投资约73万美元，每年损失的存储容量约值19万美元。这些规划数据需要更新报价并核实容量。",
     "La propuesta estima unos 0,73 millones de USD de inversión y unos 190.000 USD al año de almacenamiento perdido para un centro. Estas cifras de planificación requieren presupuestos actualizados y una revisión de capacidad."
-  ],
-  "At two avoided cases, injury-cost avoidance does not cover the annual storage cost, so this limited financial model shows no simple payback. The safety rationale stands apart from this financial view. No discounted cash flow, validated NPV or quantified productivity benefit is claimed here.": [
-    "若每年避免两起工伤，避免的工伤成本不足以覆盖每年的存储成本，因此这一有限的财务模型不显示简单回收期。安全理由独立于这一财务视角。此处不声称任何折现现金流、经验证的净现值或量化的生产率收益。",
-    "Con dos casos evitados, el ahorro en costes de lesiones no cubre el coste anual de almacenamiento, así que este modelo financiero limitado no muestra una recuperación simple. La justificación de seguridad es independiente de esta visión financiera. Aquí no se afirma ningún flujo de caja descontado, VAN validado ni beneficio de productividad cuantificado."
-  ],
-  "The $67,248 historical proxy includes $32,023 direct and $35,225 indirect costs, as reproduced from OSHA Safety Pays in the proposal. It is not the actual cost of every injury. Network figures assume comparable risk and implementation at all selected sites; each building needs its own case history, bin count, costs, and rollout schedule.": [
-    "67,248美元的历史参考值来自方案中引用的OSHA Safety Pays，包括32,023美元直接成本和35,225美元间接成本，并非每起工伤的实际成本。网络测算假设各选定站点风险与实施情况可比；各站点仍需使用自己的工伤历史、货位数量、成本及推广安排。",
-    "La referencia histórica de 67.248 USD de OSHA Safety Pays, recogida en la propuesta, incluye 32.023 USD directos y 35.225 USD indirectos. No es el coste real de cada lesión. La proyección supone riesgos e implantación comparables; cada centro necesita su historial, ubicaciones, costes y calendario."
-  ],
-  "The source is a project proposal, not an installation or post-installation benefits report. Avoided injuries and network benefits remain projections. Do not combine these cases with Bin Liners injury avoidance until overlapping incidents have been removed.": [
-    "来源为项目方案，并非安装报告或实施后效益报告。避免工伤与网络效益仍是预测。排除重复工伤之前，不应与货位衬板项目的工伤避免额合并。",
-    "La fuente es una propuesta de proyecto, no un informe de instalación ni de beneficios posteriores. Las lesiones evitadas y los beneficios de red siguen siendo proyecciones. No deben sumarse a los de Separadores de ubicaciones sin eliminar los casos duplicados."
   ],
   "Recovered per cage changeover, as reported": [
     "据报告，每次换笼节省的时间",
@@ -2341,5 +2157,57 @@ export const DICTIONARY = {
   "Open the project index": [
     "打开项目目录",
     "Abrir el índice de proyectos"
+  ],
+  "Run the model": [
+    "试算模型",
+    "Probar el modelo"
+  ],
+  "The model uses 52 operating weeks a year and assumes the stated staffing, cage rate and time recovery hold for every selected active hour. The default schedule is an illustration, not a confirmed historical schedule, and $30/hour is a rounded public compensation benchmark, not the building’s verified fully loaded labor rate. Values show labor capacity before installation and maintenance costs; payroll savings depend on paid hours or overtime actually avoided.": [
+    "模型按每年52个运营周计算，并假设在所选的每个有效作业小时内，人员数量、换笼频率与时间改善均保持稳定。默认班次安排仅为示例，并非已确认的历史班次；每小时30美元为取整后的公开薪酬参考，并非经核实的本站点完整人工成本。所示金额为未扣除安装和维护成本的人工产能价值；实际工资节省取决于真正减少的付薪工时或加班。",
+    "El modelo usa 52 semanas de operación al año y supone que la dotación, el ritmo de jaulas y el ahorro de tiempo se mantienen en cada hora activa elegida. El horario predeterminado es ilustrativo, no un horario histórico confirmado, y los 30 USD/h son una referencia pública y redondeada de remuneración, no el coste laboral completo verificado del centro. Los valores muestran capacidad laboral antes de instalación y mantenimiento; el ahorro real de nómina depende de las horas pagadas o extras efectivamente evitadas."
+  ],
+  "The defaults are illustrative, not site data: one shift a day, seven days a week, 52 weeks a year and $30/hour. Volume means outbound Rainbow picks; batch picks should use their actual units per bin visit. More sites assumes the same volume, bin mix and time improvement at each, for a full year after rollout. The avoided injury cases are a planning scenario, not derived from the reported RIR reduction, and the $67,248 per strain case is the OSHA Safety Pays estimate ($32,023 direct plus $35,225 indirect) reproduced in the A-Level Beams proposal, not an Amazon claims rate. Labor and injury values stay separate because they can overlap, and cases shared with A-Level Beams must be removed before the projects are combined. Installation and maintenance costs are not deducted, and recovered time does not automatically reduce payroll.": [
+    "默认值仅为示例，并非站点数据：每天1班、每周7天、每年52周，每小时30美元。件数应对应出库Rainbow拣选；批量拣选应使用实际每次访问货位的件数。多站点测算假设各站点件量、货位构成和时间改善相当，且推广后完整运营一年。避免的工伤起数是规划情景，并非根据报告的RIR下降推算而来；每起劳损工伤67,248美元的成本采用A层横梁方案中引用的OSHA Safety Pays估算（直接成本32,023美元加间接成本35,225美元），并非亚马逊理赔标准。人工价值与工伤价值分开展示，因为两者可能重叠；合并项目效益前，须排除与A层横梁项目重复计算的工伤。此处未扣除安装和维护成本，节省时间也不会自动减少工资支出。",
+    "Los valores predeterminados son ilustrativos, no datos del centro: un turno diario, siete días semanales, 52 semanas anuales y 30 USD/h. El volumen debe corresponder a picks Rainbow de salida; los picks por lotes deben usar sus unidades reales por visita. Con más centros se suponen volumen, mezcla de ubicaciones y mejora de tiempo equivalentes en cada uno, con un año completo de operación tras la implantación. Los casos de lesiones evitados son un escenario de planificación, no derivado de la reducción reportada de la RIR, y los 67.248 USD por lesión por sobreesfuerzo son la estimación de OSHA Safety Pays (32.023 USD directos y 35.225 USD indirectos) incluida en la propuesta de Vigas de nivel A, no una tarifa de reclamaciones de Amazon. Los valores laborales y de lesiones se muestran por separado porque pueden solaparse, y antes de combinar proyectos deben excluirse los casos ya atribuidos a Vigas de nivel A. No se deducen instalación ni mantenimiento; recuperar tiempo no reduce automáticamente la nómina."
+  ],
+  "Two avoided cases is an illustrative scenario, not a measured outcome, and the source is a project proposal, not a post-installation benefits report. The $67,248 per strain case is the OSHA Safety Pays estimate ($32,023 direct plus $35,225 indirect) reproduced in the proposal, not the actual cost of every injury. More sites assumes comparable risk and implementation at each; every building needs its own case history, bin count, costs and rollout schedule. The safety rationale stands apart from the financial view: no discounted cash flow, validated NPV or quantified productivity benefit is claimed. Do not combine these cases with Bin Liners injury avoidance until overlapping incidents have been removed.": [
+    "每年避免两起工伤只是示例情景，并非实测结果；来源为项目方案，并非实施后效益报告。每起劳损工伤67,248美元的成本采用方案中引用的OSHA Safety Pays估算（直接成本32,023美元加间接成本35,225美元），并非每起工伤的实际成本。多站点测算假设各站点风险与实施情况可比；各站点仍需使用自己的工伤历史、货位数量、成本及推广安排。安全理由独立于财务视角：此处不声称任何折现现金流、经验证的净现值或量化的生产率收益。排除重复工伤之前，不应与货位衬板项目的工伤避免额合并。",
+    "Dos casos evitados es un escenario ilustrativo, no un resultado medido, y la fuente es una propuesta de proyecto, no un informe de beneficios posterior a la instalación. Los 67.248 USD por lesión por sobreesfuerzo son la estimación de OSHA Safety Pays (32.023 USD directos y 35.225 USD indirectos) recogida en la propuesta, no el coste real de cada lesión. Con más centros se suponen riesgos e implantación comparables; cada centro necesita su historial, ubicaciones, costes y calendario. La justificación de seguridad es independiente de la visión financiera: no se afirma ningún flujo de caja descontado, VAN validado ni beneficio de productividad cuantificado. No deben sumarse a los de Separadores de ubicaciones sin eliminar los casos duplicados."
+  ],
+  "The site count is a modeling input, not a company plan, and the time reductions and hourly costs are illustrative assumptions, not measured results or verified Amazon labor rates; required teaching and the full six-week program remain intact. Each participating manager counts once, spread evenly across the rollout: a one-time benefit, not a recurring annual saving, with existing sites and future replacement hires excluded. Values are gross labor capacity before development, rollout, training, support and maintenance costs. Cash savings require a demonstrated reduction in paid labor, overtime or hiring; recovered salaried time alone does not reduce payroll, so net savings and ROI are not established. Readiness value is kept out of both totals and needs a validated change in readiness before it is attributed to the portal. Quality defects, safety outcomes, retention and site-launch delays are excluded until a measurable connection is established.": [
+    "站点数量是建模输入，并非公司计划；节省时间和小时成本是示例假设，并非实测结果或经核实的亚马逊人工费率；必要教学和完整六周课程均予以保留。每位参与经理只计算一次，并在推广期内均匀分布：这是一次性效益，并非每年重复节省，且不包括现有站点及未来补招人员。所示为未扣除开发、推广、培训、支持和维护成本的人工产能毛值。现金节省需要证明付薪工时、加班或招聘成本实际减少；仅释放固定薪资人员的时间不会降低工资，因此净节省和ROI尚未确立。就绪度价值不计入两项总额，且须先验证就绪度变化，才能归因于门户。在建立可量化关联之前，质量缺陷、安全结果、留任率和开站延迟均不计入。",
+    "El número de centros es un dato del modelo, no un plan de la empresa, y las reducciones de tiempo y los costes horarios son supuestos ilustrativos, no resultados medidos ni tarifas verificadas de Amazon; se mantienen la enseñanza necesaria y el programa completo de seis semanas. Cada gerente participante cuenta una sola vez, repartido uniformemente durante la implantación: es un beneficio único, no un ahorro anual recurrente, y se excluyen centros existentes y futuras contrataciones de sustitución. Son valores brutos de capacidad laboral antes de desarrollo, implantación, formación, soporte y mantenimiento. El ahorro de efectivo exige demostrar una reducción en trabajo pagado, horas extras o contratación; recuperar tiempo de personal asalariado no reduce por sí solo la nómina, así que no se han establecido ahorro neto ni ROI. El valor de preparación queda fuera de ambos totales y exige validar la mejora antes de atribuirla al portal. Se excluyen defectos de calidad, seguridad, retención y retrasos de lanzamiento hasta establecer una relación medible."
+  ],
+  "Illustrative model: labor capacity under the selected schedule": [
+    "示例模型：所选班次安排下的人工产能",
+    "Modelo ilustrativo: capacidad laboral con el horario seleccionado"
+  ],
+  "Illustrative model: picking labor capacity": [
+    "示例模型：拣选人工产能",
+    "Modelo ilustrativo: capacidad laboral de picking"
+  ],
+  "Illustrative model: injury-cost avoidance per year": [
+    "示例模型：年度工伤成本避免额",
+    "Modelo ilustrativo: costes de lesiones evitados al año"
+  ],
+  "Illustrative model: direct time recovery per manager": [
+    "示例模型：每位经理直接释放的工时",
+    "Modelo ilustrativo: tiempo directo recuperado por gerente"
+  ],
+  "Illustrative model: gross labor capacity from launch onboarding": [
+    "示例模型：开站入职培训释放的人工产能总量",
+    "Modelo ilustrativo: capacidad laboral bruta de la incorporación en lanzamientos"
+  ],
+  "Training timeline with the Learn and Experience phases and a completion status for each week.": [
+    "培训时间轴展示学习和实践两个阶段，以及每周完成状态。",
+    "Cronograma de formación con las fases Aprender y Practicar y el estado de avance de cada semana."
+  ],
+  "Knowledge check results with a passing threshold, question overview, topic scores, and a retake button; scores and question results blurred.": [
+    "知识测验结果展示通过标准、题目概览、主题得分和重新测验按钮；分数与答题结果已模糊处理。",
+    "Resultados de una comprobación de conocimientos con umbral de aprobación, resumen de preguntas, puntuaciones por tema y botón para repetirla; puntuaciones y resultados por pregunta difuminados."
+  ],
+  "Pick a stop to begin": [
+    "选一个站点开始",
+    "Elige una parada para empezar"
   ]
 };

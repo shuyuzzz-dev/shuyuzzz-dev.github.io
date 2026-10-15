@@ -9,7 +9,7 @@ import { LINER_SCENES } from './liner-scenes.mjs';
 import { STOW_GUIDANCE_SCENES } from './stowguidance-scenes.mjs';
 import { PORTAL_SCENES } from './portal-scenes.mjs';
 import { AI_DECKS } from './ai-decks.mjs';
-import { updateSafetyEstimate, fieldProblem } from './safety-ui.mjs';
+import { updateSafetyEstimate, fieldProblem, markChangedOutputs } from './safety-ui.mjs';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -19,6 +19,7 @@ const spriteContext = sprite.getContext('2d');
 const dialog = $('#project-dialog'), dialogContent = $('#dialog-content');
 const ring = $('#destination-ring'), routeLine = $('#route-line');
 const nearbyPrompt = $('#nearby-prompt'), locationLabel = $('#location-label');
+const managerName = $('.manager-name'), exitButton = $('.warehouse-exit');
 const announcement = $('#arrival-message');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const visited = new Set();
@@ -30,8 +31,8 @@ let facing = 0, lastSprite = '', dialogReturnFocus = null, flowStep = -1;
 let walkingClock = 0;
 let outsideActive = false, pendingExit = false, nearbyExit = false, courtController = null, courtLoading = null;
 let beamStep = 0, deckKey = null, deckStep = 0;
-let linerStep = 0, linerTimer = null, linerPlaying = false;
-let stowguidanceStep = 0, stowguidanceTimer = null, stowguidancePlaying = false;
+let linerStep = 0;
+let stowguidanceStep = 0;
 
 // The generated sheet has intentionally inspected per-pose bounds rather than a
 // mechanically perfect grid. Crop at draw time and anchor every pose at its feet.
@@ -74,6 +75,7 @@ function renderPosition(walking = false) {
   manager.style.top = `${position.y / 667 * 100}%`;
   drawSprite(walking);
   routeLine.setAttribute('points', route.length ? [position, ...route].map(p => `${p.x},${p.y}`).join(' ') : '');
+  placeNearbyPrompt();
 }
 function clearArrival() {
   if (arrivalTimer !== null) window.clearTimeout(arrivalTimer);
@@ -105,6 +107,32 @@ function updateNearby() {
   } else if (!route.length) {
     locationLabel.textContent = position.y > 480 ? 'At the entrance' : 'On the floor';
   }
+  placeNearbyPrompt();
+}
+// The Enter prompt goes beside Shuyu (below first, then the sides, then above), in the first spot that
+// covers no other stop marker and no exit, or else the spot that covers least. Covering the marker the
+// prompt opens matters less. It always stays inside the map.
+function placeNearbyPrompt() {
+  if (nearbyPrompt.hidden) return;
+  const map = world.getBoundingClientRect(), gap = 8;
+  const box = (el) => { const r = el.getBoundingClientRect(); return [r.left - map.left, r.top - map.top, r.right - map.left, r.bottom - map.top]; };
+  const [bodyLeft, bodyTop, bodyRight, bodyBottom] = box(manager), headTop = Math.min(bodyTop, box(managerName)[1]);
+  const width = nearbyPrompt.offsetWidth, height = nearbyPrompt.offsetHeight;
+  const centered = Math.min(Math.max((bodyLeft + bodyRight - width) / 2, gap), map.width - width - gap);
+  const right = bodyRight + gap, left = bodyLeft - gap - width;
+  const above = headTop - gap - height, middle = (bodyTop + bodyBottom - height) / 2, below = bodyBottom + gap;
+  const own = (el) => el === exitButton ? nearbyExit : el.dataset.stop === nearbyStop;
+  const blockers = [...world.querySelectorAll('.stop-pin'), exitButton].map(el => [box(el), own(el) ? 1 : 1000]);
+  const covered = ([x, y]) => blockers.reduce((sum, [[l, t, r, b], weight]) => sum + weight * Math.max(0, Math.min(x + width, r) - Math.max(x, l)) * Math.max(0, Math.min(y + height, b) - Math.max(y, t)), 0);
+  const inside = ([x, y]) => x >= gap && y >= gap && x + width <= map.width - gap && y + height <= map.height - gap;
+  const options = [[centered, below], [right, middle], [left, middle], [centered, above], [right, below], [left, below], [right, above], [left, above]].filter(inside);
+  const [x, y] = options.length ? options.reduce((best, next) => covered(next) < covered(best) ? next : best) : [centered, map.height - height - gap];
+  nearbyPrompt.style.left = `${Math.round(x)}px`;
+  nearbyPrompt.style.top = `${Math.round(y)}px`;
+}
+function progressMessage() {
+  const total = Object.keys(PROJECTS).length;
+  return visited.size === total ? 'All five stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you’re ready.`;
 }
 function highlightStop(id) {
   selectedStop = id;
@@ -293,8 +321,6 @@ function setProjectUrl(id) {
 }
 function openDialog(html, eyebrow = 'Project notes', returnFocus = null) {
   setProjectUrl(null);
-  stopLinerPlayback();
-  stopStowGuidancePlayback();
   if (outsideActive) courtController?.pause();
   const wasOpen = dialog.open;
   if (!wasOpen) dialogReturnFocus = returnFocus || document.activeElement;
@@ -306,7 +332,10 @@ function openDialog(html, eyebrow = 'Project notes', returnFocus = null) {
   document.body.classList.add('dialog-open');
   if (!wasOpen) dialog.showModal();
   dialog.scrollTop = 0;
-  $('.close-dialog').focus({ preventScroll: true });
+  // Focus lands on the new title, so a screen reader starts at the top of what just opened.
+  const title = $('#dialog-title');
+  if (title) { title.tabIndex = -1; title.focus({ preventScroll: true }); }
+  else $('.close-dialog').focus({ preventScroll: true });
 }
 function returnToFloor() {
   dialogReturnFocus = world;
@@ -326,18 +355,17 @@ function showProject(id, returnFocus = null, skipEncounter = false) {
   updateProgress();
   highlightStop(id);
   const ids = Object.keys(PROJECTS), nextId = ids[(ids.indexOf(id)+1)%ids.length];
-  openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><p class="dialog-place">${project.place}</p><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title}</button></div></article>`, 'Project notes', returnFocus);
+  openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title}</button></div></article>`, project.place, returnFocus);
   setProjectUrl(id);
   if (id === 'stowguidance') updateImpactEstimate();
   if (id === 'portal') updateOnboardingEstimate();
   if (id === 'liners' || id === 'beams') updateSafetyEstimate(id);
-  const total = Object.keys(PROJECTS).length;
-  announcement.textContent = visited.size === total ? 'All five stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you’re ready.`;
+  announcement.textContent = progressMessage();
 }
 function showBeamObservation(returnFocus = null) {
   beamStep = 0;
   highlightStop('beams');
-  openDialog(`<section class="dialog-body beam-observation observation-view" style="--project-accent:var(--safety)"><h2 id="dialog-title">See the task through the picker’s eyes.</h2><div class="observation-progress" id="beam-scene-progress" aria-label="Observation progress">1 / 4</div><div class="slide-viewport"><div class="slide-advance" data-advance-beams><span class="observation-art" id="beam-scene-image" role="img" aria-label=""></span></div></div><div class="observation-actions"><button type="button" class="plain-link" id="beam-scene-back">Previous</button><button type="button" class="button primary" id="beam-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="beam-scene-title"></h3><p id="beam-scene-text"></p></div><p class="impact-method">An illustrative scene showing ergonomic risk, not a reconstruction of a specific injury or an installation drawing.</p><button type="button" class="plain-link" data-read-beams>Go straight to the project</button></div></section>`, 'Floor observation', returnFocus);
+  openDialog(`<section class="dialog-body beam-observation observation-view" style="--project-accent:var(--safety)"><h2 id="dialog-title">See the task through the picker’s eyes.</h2><div class="observation-progress" id="beam-scene-progress" aria-label="Observation progress">1 / 4</div><div class="slide-viewport"><div class="slide-advance" data-advance-beams><span class="observation-art" id="beam-scene-image" role="img" aria-label=""></span></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="beam-scene-title"></h3><p id="beam-scene-text"></p></div><p class="impact-method">An illustrative scene showing ergonomic risk, not a reconstruction of a specific injury or an installation drawing.</p></div><div class="observation-actions"><button type="button" class="plain-link" id="beam-scene-back">Previous</button><button type="button" class="button primary" id="beam-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-beams>Go straight to the project</button></div></section>`, 'Floor observation', returnFocus);
   renderBeamObservation();
 }
 function renderBeamObservation() {
@@ -350,26 +378,17 @@ function renderBeamObservation() {
   $('#beam-scene-progress').textContent = `${beamStep + 1} / ${BEAM_SCENES.length}`;
   $('#beam-scene-next').textContent = beamStep === BEAM_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
   $('#beam-scene-back').disabled = beamStep === 0;
+  $('[data-read-beams]').hidden = beamStep === BEAM_SCENES.length - 1;
 }
 function advanceBeamObservation(direction = 1) {
   if (direction === 1 && beamStep === BEAM_SCENES.length - 1) { showProject('beams', null, true); return; }
   beamStep = Math.max(0, Math.min(BEAM_SCENES.length - 1, beamStep + direction));
   renderBeamObservation();
 }
-function stopLinerPlayback() {
-  if (linerTimer !== null) window.clearTimeout(linerTimer);
-  linerTimer = null;
-  linerPlaying = false;
-  const button = $('#liner-scene-play');
-  if (button) {
-    button.textContent = linerStep === LINER_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
-    button.setAttribute('aria-pressed', 'false');
-  }
-}
 function showLinerObservation(returnFocus = null) {
   linerStep = 0;
   highlightStop('liners');
-  openDialog(`<section class="dialog-body liner-observation observation-view" style="--project-accent:var(--mint)"><h2 id="dialog-title">From digging through a pile to picking from a shelf.</h2><div class="liner-scene-heading"><span id="liner-scene-phase"></span><span id="liner-scene-progress" aria-label="Observation progress">1 / 4</span></div><div class="slide-viewport"><div class="slide-advance" data-advance-liners><span class="observation-art liner-stage" id="liner-scene-image" role="img" aria-label=""><span class="liner-scene-layer" id="liner-scene-current" aria-hidden="true"></span><span class="liner-scene-layer liner-scene-outgoing" id="liner-scene-outgoing" aria-hidden="true"></span></span></div></div><div class="observation-actions"><button type="button" class="plain-link" id="liner-scene-back">Previous</button><button type="button" class="outline-button" id="liner-scene-play" aria-pressed="false">Play sequence</button><button type="button" class="button primary" id="liner-scene-next">Next slide</button></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="liner-scene-metric" id="liner-scene-metric"></p><h3 id="liner-scene-title"></h3><p id="liner-scene-text"></p></div><p class="impact-method">Illustrative workflow based on the project account. Pick times are reported averages; the animation is not a timed reenactment.</p><button type="button" class="plain-link" data-read-liners>Go straight to the project</button></div></section>`, 'Before and after', returnFocus);
+  openDialog(`<section class="dialog-body liner-observation observation-view" style="--project-accent:var(--mint)"><h2 id="dialog-title">From digging through a pile to picking from a shelf.</h2><div class="liner-scene-heading"><span id="liner-scene-phase"></span><span id="liner-scene-progress" aria-label="Observation progress">1 / 4</span></div><div class="slide-viewport"><div class="slide-advance" data-advance-liners><span class="observation-art liner-stage" id="liner-scene-image" role="img" aria-label=""><span class="liner-scene-layer" id="liner-scene-current" aria-hidden="true"></span><span class="liner-scene-layer liner-scene-outgoing" id="liner-scene-outgoing" aria-hidden="true"></span></span></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="liner-scene-metric" id="liner-scene-metric"></p><h3 id="liner-scene-title"></h3><p id="liner-scene-text"></p></div><p class="impact-method">Illustrative workflow based on the project account. Pick times are reported averages; the animation is not a timed reenactment.</p></div><div class="observation-actions"><button type="button" class="plain-link" id="liner-scene-back">Previous</button><button type="button" class="button primary" id="liner-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-liners>Go straight to the project</button></div></section>`, 'Before and after', returnFocus);
   renderLinerObservation(false);
 }
 function renderLinerObservation(animate = true) {
@@ -391,45 +410,12 @@ function renderLinerObservation(animate = true) {
   $('#liner-scene-progress').textContent = `${linerStep + 1} / ${LINER_SCENES.length}`;
   $('#liner-scene-next').textContent = linerStep === LINER_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
   $('#liner-scene-back').disabled = linerStep === 0;
-  const play = $('#liner-scene-play');
-  play.textContent = linerPlaying ? 'Pause sequence' : linerStep === LINER_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
-  play.setAttribute('aria-pressed', String(linerPlaying));
+  $('[data-read-liners]').hidden = linerStep === LINER_SCENES.length - 1;
 }
-function advanceLinerObservation(direction = 1, automatic = false) {
-  if (!automatic) stopLinerPlayback();
+function advanceLinerObservation(direction = 1) {
   if (direction === 1 && linerStep === LINER_SCENES.length - 1) { showProject('liners', null, true); return; }
   linerStep = Math.max(0, Math.min(LINER_SCENES.length - 1, linerStep + direction));
-  if (linerStep === LINER_SCENES.length - 1) stopLinerPlayback();
   renderLinerObservation();
-}
-function scheduleLinerPlayback() {
-  if (!linerPlaying || !dialog.open || !$('#liner-scene-image')) return;
-  linerTimer = window.setTimeout(() => {
-    linerTimer = null;
-    advanceLinerObservation(1, true);
-    scheduleLinerPlayback();
-  }, 6000);
-}
-function toggleLinerPlayback() {
-  if (linerPlaying) { stopLinerPlayback(); return; }
-  if (linerStep === LINER_SCENES.length - 1) {
-    linerStep = 0;
-    renderLinerObservation();
-  }
-  linerPlaying = true;
-  $('#liner-scene-play').textContent = 'Pause sequence';
-  $('#liner-scene-play').setAttribute('aria-pressed', 'true');
-  scheduleLinerPlayback();
-}
-function stopStowGuidancePlayback() {
-  if (stowguidanceTimer !== null) window.clearTimeout(stowguidanceTimer);
-  stowguidanceTimer = null;
-  stowguidancePlaying = false;
-  const button = $('#stowguidance-scene-play');
-  if (button) {
-    button.textContent = stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
-    button.setAttribute('aria-pressed', 'false');
-  }
 }
 function showStowGuidanceObservation(returnFocus = null) {
   stowguidanceStep = 0;
@@ -438,8 +424,8 @@ function showStowGuidanceObservation(returnFocus = null) {
     <h2 id="dialog-title">From scan and wait to mount and go.</h2>
     <div class="liner-scene-heading"><span id="stowguidance-scene-phase"></span><span id="stowguidance-scene-progress" aria-label="Observation progress"></span></div>
     <div class="slide-viewport"><div class="slide-advance" data-advance-stowguidance><span class="observation-art stowguidance-stage" id="stowguidance-scene-image" role="img" aria-label=""><span class="stowguidance-scene-layer" id="stowguidance-scene-current" aria-hidden="true"></span><span class="stowguidance-scene-layer stowguidance-scene-outgoing" id="stowguidance-scene-outgoing" aria-hidden="true"></span></span></div></div>
-    <div class="observation-actions"><button type="button" class="plain-link" id="stowguidance-scene-back">Previous</button><button type="button" class="outline-button" id="stowguidance-scene-play" aria-pressed="false">Play sequence</button><button type="button" class="button primary" id="stowguidance-scene-next">Next slide</button></div>
-    <div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="stowguidance-scene-metric" id="stowguidance-scene-metric"></p><h3 id="stowguidance-scene-title"></h3><p id="stowguidance-scene-text"></p></div><p class="impact-method">Illustrated from my project account and warehouse photos. The sequence is not timed; the approximate one-minute recovery covers the old scan-and-wait process together.</p><button type="button" class="plain-link" data-read-stowguidance>Go straight to the project</button></div>
+    <div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><p class="stowguidance-scene-metric" id="stowguidance-scene-metric"></p><h3 id="stowguidance-scene-title"></h3><p id="stowguidance-scene-text"></p></div><p class="impact-method">Illustrated from my project account and warehouse photos. The sequence is not timed; the approximate one-minute recovery covers the old scan-and-wait process together.</p></div>
+    <div class="observation-actions"><button type="button" class="plain-link" id="stowguidance-scene-back">Previous</button><button type="button" class="button primary" id="stowguidance-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-stowguidance>Go straight to the project</button></div>
   </section>`, 'Before and after', returnFocus);
   renderStowGuidanceObservation(false);
 }
@@ -462,35 +448,12 @@ function renderStowGuidanceObservation(animate = true) {
   $('#stowguidance-scene-text').textContent = scene.text;
   $('#stowguidance-scene-back').disabled = stowguidanceStep === 0;
   $('#stowguidance-scene-next').textContent = stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1 ? 'Explore the project' : 'Next slide';
-  const play = $('#stowguidance-scene-play');
-  play.textContent = stowguidancePlaying ? 'Pause sequence' : stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1 ? 'Replay sequence' : 'Play sequence';
-  play.setAttribute('aria-pressed', String(stowguidancePlaying));
+  $('[data-read-stowguidance]').hidden = stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1;
 }
-function advanceStowGuidanceObservation(direction = 1, automatic = false) {
-  if (!automatic) stopStowGuidancePlayback();
+function advanceStowGuidanceObservation(direction = 1) {
   if (direction === 1 && stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1) { showProject('stowguidance', null, true); return; }
   stowguidanceStep = Math.max(0, Math.min(STOW_GUIDANCE_SCENES.length - 1, stowguidanceStep + direction));
-  if (stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1) stopStowGuidancePlayback();
   renderStowGuidanceObservation();
-}
-function scheduleStowGuidancePlayback() {
-  if (!stowguidancePlaying || !dialog.open || !$('#stowguidance-scene-image')) return;
-  stowguidanceTimer = window.setTimeout(() => {
-    stowguidanceTimer = null;
-    advanceStowGuidanceObservation(1, true);
-    scheduleStowGuidancePlayback();
-  }, 6500);
-}
-function toggleStowGuidancePlayback() {
-  if (stowguidancePlaying) { stopStowGuidancePlayback(); return; }
-  if (stowguidanceStep === STOW_GUIDANCE_SCENES.length - 1) {
-    stowguidanceStep = 0;
-    renderStowGuidanceObservation();
-  }
-  stowguidancePlaying = true;
-  $('#stowguidance-scene-play').textContent = 'Pause sequence';
-  $('#stowguidance-scene-play').setAttribute('aria-pressed', 'true');
-  scheduleStowGuidancePlayback();
 }
 // Screenshot decks: one real image per slide, a title and a short caption. The portal deck
 // ends on its project page; AI decks return to the screen that opened them.
@@ -510,7 +473,8 @@ function showDeck(key, returnFocus = null) {
   deckKey = key;
   deckStep = 0;
   highlightStop(deck.project);
-  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent}"${deck.screen ? ` data-return-screen="${deck.screen}"` : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button></div><div class="observation-details"><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><p class="impact-method">${deck.note}</p><button type="button" class="plain-link" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
+  const ratio = deck.scenes.reduce((sum, scene) => sum + scene.width / scene.height, 0) / deck.scenes.length;
+  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent};--slide-ratio:${ratio.toFixed(3)}"${deck.screen ? ` data-return-screen="${deck.screen}"` : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><p class="impact-method">${deck.note}</p></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
   renderDeck();
 }
 function renderDeck() {
@@ -528,6 +492,7 @@ function renderDeck() {
   part('scene-progress').textContent = `${deckStep + 1} / ${scenes.length}`;
   part('scene-back').disabled = deckStep === 0;
   part('scene-next').textContent = deckStep === scenes.length - 1 ? deck.endLabel || 'Explore the project' : 'Next slide';
+  $(`[data-read-${deckKey}]`).hidden = deckStep === scenes.length - 1;
   const next = scenes[deckStep + 1];
   if (next) { const preload = new Image(); preload.src = next.src; }
 }
@@ -573,10 +538,10 @@ function selectAIScreen(id, reveal = true) {
   }
 }
 function showProjectMenu() {
-  openDialog(`<div class="dialog-body"><h2 id="dialog-title">Project index.</h2><p class="dialog-lead">Explore the stories directly, or meet them on the warehouse floor.</p><div class="project-index">${Object.entries(PROJECTS).map(([id, p])=>`<button type="button" class="index-card" data-project="${id}" style="--stop-color:${p.color}"><span><strong>${p.title}</strong><small>${p.summary}</small></span><span class="index-arrow" aria-hidden="true">${visited.has(id)?'✓':''}</span></button>`).join('')}</div><div class="project-end"><button type="button" class="button primary" data-return-floor>Walk the floor</button></div></div>`, 'Project index');
+  openDialog(`<div class="dialog-body"><h2 id="dialog-title">Project index.</h2><p class="dialog-lead">Explore the stories directly, or meet them on the warehouse floor.</p><div class="project-index">${Object.entries(PROJECTS).map(([id, p], i)=>`<button type="button" class="index-card" data-project="${id}" style="--stop-color:${p.color}"><span class="stop-index">${i + 1}</span><span><strong>${p.title}</strong><small>${p.summary}</small></span><span class="index-arrow" aria-hidden="true">${visited.has(id)?'✓':''}</span></button>`).join('')}</div><div class="project-end"><button type="button" class="button primary" data-return-floor>Walk the floor</button></div></div>`, 'Project index');
 }
 function showAbout() {
-  openDialog(`<div class="dialog-body"><h2 id="dialog-title">A perspective built<br>from the floor up.</h2><p class="dialog-lead">I’m Shuyu Zheng, an operations and inventory quality leader at Amazon.</p><div class="resume-actions"><a class="outline-button" href="assets/Shuyu_Zheng_Resume.pdf" target="_blank" rel="noopener noreferrer"><span>View résumé (PDF, English)</span> <span aria-hidden="true">↗</span></a><a class="plain-link" href="assets/Shuyu_Zheng_Resume.pdf" download="Shuyu_Zheng_Resume.pdf">Download résumé (PDF, English)</a><p>One page covering operations leadership and program delivery.</p></div><div class="about-path">L4 Area Manager (college hire) → Operations Manager → ICQA Operations Manager</div><p>I’ve worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.</p><div class="about-grid"><div><span>Based in</span><strong>Bay Area, California</strong></div><div><span>Education</span><strong>San Francisco State University</strong></div></div><section class="story-section"><h3>Start close to the work</h3><p>Understand the actual workflow and where it breaks. Connect the data with what associates and managers experience.</p></section><section class="story-section"><h3>Make the response clear</h3><p>Define the next action, the owner, and the checkpoint. Build standard work around the problem being solved.</p></section><section class="story-section"><h3>Build what helps</h3><p>I use practical tools and AI-assisted development to turn operational needs into usable solutions, including my Onboarding Portal.</p></section><section class="story-section"><h3>Follow through</h3><p>Review adoption and effectiveness. Coach, adjust, and make the improvement part of everyday execution.</p></section><div class="more-work"><button type="button" class="outline-button" data-additional="quality">Quality and launch readiness</button><button type="button" class="outline-button" data-additional="inventory">Inventory quality leadership</button></div><div class="project-end"><button class="button primary" type="button" data-return-floor>Walk the floor</button></div></div>`, 'Background and approach');
+  openDialog(`<div class="dialog-body"><h2 id="dialog-title">A perspective built<br>from the floor up.</h2><p class="dialog-lead">I’m Shuyu Zheng, an operations and inventory quality leader at Amazon.</p><div class="resume-actions"><a class="outline-button" href="assets/Shuyu_Zheng_Resume.pdf" target="_blank" rel="noopener noreferrer"><span>View résumé (PDF, English)</span> <span aria-hidden="true">↗</span></a><a class="plain-link" href="assets/Shuyu_Zheng_Resume.pdf" download="Shuyu_Zheng_Resume.pdf">Download résumé (PDF, English)</a><p>One page covering operations leadership and program delivery.</p></div><div class="about-path">L4 Area Manager (college hire) → Operations Manager → ICQA Operations Manager</div><p>I’ve worked across inbound operations and Inventory Control and Quality Assurance (ICQA), with experience in receiving, stowing, inventory accuracy, quality mechanisms, and team development.</p><div class="about-grid"><div><span>Based in</span><strong>Bay Area, California</strong></div><div><span>Education</span><strong>San Francisco State University</strong></div></div><section class="story-section"><h3>Start close to the work</h3><p>Understand the actual workflow and where it breaks. Connect the data with what associates and managers experience.</p></section><section class="story-section"><h3>Make the response clear</h3><p>Define the next action, the owner, and the checkpoint. Build standard work around the problem being solved.</p></section><section class="story-section"><h3>Build what helps</h3><p>I use practical tools and AI-assisted development to turn operational needs into usable solutions, including my Onboarding Portal.</p></section><section class="story-section"><h3>Follow through</h3><p>Review adoption and effectiveness. Coach, adjust, and make the improvement part of everyday execution.</p></section><div class="more-work"><button type="button" class="outline-button" data-additional="quality">${ADDITIONAL_WORK.quality.label}</button><button type="button" class="outline-button" data-additional="inventory">${ADDITIONAL_WORK.inventory.label}</button></div><div class="project-end"><button class="button primary" type="button" data-return-floor>Walk the floor</button></div></div>`, 'Background and approach');
 }
 function showAdditional(id) {
   const item = ADDITIONAL_WORK[id];
@@ -624,6 +589,7 @@ function updateImpactEstimate() {
     });
     $('#impact-summary').textContent = 'Update the schedule to calculate the capacity estimate.';
   }
+  markChangedOutputs('impact-form');
 }
 document.addEventListener('input', event=>{ if(event.target.closest('#impact-form')) updateImpactEstimate(); });
 document.addEventListener('change', event=>{ if(event.target.closest('#impact-form')) updateImpactEstimate(); });
@@ -685,6 +651,7 @@ function updateOnboardingEstimate() {
     $('#onboarding-summary').textContent = 'Update the inputs to calculate the scenario.';
     $('#onboarding-readiness').textContent = 'Update the inputs to calculate the readiness scenario.';
   }
+  markChangedOutputs('onboarding-form');
 }
 document.addEventListener('input', event=>{ if(event.target.closest('#onboarding-form')) updateOnboardingEstimate(); });
 document.addEventListener('change', event=>{ if(event.target.closest('#onboarding-form')) updateOnboardingEstimate(); });
@@ -716,12 +683,10 @@ document.addEventListener('click', (event) => {
   else if (trigger.hasAttribute('data-replay-liners')) showLinerObservation();
   else if (trigger.id === 'liner-scene-next' || trigger.hasAttribute('data-advance-liners')) advanceLinerObservation();
   else if (trigger.id === 'liner-scene-back') advanceLinerObservation(-1);
-  else if (trigger.id === 'liner-scene-play') toggleLinerPlayback();
   else if (trigger.hasAttribute('data-read-stowguidance')) showProject('stowguidance', null, true);
   else if (trigger.hasAttribute('data-replay-stowguidance')) showStowGuidanceObservation();
   else if (trigger.id === 'stowguidance-scene-next' || trigger.hasAttribute('data-advance-stowguidance')) advanceStowGuidanceObservation();
   else if (trigger.id === 'stowguidance-scene-back') advanceStowGuidanceObservation(-1);
-  else if (trigger.id === 'stowguidance-scene-play') toggleStowGuidancePlayback();
   else if (trigger.hasAttribute('data-replay-portal')) showDeck('portal');
   else if (trigger.dataset.deck) showDeck(trigger.dataset.deck);
   else if (deckKey && trigger.hasAttribute(`data-read-${deckKey}`)) exitDeck();
@@ -761,7 +726,13 @@ world.addEventListener('click', (event) => {
   world.focus({ preventScroll: true });
   travelTo(object ? STOPS[object] : clickedStop ? clickedStop[1] : target, object || (clickedStop ? clickedStop[0] : null));
 });
+// A click on the landing preview, away from its markers, enters the floor like Walk the floor.
+$('.preview-art').addEventListener('click', (event) => { if (!event.target.closest('button')) enterWarehouse(); });
 nearbyPrompt.addEventListener('click', () => { if (nearbyExit) showOutside(); else if (nearbyStop) showProject(nearbyStop, world); });
+// Re-place the prompt when the map resizes or a translation changes the prompt's width.
+const promptPlacement = new ResizeObserver(() => placeNearbyPrompt());
+promptPlacement.observe(world);
+promptPlacement.observe(nearbyPrompt);
 const movementKeys = new Set(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d']);
 world.addEventListener('keydown', (event) => {
   if (event.target !== world || dialog.open || event.ctrlKey || event.metaKey || event.altKey) return;
@@ -795,12 +766,18 @@ document.addEventListener('keydown', (event) => {
 world.addEventListener('blur', () => { keys.clear(); });
 window.addEventListener('blur', () => { keys.clear(); });
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) stopLinerPlayback();
-  if (document.hidden) stopStowGuidancePlayback();
   if (document.hidden) { keys.clear(); previousTime = 0; }
   else if (route.length && active && !dialog.open) startLoop();
 });
 $('.close-dialog').addEventListener('click', closeDialogOrDeck);
+document.addEventListener('keydown', (event) => {
+  if (!dialog.open || (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (event.target.closest('input, select, textarea')) return;
+  const control = dialogContent.querySelector(`.observation-actions [id$="-scene-${event.key === 'ArrowRight' ? 'next' : 'back'}"]`);
+  if (!control || control.disabled) return;
+  event.preventDefault();
+  control.click();
+});
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape' || !dialog.open) return;
   if (event.repeat) { event.preventDefault(); return; }
@@ -816,10 +793,9 @@ dialog.addEventListener('click', (event) => {
 });
 dialog.addEventListener('close', () => {
   setProjectUrl(null);
-  stopLinerPlayback();
-  stopStowGuidancePlayback();
   document.body.classList.remove('dialog-open');
   updateNearby();
+  if (active) announcement.textContent = progressMessage();
   if (dialogReturnFocus && dialogReturnFocus.isConnected && !dialogReturnFocus.closest('[hidden]')) dialogReturnFocus.focus({preventScroll:true});
   else if (outsideActive) courtController?.focus();
   else (active?world:$('#enter-button')).focus({preventScroll:true});

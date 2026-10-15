@@ -9,16 +9,19 @@
 <meta name="author" content="Shuyu Zheng">
 <meta name="copyright" content="© 2026 Shuyu Zheng — creator and owner">
 <link rel="canonical" href="https://shuyuzheng.com/dock-flow/">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314213d'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-weight='700' font-size='30' text-anchor='middle' fill='white'%3ESZ%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed')</script>
 <style>
+  @font-face{font-family:Overpass;src:url('/assets/fonts/overpass-latin.woff2') format('woff2');font-weight:300 800;font-style:normal;font-display:swap}
   :root{
     color-scheme:dark;
     --bg:#0c151d; --panel:#121f28; --panel2:#172631; --line:#2b3c46; --text:#edf2e9; --muted:#a6b5bb; --dim:#6f8290;
     --mint:#c6efa7; --amber:#ffc17d; --blue:#a7d9ef; --safety:#ffc94b; --red:#ff7b72;
     --floor:#101d26; --grid:#152634;
     --conv:#46718f; --case:#c98a4b; --pallet:#4aa3ff; --fork:#ff8a3d; --chk:#b48cf2; --c2c:#5ad27a; --cage:#7fc3e8; --lbl:#ff9f43; --ws:#f28fb8;
-    --mono:'Courier New',Courier,monospace; --sans:Inter,ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace; --sans:Overpass,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;font:14px/1.5 var(--sans);color:var(--text);background:var(--bg)}
