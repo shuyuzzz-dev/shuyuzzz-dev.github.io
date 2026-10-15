@@ -13,6 +13,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed')</script>
+<script>try{const q=new URLSearchParams(location.search).get("theme");let t=q==="day"||q==="night"?q:null;if(!t&&!document.documentElement.classList.contains("embed"))try{t=localStorage.getItem("sz-flowmap-theme")}catch(e){}if(!t)try{t=localStorage.getItem("shuyu-portfolio-theme")}catch(e){}if(t!=="day"&&t!=="night")t=matchMedia("(prefers-color-scheme: dark)").matches?"night":"day";if(t!=="night")document.documentElement.classList.add("day")}catch(e){}</script>
 <style>
   /* Night palette. Colours set as SVG attributes; night only, day is unaffected */
   :where(html:not(.day)) [fill='#0c151d']{fill:#121416}
@@ -221,6 +222,73 @@ path.conv:focus,path.walk:focus{stroke:var(--text)}
   html:not(.day) button:active,html:not(.day) button:disabled{transform:none;box-shadow:none}
   html:not(.day) .tabs button,html:not(.day) .tabs button:hover{transform:none;box-shadow:none}
   html:not(.day) #legend,html:not(.day) #tip,html:not(.day) .deck{border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}
+
+  /* Day palette: the embedded dock's day colours for the floor, the flow map's for the page around it */
+  html.day{color-scheme:light;
+    --bg:#e2e5e5;--panel:#f4f7f7;--panel2:#ebeeee;--line:#bcbebe;--text:#1c262c;--muted:#434e55;--dim:#525d65;
+    --mint:#2f6f1f;--amber:#a35a00;--blue:#11649e;--red:#c62828;--safety:#a17700;--c2c:#1d8a48;--cage:#1676b9;
+    --floor:#e6e9e9;--grid:#d9dcdc;--conv:#86a6bb}
+  html.day .aa{--safety:#ffc94b;--c2c:#5ad27a}
+  html.day .aa .tag{fill:#1c262c}
+  html.day .aa .stripe{stroke:#f4f6f7}
+  html.day #grid rect{fill:#e6e9e9}
+  html.day #grid path{stroke:#d9dcdc}
+  html.day #hatch rect:first-child{fill:#d6dde2}
+  html.day #hatch rect:last-child{fill:#7d97a8}
+  html.day #balls circle{fill:#4f8a3a}
+  html.day .aisle{stroke:#9aa7af}
+  html.day .fllane{fill:#dee1e1;stroke:#a68a3a}
+  html.day .door rect.d{fill:#b9c1c6;stroke:#7d8b95}
+  html.day .door.flex rect.d{fill:#b3c8d8;stroke:#4d7fa3}
+  html.day .door.closed rect.d{fill:#e2c9c9;stroke:#a34a4a}
+  html.day .door.active rect.d{stroke:#a17700}
+  html.day .trailer{fill:#d3d8db;stroke:#8e9aa2}
+  html.day .trailer.open{fill:#c9d4dc;stroke:#5f7f95}
+  html.day .conv.hot,html.day .conv:hover{stroke:#5f8fb4}
+  html.day .conv2{stroke:#eef2f5;opacity:.85}
+  html.day .stall rect.box{fill:#e1e4e5;stroke:#8e9aa2}
+  html.day .stall.warn rect.box,html.day .flexz.warn rect.box{fill:#f3e7c4}
+  html.day .stall.crit rect.box,html.day .flexz.crit rect.box{fill:#f3d6d6}
+  html.day .pal{stroke:#1f5f99}
+  html.day .flexz rect.box{fill:#dfe7ec;stroke:#4d7fa3}
+  html.day .table rect.box{fill:#d6e6cf}
+  html.day .lblst rect.box{fill:#f3e3d2;stroke:#c05a14}
+  html.day .lblst text{fill:#a3460c}
+  html.day .build rect.box{fill:#e6e8e8;stroke:#8e9aa2}
+  html.day .build.warn rect.box{fill:#f1ead0}
+  html.day .build.crit rect.box{fill:#f3dada}
+  html.day .cage{--pc:#1676b9}
+  html.day .cage.pc-green{--pc:#1d8a48}
+  html.day .cage.pc-red{--pc:#c62828}
+  html.day .cage.pc-yellow{--pc:#a17700}
+  html.day .cage.pc-grey{--pc:#6c7a83}
+  html.day .cage rect.box{fill:#f4f7f7}
+  html.day .cage text{fill:#1c262c}
+  html.day .cage .seal{stroke:#1c262c}
+  html.day .buffer rect.box,html.day .empties rect.box{fill:#e4e6e6;stroke:#7d8b95}
+  html.day .empties .ecage{fill:#f4f7f7}
+  html.day .room rect.box{fill:#e9e1ee;stroke:#8a6e9c}
+  html.day .walk{stroke:#b5d9a5}
+  html.day .walk:hover{stroke:#93c47f}
+  html.day .walklbl{fill:#1f5a12}
+  html.day .badge text{fill:#fff}
+  html.day .fork .tine{stroke:#5d6b74}
+  html.day #map .wm text{fill:#1c262c;opacity:.035}
+  html.day button,html.day .back{border-radius:6px;box-shadow:0 1px 2px rgba(20,23,24,.12)}
+  html.day button:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,23,24,.12)}
+  html.day button:active,html.day button:disabled{transform:none;box-shadow:none}
+  html.day .tabs button,html.day .tabs button:hover{transform:none;box-shadow:none}
+  html.day button[aria-pressed="true"]{color:#fff}
+  html.day #legend{background:rgba(244,247,247,.93);border-color:#bcbebe}
+  html.day #legend .sw[style*="#2e4a2a"]{background-color:#d6e6cf!important}
+  html.day #legend .sw[style*="#3d3312"]{background-color:#f3e7c4!important}
+  html.day #legend .sw[style*="#4a1f22"]{background-color:#f3d6d6!important}
+  html.day #tip{background:#fbfaf8;border-color:#a2a4a4}
+  html.day #legend,html.day #tip,html.day .deck{border-radius:8px;box-shadow:0 1px 2px rgba(20,23,24,.06),0 8px 24px rgba(20,23,24,.10)}
+  html.day .deck{border-color:#bcbebe;background:#dfe2e2}
+  html.day .tab li{color:#27323a}
+  /* Phones: a little more room on the control rows for the Day/Night button, in both themes */
+  @media (max-width:480px){html:not(.embed) .controls{gap:8px}html:not(.embed) label.ctl input[type=range]{width:96px}}
 </style>
 </head>
 <body>
@@ -234,6 +302,7 @@ path.conv:focus,path.walk:focus{stroke:var(--text)}
     <label class="ctl">VOLUME <input type="range" id="vol" min="1" max="10" step="1" value="4"> <span id="vollbl">Normal</span></label>
     <button id="play">⏸ Pause</button>
     <label class="ctl">SPEED <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"></label>
+    <button id="theme" title="Switch to the day theme (light floor)">☀ Day</button>
     <button id="tour">▶ Guided tour</button>
   </div>
 </header>
@@ -735,5 +804,6 @@ tourBtn.onclick=()=>{ if(tourTimer){stopTour();return;} let i=0;tab='overview';s
   tourTimer=setInterval(()=>{i++;if(i>=order.length){stopTour();return;}select(order[i]);glow(order[i]);},7000/Math.max(.5,speed)); };
 window.addEventListener('load',()=>{ if(q.get('sel'))select(q.get('sel')); if(q.get('tab')){tab=q.get('tab')==='slides'?'slides':'overview';if(active)render();} });
 </script>
+<script>(()=>{const r=document.documentElement,b=document.getElementById("theme");const text=()=>{const d=r.classList.contains("day");b.textContent=d?"☾ Night":"☀ Day";b.title=d?"Switch to the night theme (dark floor)":"Switch to the day theme (light floor)"};b.onclick=()=>{const d=!r.classList.contains("day");r.classList.toggle("day",d);text();if(!r.classList.contains("embed"))try{localStorage.setItem("sz-flowmap-theme",d?"day":"night")}catch(e){}};text()})();</script>
 </body>
 </html>
