@@ -1,7 +1,7 @@
 import { renderAIScreen, renderAIHero, aiHeroView } from './ai-operations.mjs';
 import { initI18n, getLocale } from './i18n.mjs';
 import { initTheme, getTheme, syncThemeArt } from './theme.mjs';
-import { STOPS, START, EXIT, walkable, findPath } from './navigation.mjs';
+import { STOPS, START, EXIT, walkable, findPath, projectOf } from './navigation.mjs';
 import { PROJECTS, ADDITIONAL_WORK } from './projects.mjs';
 import { estimateStowGuidance } from './stowguidance-impact.mjs';
 import { estimateOnboarding, estimateRegionalOnboarding } from './onboarding-impact.mjs';
@@ -10,6 +10,7 @@ import { LINER_SCENES } from './liner-scenes.mjs';
 import { STOW_GUIDANCE_SCENES } from './stowguidance-scenes.mjs';
 import { PORTAL_SCENES } from './portal-scenes.mjs';
 import { AI_DECKS } from './ai-decks.mjs';
+import { SWEEPER_DECK } from './sweeper.mjs';
 import { updateSafetyEstimate, fieldProblem, markChangedOutputs } from './safety-ui.mjs';
 
 const $ = (selector) => document.querySelector(selector);
@@ -31,7 +32,7 @@ let nearbyStop = null, arrivalTimer = null, frameRequest = null, previousTime = 
 let facing = 0, lastSprite = '', dialogReturnFocus = null, flowStep = -1;
 let walkingClock = 0;
 let outsideActive = false, pendingExit = false, nearbyExit = false, courtController = null, courtLoading = null;
-let beamStep = 0, deckKey = null, deckStep = 0;
+let beamStep = 0, deckKey = null, deckStep = 0, deckLauncher = null;
 let linerStep = 0;
 let stowguidanceStep = 0;
 
@@ -103,7 +104,7 @@ function updateNearby() {
     nearbyPrompt.innerHTML = '<span>Step outside for basketball</span> <kbd>Enter</kbd>';
     locationLabel.textContent = 'Life outside work';
   } else if (nearbyStop) {
-    nearbyPrompt.innerHTML = `Explore ${PROJECTS[nearbyStop].title} <kbd>Enter</kbd>`;
+    nearbyPrompt.innerHTML = `Explore ${PROJECTS[projectOf(nearbyStop)].title} <kbd>Enter</kbd>`;
     locationLabel.textContent = STOPS[nearbyStop].label;
   } else if (!route.length) {
     locationLabel.textContent = position.y > 480 ? 'At the entrance' : 'On the floor';
@@ -133,15 +134,20 @@ function placeNearbyPrompt() {
 }
 function progressMessage() {
   const total = Object.keys(PROJECTS).length;
-  return visited.size === total ? 'All five stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you’re ready.`;
+  return visited.size === total ? 'All six stops explored. Revisit a project or view my résumé.' : `${visited.size} of ${total} projects explored. Continue to another stop when you’re ready.`;
 }
+// A project can have more than one marker: the marker walked to stays lit, and so does the project's card.
 function highlightStop(id) {
   selectedStop = id;
+  const project = id && projectOf(id);
   $$('[data-stop]').forEach(el => {
-    el.classList.toggle('is-active', el.dataset.stop === id);
-    if (el.classList.contains('stop-card')) el.setAttribute('aria-current', el.dataset.stop === id ? 'location' : 'false');
+    const card = el.classList.contains('stop-card');
+    const lit = card ? el.dataset.stop === project : el.dataset.stop === id;
+    el.classList.toggle('is-active', lit);
+    if (card) el.setAttribute('aria-current', lit ? 'location' : 'false');
   });
 }
+const markerOf = project => [selectedStop, nearbyStop].find(id => id && projectOf(id) === project) || project;
 function enterWarehouse(focus = true, updateHistory = true) {
   loadSprite();
   if (updateHistory) setProjectUrl(null);
@@ -204,7 +210,7 @@ function updateProgress() {
   $('.progress-track').setAttribute('aria-valuemax', String(total));
   $('.progress-track').setAttribute('aria-valuenow', String(visited.size));
   $$('[data-stop]').forEach(el => {
-    const done = visited.has(el.dataset.stop);
+    const done = visited.has(projectOf(el.dataset.stop));
     el.classList.toggle('is-visited', done);
     const state = el.querySelector('.stop-state');
     if (state) state.textContent = done ? '✓' : '';
@@ -228,7 +234,7 @@ function travelTo(target, stopId = null, toExit = false) {
   ring.hidden = false;
   nearbyPrompt.hidden = true;
   locationLabel.textContent = stopId ? `To ${STOPS[stopId].phrase}` : 'Walking the floor';
-  announcement.textContent = toExit ? 'Walking to the exit. Time for a little basketball.' : stopId ? `Walking to ${PROJECTS[stopId].title}. The project will open when Shuyu arrives.` : 'Click a project marker whenever you want to explore its story.';
+  announcement.textContent = toExit ? 'Walking to the exit. Time for a little basketball.' : stopId ? `Walking to ${PROJECTS[projectOf(stopId)].title}. The project will open when Shuyu arrives.` : 'Click a project marker whenever you want to explore its story.';
   if (reducedMotion.matches) {
     Object.assign(position, destination);
     route = [];
@@ -251,14 +257,14 @@ function arrive() {
   if (completed) {
     facing = STOPS[completed].facing;
     renderPosition(false);
-    announcement.textContent = `At ${STOPS[completed].phrase}. Opening ${PROJECTS[completed].title}.`;
+    announcement.textContent = `At ${STOPS[completed].phrase}. Opening ${PROJECTS[projectOf(completed)].title}.`;
     arrivalTimer = window.setTimeout(() => {
       arrivalTimer = null;
-      if (active && !dialog.open) showProject(completed, world);
+      if (active && !dialog.open) showProject(projectOf(completed), world);
     }, reducedMotion.matches ? 0 : 180);
   } else {
     renderPosition(false);
-    announcement.textContent = nearbyStop ? `You’re near ${PROJECTS[nearbyStop].title}. Press Enter or use the project marker.` : 'Choose a project marker, or keep exploring the floor.';
+    announcement.textContent = nearbyStop ? `You’re near ${PROJECTS[projectOf(nearbyStop)].title}. Press Enter or use the project marker.` : 'Choose a project marker, or keep exploring the floor.';
   }
 }
 function direction(dx, dy) {
@@ -311,7 +317,7 @@ function startLoop() {
   if (frameRequest === null) frameRequest = requestAnimationFrame(frame);
 }
 // Each project's notes have their own address, so a project can be linked to directly.
-const PROJECT_SLUGS = { liners: 'bin-liners', stowguidance: 'stow-guidance', portal: 'onboarding-portal', beams: 'a-level-beams', ai: 'ai-operations' };
+const PROJECT_SLUGS = { liners: 'bin-liners', stowguidance: 'stow-guidance', portal: 'onboarding-portal', beams: 'a-level-beams', ai: 'ai-operations', sweeper: 'diot-autosweeper' };
 const linkedProject = () => Object.keys(PROJECT_SLUGS).find(id => location.hash === `#${PROJECT_SLUGS[id]}`);
 const defaultTitle = document.title;
 function setProjectUrl(id) {
@@ -353,9 +359,10 @@ function showProject(id, returnFocus = null, skipEncounter = false) {
   if (id === 'liners' && !skipEncounter) { showLinerObservation(returnFocus); return; }
   if (id === 'stowguidance' && !skipEncounter) { showStowGuidanceObservation(returnFocus); return; }
   if (id === 'portal' && !skipEncounter) { showDeck('portal', returnFocus); return; }
+  if (id === 'sweeper' && !skipEncounter) { showDeck('sweeper', returnFocus); return; }
   visited.add(id);
   updateProgress();
-  highlightStop(id);
+  highlightStop(markerOf(id));
   const ids = Object.keys(PROJECTS), nextId = ids[(ids.indexOf(id)+1)%ids.length];
   openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title}</button></div></article>`, project.place, returnFocus);
   setProjectUrl(id);
@@ -468,22 +475,26 @@ const DECKS = {
     note: 'Screenshots from the working portal, with names pixelated, sensitive values blurred and internal labels made generic; everything obscured is placeholder content. Original interface in English; captions follow your selected language.',
   },
   ...AI_DECKS,
+  sweeper: SWEEPER_DECK,
 };
-function showDeck(key, returnFocus = null) {
+function showDeck(key, returnFocus = null, step = 0) {
   const deck = DECKS[key];
   if (!deck) return;
   deckKey = key;
-  deckStep = 0;
-  highlightStop(deck.project);
+  deckStep = Math.max(0, Math.min(deck.scenes.length - 1, step));
+  // A deck opened from a picture on its own project page goes back to that picture on Close, Escape or the last slide.
+  const launcher = `#dialog-content article [data-deck="${key}"][data-deck-step="${step}"]`;
+  deckLauncher = !deck.screen && dialog.open && $(launcher) ? launcher : null;
+  highlightStop(markerOf(deck.project));
   const ratio = deck.scenes.reduce((sum, scene) => sum + scene.width / scene.height, 0) / deck.scenes.length;
-  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent};--slide-ratio:${ratio.toFixed(3)}"${deck.screen ? ` data-return-screen="${deck.screen}"` : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><p class="impact-method">${deck.note}</p></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
+  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent};--slide-ratio:${ratio.toFixed(3)}"${deck.screen ? ` data-return-screen="${deck.screen}"` : deckLauncher ? ' data-return-page' : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><p class="impact-method">${deck.note}</p></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
   renderDeck();
 }
 function renderDeck() {
   const deck = DECKS[deckKey], scenes = deck.scenes, scene = scenes[deckStep], part = name => $(`#${deckKey}-${name}`);
   $('.observation-details').scrollTop = 0;
   const picture = part('scene-image');
-  picture.src = scene.src;
+  picture.src = slideSource(scene);
   picture.alt = scene.alt;
   picture.width = scene.width;
   picture.height = scene.height;
@@ -493,11 +504,13 @@ function renderDeck() {
   part('scene-text').textContent = scene.text;
   part('scene-progress').textContent = `${deckStep + 1} / ${scenes.length}`;
   part('scene-back').disabled = deckStep === 0;
-  part('scene-next').textContent = deckStep === scenes.length - 1 ? deck.endLabel || 'Explore the project' : 'Next slide';
+  part('scene-next').textContent = deckStep === scenes.length - 1 ? deck.endLabel || (deckLauncher ? 'Back to the project' : 'Explore the project') : 'Next slide';
   $(`[data-read-${deckKey}]`).hidden = deckStep === scenes.length - 1;
   const next = scenes[deckStep + 1];
-  if (next) { const preload = new Image(); preload.src = next.src; }
+  if (next) { const preload = new Image(); preload.src = slideSource(next); }
 }
+// A slide may have a night picture; most are screenshots with one look.
+const slideSource = scene => scene.night && getTheme() === 'night' ? scene.night : scene.src;
 function advanceDeck(direction = 1) {
   const scenes = DECKS[deckKey].scenes;
   if (direction === 1 && deckStep === scenes.length - 1) { exitDeck(); return; }
@@ -505,8 +518,10 @@ function advanceDeck(direction = 1) {
   renderDeck();
 }
 function exitDeck() {
-  const key = deckKey, deck = DECKS[key];
+  const key = deckKey, deck = DECKS[key], opener = deckLauncher;
+  deckLauncher = null;
   showProject(deck.project, null, true);
+  if (opener) queueMicrotask(() => { const picture = $(opener); picture?.focus({ preventScroll: true }); picture?.scrollIntoView({ block: 'nearest', behavior: 'auto' }); });
   if (!deck.screen) return;
   selectAIScreen(deck.screen, false);
   // Scroll after the translation observer has run: translated captions can change the hero's height.
@@ -519,8 +534,8 @@ function exitDeck() {
     launcher?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   });
 }
-// Close, Escape and a backdrop click inside an AI deck go back to the screen that opened it.
-const deckReturns = () => Boolean(dialogContent.querySelector('.observation-view[data-return-screen]'));
+// Close, Escape and a backdrop click inside a deck opened from a project page go back to what opened it.
+const deckReturns = () => Boolean(dialogContent.querySelector('.observation-view[data-return-screen], .observation-view[data-return-page]'));
 function closeDialogOrDeck() {
   if (deckReturns()) exitDeck();
   else dialog.close();
@@ -690,7 +705,7 @@ document.addEventListener('click', (event) => {
   else if (trigger.id === 'stowguidance-scene-next' || trigger.hasAttribute('data-advance-stowguidance')) advanceStowGuidanceObservation();
   else if (trigger.id === 'stowguidance-scene-back') advanceStowGuidanceObservation(-1);
   else if (trigger.hasAttribute('data-replay-portal')) showDeck('portal');
-  else if (trigger.dataset.deck) showDeck(trigger.dataset.deck);
+  else if (trigger.dataset.deck) showDeck(trigger.dataset.deck, null, Number(trigger.dataset.deckStep) || 0);
   else if (deckKey && trigger.hasAttribute(`data-read-${deckKey}`)) exitDeck();
   else if (deckKey && (trigger.id === `${deckKey}-scene-next` || trigger.hasAttribute(`data-advance-${deckKey}`))) advanceDeck();
   else if (deckKey && trigger.id === `${deckKey}-scene-back`) advanceDeck(-1);
@@ -702,7 +717,10 @@ document.addEventListener('click', (event) => {
     travelTo(STOPS[trigger.dataset.stop], trigger.dataset.stop);
   } else if (trigger.id === 'flow-next') advanceFlow();
 });
+// Zones are keyed by stop; the first match wins, so the Problem Solve cell comes before the beams it borders.
 const objectZones = {
+  sweeper: [30, 480, 131, 608],
+  'sweeper-pallet': [872, 492, 970, 603],
   liners: [35, 48, 365, 297],
   stowguidance: [390, 100, 675, 302],
   portal: [705, 82, 875, 255],
@@ -730,7 +748,7 @@ world.addEventListener('click', (event) => {
 });
 // A click on the landing preview, away from its markers, enters the floor like Walk the floor.
 $('.preview-art').addEventListener('click', (event) => { if (!event.target.closest('button')) enterWarehouse(); });
-nearbyPrompt.addEventListener('click', () => { if (nearbyExit) showOutside(); else if (nearbyStop) showProject(nearbyStop, world); });
+nearbyPrompt.addEventListener('click', () => { if (nearbyExit) showOutside(); else if (nearbyStop) showProject(projectOf(nearbyStop), world); });
 // Re-place the prompt when the map resizes or a translation changes the prompt's width.
 const promptPlacement = new ResizeObserver(() => placeNearbyPrompt());
 promptPlacement.observe(world);
@@ -754,7 +772,7 @@ world.addEventListener('keydown', (event) => {
     showOutside();
   } else if (event.key === 'Enter' && nearbyStop) {
     event.preventDefault();
-    showProject(nearbyStop, world);
+    showProject(projectOf(nearbyStop), world);
   } else if (event.key === 'Escape') {
     stopMotion();
     updateNearby();
@@ -822,10 +840,12 @@ window.addEventListener('portfolio-language-change', () => {
   updateSafetyEstimate('liners');
   updateSafetyEstimate('beams');
 });
-// An open flow map embed reloads in the new theme.
+// An open flow map embed reloads in the new theme, and an open slide switches to its night picture.
 window.addEventListener('portfolio-theme-change', ({ detail }) => {
   const hero = $('#ai-hero[data-view="map"]');
   if (hero) hero.innerHTML = renderAIHero('map', detail.theme);
+  const slide = deckKey && $(`#${deckKey}-scene-image`);
+  if (slide) slide.src = slideSource(DECKS[deckKey].scenes[deckStep]);
 });
 initTheme();
 initI18n();

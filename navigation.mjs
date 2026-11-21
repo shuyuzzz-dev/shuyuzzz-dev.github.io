@@ -14,7 +14,12 @@ export const STOPS = {
   portal: { x: 800, y: 300, label: "Manager’s desk", phrase: 'the manager’s desk', facing: 3 },
   beams: { x: 360, y: 510, label: 'Floor-level pallet picking', phrase: 'the pallet picking area', facing: 1 },
   ai: { x: 600, y: 450, label: 'Leadership sync', phrase: 'the leadership sync', facing: 2 },
+  // DIOT AutoSweeper has a marker in each bottom corner. A stop opens the project named by its key,
+  // unless `project` names another one.
+  sweeper: { x: 150, y: 540, label: 'Problem Solve cage', phrase: 'the Problem Solve cage', facing: 1 },
+  'sweeper-pallet': { x: 860, y: 540, label: 'Dwelling pallet', phrase: 'the dwelling pallet', facing: 2, project: 'sweeper' },
 };
+export const projectOf = id => STOPS[id]?.project || id;
 export const EXIT = { x: 500, y: 600 };
 export const START = { x: 500, y: 510 };
 export const BLOCKED = [[105, 325, 335, 518], [625, 305, 865, 500]];

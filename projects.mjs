@@ -1,5 +1,6 @@
 import { AI_PROJECT } from './ai-operations.mjs';
 import { BIN_LINERS, A_LEVEL_BEAMS } from './safety-projects.mjs';
+import { SWEEPER_PROJECT } from './sweeper.mjs';
 export const PROJECTS = {
   liners: BIN_LINERS,
   stowguidance: {
@@ -91,6 +92,7 @@ export const PROJECTS = {
   },
   beams: A_LEVEL_BEAMS,
   ai: AI_PROJECT,
+  sweeper: SWEEPER_PROJECT,
 };
 export const ADDITIONAL_WORK = {
   quality: {

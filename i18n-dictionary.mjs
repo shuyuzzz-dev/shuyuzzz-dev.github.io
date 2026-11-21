@@ -1,11 +1,13 @@
 import { BASKETBALL_COPY } from './basketball-copy.mjs';
 import { AI_COPY } from './ai-operations.mjs';
 import { AI_DECK_COPY } from './ai-decks.mjs';
+import { SWEEPER_COPY } from './sweeper.mjs';
 // Reviewed Simplified Chinese and Spanish copy, keyed by the English source.
 export const DICTIONARY = {
   ...AI_COPY,
   ...AI_DECK_COPY,
   ...BASKETBALL_COPY,
+  ...SWEEPER_COPY,
   "Hi, I’m Shuyu.": [
     "你好，我是 Shuyu。",
     "Hola, soy Shuyu."
