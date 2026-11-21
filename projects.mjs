@@ -1,6 +1,7 @@
 import { AI_PROJECT } from './ai-operations.mjs';
 import { BIN_LINERS, A_LEVEL_BEAMS } from './safety-projects.mjs';
 import { SWEEPER_PROJECT } from './sweeper.mjs';
+import { FLOW_SUMMARY, FLOW_LEAD, FLOW_TAG, FLOW_SECTION, FLOW_DECK_BUTTON } from './flow-training.mjs';
 export const PROJECTS = {
   liners: BIN_LINERS,
   stowguidance: {
@@ -21,11 +22,12 @@ export const PROJECTS = {
   },
   portal: {
     title: 'Onboarding Portal', place: "Manager’s desk", color: 'var(--blue)',
-    summary: 'Organization health. Team pace. Verified learning.',
-    lead: 'I built the Onboarding Portal end to end to make learning health visible: how teams are progressing, who is on pace, and where leaders need to follow up. It is designed for site and regional review and runs today as a site pilot.',
-    tags: ['Organization-wide learning health', 'Team progress and compliance', 'End-to-end ownership'],
-    content: `<button class="outline-button" type="button" data-replay-portal>View the tool screenshots</button>
+    summary: FLOW_SUMMARY,
+    lead: FLOW_LEAD,
+    tags: ['Organization-wide learning health', 'Team progress and compliance', FLOW_TAG, 'End-to-end ownership'],
+    content: `<button class="outline-button" type="button" data-replay-portal>${FLOW_DECK_BUTTON}</button>
       <div class="impact-facts onboarding-facts" aria-label="Onboarding Portal scope"><div><strong>Org → team → person</strong><span>Learning health across the organization</span></div><div><strong>Site → region</strong><span>Designed for site and regional review; running as a site pilot</span></div><div><strong>Built by me</strong><span>Business need, design, development, and delivery</span></div></div>
+      ${FLOW_SECTION}
       <section class="story-section"><h3>The business need</h3><p>Senior leaders needed a consistent picture of organizational learning health: which teams were progressing, who was on pace, and where support was needed before launch. Unstructured roadmaps, unclear shadowing expectations, and fragmented learning records made readiness difficult to assess.</p><p>I connected the manager learning experience to an organization-level review process, so leaders could use the same evidence to recognize progress, address gaps, and hold teams accountable for development.</p></section>
       <section class="story-section" aria-labelledby="portal-leadership-title"><h3 id="portal-leadership-title">A leadership view of organizational learning health</h3><p>The design lets operations leaders focus coaching by team and shift, lets site leaders review learning health across the building, and gives regional reviewers a consistent view of progress and launch readiness. Today it runs as a site pilot.</p>
       <div class="portal-capabilities"><section><h3>See the whole team</h3><p>The admin overview connects reporting lines, roles, and learning progress. Leaders can move from the organization chart to a team or individual to understand where support is needed.</p></section><section><h3>Know which teams are on track</h3><p>Team rollups bring assignment compliance, active engagement, and progress against the expected pace into one review. Follow-up indicators help leaders focus their attention.</p></section><section><h3>Recognize active learners and strong progress</h3><p>Separate rankings cover assignments, active engagement, weekly progress, and completion. Leaders can recognize momentum and identify coaching needs using distinct learning signals.</p></section><section><h3>Connect attendance with learning validation</h3><p>The training view brings sessions, eligible learners, attendance, pass rates, and repeat attempts together. Knowledge-check submissions provide the attendance record and evidence for follow-up.</p></section></div></section>

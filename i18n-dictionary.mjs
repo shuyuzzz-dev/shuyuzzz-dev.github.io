@@ -2,12 +2,14 @@ import { BASKETBALL_COPY } from './basketball-copy.mjs';
 import { AI_COPY } from './ai-operations.mjs';
 import { AI_DECK_COPY } from './ai-decks.mjs';
 import { SWEEPER_COPY } from './sweeper.mjs';
+import { FLOW_COPY } from './flow-training.mjs';
 // Reviewed Simplified Chinese and Spanish copy, keyed by the English source.
 export const DICTIONARY = {
   ...AI_COPY,
   ...AI_DECK_COPY,
   ...BASKETBALL_COPY,
   ...SWEEPER_COPY,
+  ...FLOW_COPY,
   "Hi, I’m Shuyu.": [
     "你好，我是 Shuyu。",
     "Hola, soy Shuyu."
@@ -1576,10 +1578,6 @@ export const DICTIONARY = {
     "知识测验展示通过标准、逐题反馈及各主题得分。经理可以据此复习薄弱内容并重新测验，导师也能获得判断学习差距的依据。",
     "Las comprobaciones de conocimientos muestran el umbral de aprobación, comentarios por pregunta y puntuaciones por tema. Los gerentes pueden identificar qué repasar y repetir la evaluación; sus mentores obtienen evidencia de las lagunas de aprendizaje."
   ],
-  "Organization health. Team pace. Verified learning.": [
-    "组织学习状况。团队进度。学习成果验证。",
-    "Salud del aprendizaje. Ritmo de los equipos. Aprendizaje validado."
-  ],
   "Organization-wide learning health": [
     "全组织学习状况",
     "Estado del aprendizaje en toda la organización"
@@ -1587,10 +1585,6 @@ export const DICTIONARY = {
   "Team progress and compliance": [
     "团队进度与学习要求落实",
     "Progreso y cumplimiento por equipo"
-  ],
-  "Learning health, from organization to individual.": [
-    "从组织到个人，看清学习状况。",
-    "El aprendizaje, de la organización a cada persona."
   ],
   "Org → team → person": [
     "组织 → 团队 → 个人",
@@ -2119,10 +2113,6 @@ export const DICTIONARY = {
   "By the time the cage is secured behind the order picker, the overhead screen already shows the recommended aisles. The stower can continue without a separate tablet scan and wait. During stowing, the attached cage rises with the operator platform.": [
     "笼车固定在拣选车后部时，顶部屏幕已显示推荐巷道。上架员无需再单独用平板扫码等待，即可继续作业。上架过程中，安装好的笼车随操作员平台一起升起。",
     "Cuando la jaula queda asegurada detrás del preparador de pedidos, la pantalla superior ya muestra los pasillos recomendados. El operario puede continuar sin un escaneo y una espera aparte con la tableta. Durante la ubicación de mercancía, la jaula acoplada se eleva junto con la plataforma del operario."
-  ],
-  "I built the Onboarding Portal end to end to make learning health visible: how teams are progressing, who is on pace, and where leaders need to follow up. It is designed for site and regional review and runs today as a site pilot.": [
-    "我独立完成了入职培训门户的设计与开发，让学习状况清晰可见：各团队的进展、哪些人员按计划推进，以及领导者需要跟进的地方。它为站点和区域审阅而设计，目前作为站点试点运行。",
-    "Diseñé y desarrollé el Portal de incorporación de principio a fin para hacer visible el estado del aprendizaje: cómo avanzan los equipos, quién sigue el ritmo previsto y dónde deben intervenir los líderes. Está pensado para la revisión del centro y la región, y hoy funciona como piloto en un centro."
   ],
   "Designed for site and regional review; running as a site pilot": [
     "为站点和区域审阅而设计，目前作为站点试点运行",

@@ -38,10 +38,14 @@ export function initTheme() {
     applyTheme(next);
   }));
   deviceNight.addEventListener('change', () => { if (!preference) applyTheme(deviceTheme()); });
-  // The flow map has its own day and night themes; open it in the site's.
+  // The map pages have their own day and night themes; open them in the site's, keeping the rest of the link.
   const passTheme = event => {
-    const link = event.target.closest?.('a[href^="flow-map/"]');
-    if (link) link.setAttribute('href', `flow-map/?theme=${getTheme()}`);
+    const link = event.target.closest?.('a[href^="flow-map/"], a[href^="cross-dock/"]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    const url = new URL(href, location.href);
+    url.searchParams.set('theme', getTheme());
+    link.setAttribute('href', href.split(/[?#]/)[0] + url.search + url.hash);
   };
   document.addEventListener('click', passTheme, true);
   document.addEventListener('auxclick', passTheme, true);

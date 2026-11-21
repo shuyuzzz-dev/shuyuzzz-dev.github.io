@@ -9,6 +9,7 @@ import { BEAM_SCENES } from './safety-projects.mjs';
 import { LINER_SCENES } from './liner-scenes.mjs';
 import { STOW_GUIDANCE_SCENES } from './stowguidance-scenes.mjs';
 import { PORTAL_SCENES } from './portal-scenes.mjs';
+import { FLOW_SCENES, FLOW_DECK_TITLE, renderFlowHero } from './flow-training.mjs';
 import { AI_DECKS } from './ai-decks.mjs';
 import { SWEEPER_DECK } from './sweeper.mjs';
 import { updateSafetyEstimate, fieldProblem, markChangedOutputs } from './safety-ui.mjs';
@@ -367,7 +368,7 @@ function showProject(id, returnFocus = null, skipEncounter = false) {
   openDialog(`<article class="dialog-body" style="--project-accent:${project.color}"><h2 id="dialog-title">${project.title}</h2><p class="dialog-lead">${project.lead}</p><div class="project-tags">${project.tags.map(tag=>`<span>${tag}</span>`).join('')}</div>${project.content}<div class="project-end"><button type="button" class="button primary" data-return-floor>Back to the floor</button><button type="button" class="plain-link" data-project="${nextId}">Next: ${PROJECTS[nextId].title}</button></div></article>`, project.place, returnFocus);
   setProjectUrl(id);
   if (id === 'stowguidance') updateImpactEstimate();
-  if (id === 'portal') updateOnboardingEstimate();
+  if (id === 'portal') { $('#portal-flow').innerHTML = renderFlowHero(getTheme()); updateOnboardingEstimate(); }
   if (id === 'liners' || id === 'beams') updateSafetyEstimate(id);
   announcement.textContent = progressMessage();
 }
@@ -468,9 +469,9 @@ function advanceStowGuidanceObservation(direction = 1) {
 // ends on its project page; AI decks return to the screen that opened them.
 const DECKS = {
   portal: {
-    project: 'portal', accent: 'var(--blue)', scenes: PORTAL_SCENES,
+    project: 'portal', accent: 'var(--blue)', scenes: [...PORTAL_SCENES, ...FLOW_SCENES],
     eyebrow: 'Portal walkthrough',
-    title: 'Learning health, from organization to individual.',
+    title: FLOW_DECK_TITLE,
     audience: 'Manager view: individual learning',
     note: 'Screenshots from the working portal, with names pixelated, sensitive values blurred and internal labels made generic; everything obscured is placeholder content. Original interface in English; captions follow your selected language.',
   },
@@ -487,7 +488,7 @@ function showDeck(key, returnFocus = null, step = 0) {
   deckLauncher = !deck.screen && dialog.open && $(launcher) ? launcher : null;
   highlightStop(markerOf(deck.project));
   const ratio = deck.scenes.reduce((sum, scene) => sum + scene.width / scene.height, 0) / deck.scenes.length;
-  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent};--slide-ratio:${ratio.toFixed(3)}"${deck.screen ? ` data-return-screen="${deck.screen}"` : deckLauncher ? ' data-return-page' : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer">View full-size screenshot ↗</a><p class="impact-method">${deck.note}</p></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
+  openDialog(`<section class="dialog-body ${key}-observation observation-view" style="--project-accent:${deck.accent};--slide-ratio:${ratio.toFixed(3)}"${deck.screen ? ` data-return-screen="${deck.screen}"` : deckLauncher ? ' data-return-page' : ''}><h2 id="dialog-title">${deck.title}</h2><div class="liner-scene-heading"><span id="${key}-scene-audience"></span><span id="${key}-scene-progress" aria-label="Observation progress"></span></div><div class="slide-viewport"><div class="slide-advance" data-advance-${key}><img id="${key}-scene-image" class="portal-screen" alt="" draggable="false"></div></div><div class="observation-details"><p class="slide-tap-hint">Tap the slide or use Next.</p><div class="observation-copy" aria-live="polite" aria-atomic="true"><h3 id="${key}-scene-title"></h3><p id="${key}-scene-text"></p></div><a id="${key}-full-size" class="plain-link" target="_blank" rel="noopener noreferrer"></a><p class="impact-method" id="${key}-scene-note"></p></div><div class="observation-actions"><button type="button" class="plain-link" id="${key}-scene-back">Previous</button><button type="button" class="button primary" id="${key}-scene-next">Next slide</button><button type="button" class="plain-link observation-skip" data-read-${key}>Go straight to the project</button></div></section>`, deck.eyebrow, returnFocus);
   renderDeck();
 }
 function renderDeck() {
@@ -498,7 +499,11 @@ function renderDeck() {
   picture.alt = scene.alt;
   picture.width = scene.width;
   picture.height = scene.height;
-  part('full-size').href = scene.full || scene.src;
+  // A slide may point at a live page instead of its full-size picture, and may carry its own note.
+  const link = part('full-size');
+  link.href = scene.link?.href || scene.full || scene.src;
+  link.textContent = scene.link?.label || 'View full-size screenshot ↗';
+  part('scene-note').textContent = scene.note || deck.note;
   part('scene-audience').textContent = scene.audience || deck.audience || '';
   part('scene-title').textContent = scene.title;
   part('scene-text').textContent = scene.text;
@@ -840,10 +845,18 @@ window.addEventListener('portfolio-language-change', () => {
   updateSafetyEstimate('liners');
   updateSafetyEstimate('beams');
 });
-// An open flow map embed reloads in the new theme, and an open slide switches to its night picture.
+// An open map embed reloads in the new theme, and an open slide switches to its night picture.
 window.addEventListener('portfolio-theme-change', ({ detail }) => {
+  // Keyboard focus on a map's link moves to the redrawn link instead of dropping out of the dialog.
+  const redraw = (box, html) => {
+    const focused = box.contains(document.activeElement);
+    box.innerHTML = html;
+    if (focused) box.querySelector('a')?.focus({ preventScroll: true });
+  };
   const hero = $('#ai-hero[data-view="map"]');
-  if (hero) hero.innerHTML = renderAIHero('map', detail.theme);
+  if (hero) redraw(hero, renderAIHero('map', detail.theme));
+  const flow = $('#portal-flow');
+  if (flow) redraw(flow, renderFlowHero(detail.theme));
   const slide = deckKey && $(`#${deckKey}-scene-image`);
   if (slide) slide.src = slideSource(DECKS[deckKey].scenes[deckStep]);
 });

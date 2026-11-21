@@ -206,6 +206,11 @@ html:lang(zh) .intro-copy h1{line-height:1.22}
 .ai-map-frame a:focus-visible>span{opacity:1}@media(hover:hover){.ai-map-frame a:hover>span{opacity:1}}
 @media (prefers-reduced-motion:reduce),(max-width:680px){.ai-map-frame iframe{display:none}}
 .ai-hero-map figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.flow-hero .ai-map-frame{border-color:var(--line-2)}
+.flow-hero .ai-map-frame:focus-within{border-color:var(--blue)}
+@media(hover:hover){.flow-hero .ai-map-frame:hover{border-color:var(--blue)}}
+.flow-hero .ai-map-frame a>span{color:var(--blue);border-color:var(--blue)}
+.flow-training .resume-actions{margin:18px 0 6px}
 @media(max-width:930px) and (min-width:681px){.project-stops{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.ai-screen-controls{grid-template-columns:1fr;gap:8px}.ai-screen-controls button{min-height:48px;padding:10px 14px}.ai-screen-content{padding:18px}.ai-facts{grid-template-columns:1fr}.resume-actions{align-items:flex-start;flex-direction:column}.resume-nav{font-size:14px}.site-header nav{gap:12px}}
 
